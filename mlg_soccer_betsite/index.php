@@ -14,16 +14,16 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-	
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-	
+
 	<!--Eigenes Stylesheet-->
 	<link rel="stylesheet" href="/css/main.css" type="text/css">
-	
-	
+
+
   </head>
   <body>
 	 <!-- Navigation aus Bootstrap-->
@@ -70,7 +70,7 @@
 			</div>
 		</div>
 	</nav>
-		
+
 	<!-- LoginModal -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="meinModalLabel">
 	  <div class="modal-dialog" role="document">
@@ -98,7 +98,7 @@
 		</div>
 	  </div>
 	</div>
-	
+
 	<!-- RegisterModal -->
 	<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="meinModalLabel">
 	  <div class="modal-dialog" role="document">
@@ -139,9 +139,9 @@
 		</div>
 	  </div>
 	</div>
-		
+
     <!--Eigenes Script-->
 	<script type="text/javascript" src="js/script.js"></script>
-	
+
   </body>
 </html>

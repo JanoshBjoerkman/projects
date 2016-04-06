@@ -2,7 +2,7 @@
 	session_start();
 	require 'connect.php';
 	header("Content-Type: text/html;charset=UTF-8");
-	
+
 	//Check userdata
 	if (isset($_POST["RegisterEmail"]) && isset($_POST["RegisterPw"]) && isset($_POST["RegisterPw2"]))
 			{
@@ -21,8 +21,8 @@
 							$_SESSION['mail'] = $_POST['RegisterEmail'];
 							header('Location: index.php');
 						}
-					}	
-				}else					
+					}
+				}else
 					die("Wrong passwords");
 			}
-?> 
+?>
