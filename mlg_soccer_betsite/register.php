@@ -19,6 +19,9 @@
 							$sql = "INSERT INTO user VALUES (NULL, '".$_POST['RegisterVorname']."', '".$_POST['RegisterNachname']."', 0, 0, 0, '".$_POST['RegisterEmail']."', '".sha1($_POST['RegisterPw'])."', 0);";
 							mysqli_query($db_link, $sql);
 							$_SESSION['mail'] = $_POST['RegisterEmail'];
+							$testAdminList = mysqli_query($db_link, 'SELECT Adminrechte FROM user WHERE Email = \''.$_POST['loginEmail'].'\';');
+							$testAdmin = mysqli_fetch_row($testAdminList);
+							$_SESSION['isAdmin'] = $testAdmin[0];
 							header('Location: index.php');
 						}
 					}

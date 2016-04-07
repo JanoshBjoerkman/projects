@@ -62,9 +62,41 @@
 	)';
 	mysqli_query($db_link, $sql);
 
+	//turniertyp
+	$sql = 'CREATE TABLE IF NOT EXISTS turniertyp(
+		Typ_ID int NOT NULL AUTO_INCREMENT,
+		Typ varchar(10) NOT NULL,
+		PRIMARY KEY (Typ_ID)
+	)';
+	mysqli_query($db_link, $sql);
+
+	$sql = "SELECT EXISTS(SELECT * FROM turniertyp WHERE Typ = 'WM')";
+	$checkTypListe = mysqli_query($db_link, $sql);
+	$checkTyp = mysqli_fetch_row($checkTypListe);
+	if(!$checkTyp[0]==1) // Wenn EM/WM-Einträge nicht existieren -> insert
+	{
+			$sql = "INSERT INTO turniertyp VALUES (NULL, 'EM')";
+			mysqli_query($db_link, $sql);
+			$sql = "INSERT INTO turniertyp VALUES (NULL, 'WM')";
+			mysqli_query($db_link, $sql);
+	}
+
+	//turnier
+	$sql = 'CREATE TABLE IF NOT EXISTS turnier(
+		Turnier_ID int NOT NULL AUTO_INCREMENT,
+		Turniername varchar(50) NOT NULL,
+		Jahr int NOT NULL,
+		Status boolean NOT NULL DEFAULT 0, 
+		Typ_ID int NOT NULL,
+		PRIMARY KEY (Turnier_ID),
+		FOREIGN KEY (Typ_ID) REFERENCES turniertyp(Typ_ID)
+	)';
+	mysqli_query($db_link, $sql);
+
 	//spiel
 	$sql = 'CREATE TABLE IF NOT EXISTS spiel(
 	Spiel_ID int NOT NULL AUTO_INCREMENT,
+	Turnier_ID int,
 	Spiel_Nr int,
 	Datum DATE NOT NULL,
 	Home_Team varchar(50),
@@ -72,7 +104,8 @@
 	Home_Goals int,
 	Guest_Goals int,
 	Winner varchar(50),
-	PRIMARY KEY (Spiel_ID)
+	PRIMARY KEY (Spiel_ID),
+	FOREIGN KEY (Turnier_ID) REFERENCES turnier(Turnier_ID)
 	)';
 	mysqli_query($db_link, $sql);
 

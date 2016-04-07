@@ -16,9 +16,6 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/bootstrap-theme.min.css" rel="stylesheet">
 
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-
 		<!--Eigenes Stylesheet-->
 		<link rel="stylesheet" href="/css/main.css" type="text/css">
   </head>
@@ -70,34 +67,43 @@
 
 	<!--Content für den User oder Admin, unterscheidung mittels PHP-Login-->
 	<div class="container" id="homeContent">
-	<?php if(isset($_SESSION['mail']) && $_SESSION['isAdmin']) { ?>
+		<?php if(isset($_SESSION['mail']) && $_SESSION['isAdmin']) { ?>
 			<div class="row">
 				<div class="col-md-12">
 					<div id="adminContent">
-						<button href="#turnierErstellen" class="btn btn-info btn-block" data-toggle="collapse">Turnier erstellen</button>
+						<button href="#turnierErstellen" class="btn btn-default btn-block" data-toggle="collapse">Turnier erstellen</button>
 						<div id="turnierErstellen" class="collapse">
+							<div class="col-md-12">
 						    <div id="turnierErstellenGruppe">
-									Work in progress <progress value="10" max="100">10%</progress>
+									<div id="addGroup">
+										<button class="btn btn-success center-block" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addGroupModal">
+											<span class="glyphicon glyphicon-plus"></span> Gruppe hinzufügen</button>
+									</div>
 								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-	<?php }elseif (isset($_SESSION['mail']) && !$_SESSION['isAdmin']) { ?>
+		<?php }elseif (isset($_SESSION['mail']) && !$_SESSION['isAdmin']) { ?>
+			<div class="row">
+				<div class="col-md-12">
+					<div id="userContent">
+					</div>
+				</div>
+			</div>
+	<?php }else{ ?>
+		<div id="homeContentGuest">
+			<h1>Wilkommen</h1>
+		</div>
+	<?php } ?>
 		<div class="row">
 			<div class="col-md-12">
-				<div id="userContent">
-					user content site
-					<progress value="2" max="100">0%</progress>
+				<div id="aktivesTurnier">
 				</div>
 			</div>
 		</div>
-	<?php }else{ ?>
-		<div id="homeContentGuest">
-			<h1>Wilkommen du Russe</h1>
-		</div>
 	</div>
-	<?php } ?>
 
 	<!-- LoginModal -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="meinModalLabel">
@@ -171,8 +177,10 @@
 		<!-- Einbinden der Skripts -->
 	  <!--<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.1.min.js"></script>-->
 		<script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+		<script>
+    	var loggedIn = <?php echo isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == 'yes' ? 'true' : 'false'; ?>;
+		</script>
 	  <script type="text/javascript" src="js/script.js"></script>
 	  <script src="js/bootstrap.min.js"></script>
-
   </body>
 </html>
