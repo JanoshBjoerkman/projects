@@ -1,5 +1,5 @@
 <?php
-	//Variablen für DB-Verbindung
+	//Variablen fï¿½r DB-Verbindung
 	$servername = "localhost";
 	$username = "root";
 	$password = "admin";
@@ -7,7 +7,7 @@
 	//Erstellt Verbindung
 	$conn = mysqli_connect($servername, $username, $password);
 
-	//Überprüft ob Verbidnung vorhanden ist, wenn nicht: Abbruch
+	//ï¿½berprï¿½ft ob Verbidnung vorhanden ist, wenn nicht: Abbruch
 	if (!$conn) {
 		die("Connection failed: " . mysqli_connect_error());
 	}
@@ -17,9 +17,9 @@
 	$result = mysqli_query($conn, $sql)
 	  or die("Failed to create database: " . mysql_error());
 
-	//link für connection
+	//link fï¿½r connection
 	$db_link = mysqli_connect($servername, $username, $password, "fussballwetten");
-		
+
 	//user
 	$sql = 'CREATE TABLE IF NOT EXISTS user(
 	User_ID int NOT NULL AUTO_INCREMENT,
@@ -34,7 +34,7 @@
 	PRIMARY KEY (User_ID)
 	)';
 	mysqli_query($db_link, $sql);
-	
+
 	//wette
 	$sql = 'CREATE TABLE IF NOT EXISTS wette(
 	Wette_ID int NOT NULL AUTO_INCREMENT,
@@ -43,7 +43,7 @@
 	FOREIGN KEY (User_ID) REFERENCES user(User_ID)
 	)';
 	mysqli_query($db_link, $sql);
-	
+
 	//gruppe
 	$sql = 'CREATE TABLE IF NOT EXISTS gruppe(
 	Gruppe_ID int NOT NULL AUTO_INCREMENT,
@@ -51,7 +51,7 @@
 	PRIMARY KEY (Gruppe_ID)
 	)';
 	mysqli_query($db_link, $sql);
-	
+
 	//team
 	$sql = 'CREATE TABLE IF NOT EXISTS team(
 	Team_ID int NOT NULL AUTO_INCREMENT,
@@ -61,7 +61,7 @@
 	FOREIGN KEY (Gruppe_ID) REFERENCES gruppe(Gruppe_ID)
 	)';
 	mysqli_query($db_link, $sql);
-	
+
 	//spiel
 	$sql = 'CREATE TABLE IF NOT EXISTS spiel(
 	Spiel_ID int NOT NULL AUTO_INCREMENT,
@@ -75,7 +75,7 @@
 	PRIMARY KEY (Spiel_ID)
 	)';
 	mysqli_query($db_link, $sql);
-	
+
 	//tip
 	$sql = 'CREATE TABLE IF NOT EXISTS tip(
 	Tip_ID int NOT NULL AUTO_INCREMENT,
@@ -89,7 +89,7 @@
 	FOREIGN KEY (Wette_ID) REFERENCES wette(Wette_ID)
 	)';
 	mysqli_query($db_link, $sql);
-	
+
 	//spiel_team
 	$sql = 'CREATE TABLE IF NOT EXISTS spiel_team(
 	Spiel_ID int,

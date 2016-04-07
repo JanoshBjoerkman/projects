@@ -8,22 +8,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<link rel="icon" href="/pics/favicon.ico">
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<link rel="icon" href="/pics/favicon.ico">
     <title>Fussball-Wetten</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap-theme.min.css" rel="stylesheet">
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
 
-	<!--Eigenes Stylesheet-->
-	<link rel="stylesheet" href="/css/main.css" type="text/css">
-
-
+		<!--Eigenes Stylesheet-->
+		<link rel="stylesheet" href="/css/main.css" type="text/css">
   </head>
   <body>
 	 <!-- Navigation aus Bootstrap-->
@@ -70,6 +67,10 @@
 			</div>
 		</div>
 	</nav>
+
+	<div class="container" id="rankingContent">
+
+	</div>
 
 	<!-- LoginModal -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="meinModalLabel">
@@ -140,8 +141,11 @@
 	  </div>
 	</div>
 
-    <!--Eigenes Script-->
+	<!-- Einbinden der Skripts -->
+	<!--<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.1.min.js"></script>-->
+	<script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 
   </body>
 </html>

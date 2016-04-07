@@ -20,7 +20,9 @@
 									//Hat der User Adminrechte? -> $_Session['isAdmin'] setzten (0 oder 1, sprich false OR true)
 									$testAdminList = mysqli_query($db_link, 'SELECT Adminrechte FROM user WHERE Email = \''.$_POST['loginEmail'].'\';');
 									$testAdmin = mysqli_fetch_row($testAdminList);
-									$_Session['isAdmin'] = $testAdmin[0];
+									$_SESSION['isAdmin'] = $testAdmin[0];
+									if($_SESSION['isAdmin'])
+										echo $_SESSION['isAdmin'];
 								}
 							}
 						}

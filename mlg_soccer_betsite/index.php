@@ -8,22 +8,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-	<link rel="icon" href="/pics/favicon.ico">
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+		<link rel="icon" href="/pics/favicon.ico">
     <title>Fussball-Wetten</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/bootstrap-theme.min.css" rel="stylesheet">
 
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
 
-	<!--Eigenes Stylesheet-->
-	<link rel="stylesheet" href="/css/main.css" type="text/css">
-
-
+		<!--Eigenes Stylesheet-->
+		<link rel="stylesheet" href="/css/main.css" type="text/css">
   </head>
   <body>
 	 <!-- Navigation aus Bootstrap-->
@@ -70,6 +67,37 @@
 			</div>
 		</div>
 	</nav>
+
+	<!--Content für den User oder Admin, unterscheidung mittels PHP-Login-->
+	<div class="container" id="homeContent">
+	<?php if(isset($_SESSION['mail']) && $_SESSION['isAdmin']) { ?>
+			<div class="row">
+				<div class="col-md-12">
+					<div id="adminContent">
+						<button href="#turnierErstellen" class="btn btn-info btn-block" data-toggle="collapse">Turnier erstellen</button>
+						<div id="turnierErstellen" class="collapse">
+						    <div id="turnierErstellenGruppe">
+									Work in progress <progress value="10" max="100">10%</progress>
+								</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	<?php }elseif (isset($_SESSION['mail']) && !$_SESSION['isAdmin']) { ?>
+		<div class="row">
+			<div class="col-md-12">
+				<div id="userContent">
+					user content site
+					<progress value="2" max="100">0%</progress>
+				</div>
+			</div>
+		</div>
+	<?php }else{ ?>
+		<div id="homeContentGuest">
+			<h1>Wilkommen du Russe</h1>
+		</div>
+	</div>
+	<?php } ?>
 
 	<!-- LoginModal -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="meinModalLabel">
@@ -140,8 +168,11 @@
 	  </div>
 	</div>
 
-    <!--Eigenes Script-->
-	<script type="text/javascript" src="js/script.js"></script>
+		<!-- Einbinden der Skripts -->
+	  <!--<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.1.min.js"></script>-->
+		<script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+	  <script type="text/javascript" src="js/script.js"></script>
+	  <script src="js/bootstrap.min.js"></script>
 
   </body>
 </html>
