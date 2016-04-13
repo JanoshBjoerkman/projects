@@ -1,4 +1,6 @@
-$('#btnGruppenVerwalten').click(readGruppen);
+$('#btnGruppenVerwalten').click(function(){
+  readGruppen();
+});
 
 $('#turnierErstellenCreateForm').submit(function(e){
   e.preventDefault();
@@ -7,7 +9,7 @@ $('#turnierErstellenCreateForm').submit(function(e){
   var typ = $('#turnierTypEingeben :selected').text();
   $.ajax({
     type: "POST",
-    url: "./insertTurnier.php",
+    url: "./insert/insertTurnier.php",
     data: {name:name,jahr:jahr,typ:typ},
     success: function(data)
     {
@@ -21,6 +23,20 @@ $('#turnierErstellenCreateForm').submit(function(e){
   });
 });
 
+$('#gruppeErstellenCreateForm').submit(function(e){
+  e.preventDefault();
+  var g_bez = $('#gruppeBezeichnungEingeben').val().toUpperCase();
+  $.ajax({
+    type: "GET",
+    url: "./insert/insertGruppe.php",
+    data: "bezeichnung="+g_bez,
+    success: function()
+    {
+      readGruppen();
+      $('#gruppeBezeichnungEingeben').val(null);
+    }
+  });
+});
 
 $(document).ready(function(){
 
@@ -47,7 +63,7 @@ $(document).ready(function(){
 
 function refreshAktiveTurniere(){
   $.ajax({
-    url:"./readAktiveTurniere.php",
+    url:"./read/readAktiveTurniere.php",
     data: "",
     dataType: 'json',
     success: function(data){
@@ -74,28 +90,53 @@ function refreshAktiveTurniere(){
 };
 
 function readGruppen(){
-  console.log("funktion aufgerufen");
+  var data = "";
   $.ajax({
     url:"./read/readGruppen.php",
-    dataType: 'json',
-    success: function(json){
-      console.log('success from readGruppen');
-      console.log(json);
+    data: data,
+    dataType: "JSON",
+    success: function(data){
       var tabelle = "";
-      $.each(JSON.parse(data), function(id, obj){
-        // variable "tabelle" wird mit html tags und Daten aus der DB gefüllt
+      $.each(data, function(id, object){
         tabelle += "<tr>\
-        <td>"+obj.ID+"</td>\
-        <td>"+obj.Gruppenname+"</td>\
-        <td class='button'><button class='btn btn-danger' id='"+obj.ID+"' onclick='deleteEintrag("+obj.ID+")'>Delete</button></td>\
+          <td>"+object.Gruppenname+"</td>\
+          <td class='button'><button class='btn btn-danger btn-sm' id='"+object.Gruppe_ID+"' onclick='deleteGruppe("+object.Gruppe_ID+")'>Delete</button></td>\
         </tr>"
       });
-      // hier wird der String, der in der Variable "tabelle" steht in das HTML - Tag mit der id "ausgabe" eingefügt
-      $("#aktuelleGruppen").html(tabelle);
+      $("#aktuelleGruppen").html("<table class='table'><thead><tr><th>Gruppe</th><th>Konfiguration</th></thead><tbody>"+tabelle+"</tbody></table>");
     },
     beforeSend:function(){
       // macht, dass die Tabelle vor dem senden geleert wird
       $("#aktuelleGruppen").html = ("");
     }
   });
+};
+
+function deleteGruppe(id){
+  console.log(id);
+  $.ajax({
+    type: "GET",
+    url:"./delete/deleteGruppe.php",
+    data:"id="+id,
+    success: function(){
+      console.log('record deleted');
+      readGruppen();
+    }
+
+  });
+};
+
+function readAktuelleTurniere(){
+    var data = "";
+    $.ajax({
+      url:"./read/readAktuelleTurniere.php",
+      data: data,
+      dataType: "JSON",
+      success: function(data){
+        console.log(data);
+      },
+      beforeSend:function(){
+        $('#aktuelleTurniere').html = ("");
+      }
+    });
 };

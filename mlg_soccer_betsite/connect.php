@@ -86,7 +86,7 @@
 		Turnier_ID int NOT NULL AUTO_INCREMENT,
 		Turniername varchar(50) NOT NULL,
 		Jahr int NOT NULL,
-		Status boolean NOT NULL DEFAULT 0, 
+		Status boolean NOT NULL DEFAULT 0,
 		Typ_ID int NOT NULL,
 		PRIMARY KEY (Turnier_ID),
 		FOREIGN KEY (Typ_ID) REFERENCES turniertyp(Typ_ID)
