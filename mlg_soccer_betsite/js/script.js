@@ -28,6 +28,10 @@ $('#btnturnierVerwalten').click(function(){
   readAktuelleTurniere();
 });
 
+$('#btnTeamsVerwalten').click(function(){
+  readTeams();
+});
+
 $('#turnierErstellenCreateForm').submit(function(e){
   e.preventDefault();
   var name = $('#turnierNameEingeben').val();
@@ -61,9 +65,45 @@ $('#gruppeErstellenCreateForm').submit(function(e){
     {
       readGruppen();
       $('#gruppeBezeichnungEingeben').val(null);
+      refreshTeamErstellenDropdown();
     }
   });
 });
+
+$('#teamErstellenForm').submit(function(e){
+  e.preventDefault();
+  var t_land = $('#teamErstellenLand').val();
+  var t_gruppe = $('#teamErstellenFormDropdown option:selected').val();
+  $.ajax({
+    type: "GET",
+    url:"./insert/insertTeam.php",
+    data: "land="+t_land+"&gruppe="+t_gruppe,
+    success: function(){
+      var t_land = $('#teamErstellenLand').val("");
+      readTeams();
+    }
+  });
+});
+
+$('#teamErstellen').ready(function(){
+  refreshTeamErstellenDropdown();
+});
+
+function refreshTeamErstellenDropdown(){
+  var data = "";
+  $.ajax({
+    url:"./read/readGruppen.php",
+    data: data,
+    dataType: "JSON",
+    success: function(data){
+      var dropdown = "";
+        $.each(data, function(id, obj){
+          dropdown += "<option value="+obj.Gruppe_ID+">"+obj.Gruppenname+"</option>";
+        });
+      $("#teamErstellenFormDropdown").html(dropdown);
+    }
+  });
+};
 
 function showAktiveTurniere(){
   $.ajax({
@@ -112,11 +152,10 @@ function readGruppen(){
       $.each(data, function(id, object){
         tabelle += "<tr>\
           <td>"+object.Gruppenname+"</td>\
-          <td><button class='btn btn-default btn-sm'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></button></td>\
           <td><button class='btn btn-danger btn-sm' id='"+object.Gruppe_ID+"' onclick='deleteGruppe("+object.Gruppe_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
         </tr>"
       });
-      $("#aktuelleGruppen").html("<table class='table'><thead><tr><th>Gruppe</th><th>Teams</th><th>Löschen</th></thead><tbody>"+tabelle+"</tbody></table>");
+      $("#aktuelleGruppen").html("<table class='table'><thead><tr><th>Gruppe</th><th>Löschen</th></thead><tbody>"+tabelle+"</tbody></table>");
     },
     beforeSend:function(){
       // macht, dass die Tabelle vor dem senden geleert wird
@@ -134,8 +173,11 @@ function deleteGruppe(id){
     success: function(){
       console.log('record deleted');
       readGruppen();
+      setTimeout(function(){
+        readTeams();
+      }, 400);
+      refreshTeamErstellenDropdown();
     }
-
   });
 };
 
@@ -173,6 +215,38 @@ function disableTurnier(id){
       console.log("Turnier mit ID: "+data+" erfolgreich deaktiviert");
       showAktiveTurniere();
       readAktuelleTurniere();
+    }
+  });
+}
+
+function readTeams(){
+  var data = "";
+  $.ajax({
+    url:"./read/readTeams.php",
+    data: data,
+    dataType: "JSON",
+    success: function(data){
+      var tabelle = "";
+      $.each(data, function(id, obj){
+        tabelle += "<tr>\
+          <td>"+obj.Land+"</td>\
+          <td>"+obj.Gruppenname+"</td>\
+          <td><button class='btn btn-danger btn-sm' id='"+obj.Team_ID+"' onclick='deleteTeam("+obj.Team_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
+          "
+      });
+      $("#aktuelleTeams").html("<table class='table'><thead><tr><th>Land</th><th>Gruppe</th><th></th></thead><tbody>"+tabelle+"</tbody></table>");
+    }
+  });
+}
+
+function deleteTeam(id){
+  $.ajax({
+    type: "GET",
+    url:"./delete/deleteTeam.php",
+    data:"id="+id,
+    success: function(){
+      console.log('laatz');
+      readTeams();
     }
   });
 }

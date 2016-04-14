@@ -32,7 +32,7 @@
 	Password varchar(255) NOT NULL,
 	Adminrechte boolean NOT NULL DEFAULT 0,
 	PRIMARY KEY (User_ID)
-	)';
+	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
 	//wette
@@ -40,8 +40,8 @@
 	Wette_ID int NOT NULL AUTO_INCREMENT,
 	User_ID int,
 	PRIMARY KEY (Wette_ID),
-	FOREIGN KEY (User_ID) REFERENCES user(User_ID)
-	)';
+	FOREIGN KEY (User_ID) REFERENCES user(User_ID) ON DELETE CASCADE
+	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
 	//gruppe
@@ -49,7 +49,7 @@
 	Gruppe_ID int NOT NULL AUTO_INCREMENT,
 	Gruppenname varchar(50),
 	PRIMARY KEY (Gruppe_ID)
-	)';
+	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
 	//team
@@ -58,8 +58,8 @@
 	Land varchar(50) NOT NULL,
 	Gruppe_ID int,
 	PRIMARY KEY (Team_ID),
-	FOREIGN KEY (Gruppe_ID) REFERENCES gruppe(Gruppe_ID)
-	)';
+	FOREIGN KEY (Gruppe_ID) REFERENCES gruppe(Gruppe_ID) ON DELETE CASCADE
+	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
 	//turniertyp
@@ -67,7 +67,7 @@
 		Typ_ID int NOT NULL AUTO_INCREMENT,
 		Typ varchar(10) NOT NULL,
 		PRIMARY KEY (Typ_ID)
-	)';
+	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
 	$sql = "SELECT EXISTS(SELECT * FROM turniertyp WHERE Typ = 'WM')";
@@ -90,7 +90,7 @@
 		Typ_ID int NOT NULL,
 		PRIMARY KEY (Turnier_ID),
 		FOREIGN KEY (Typ_ID) REFERENCES turniertyp(Typ_ID)
-	)';
+	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
 	//spiel
@@ -105,8 +105,8 @@
 	Guest_Goals int,
 	Winner varchar(50),
 	PRIMARY KEY (Spiel_ID),
-	FOREIGN KEY (Turnier_ID) REFERENCES turnier(Turnier_ID)
-	)';
+	FOREIGN KEY (Turnier_ID) REFERENCES turnier(Turnier_ID) ON DELETE CASCADE
+	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
 	//tip
@@ -118,17 +118,17 @@
 	Spiel_ID int,
 	Wette_ID int,
 	PRIMARY KEY (Tip_ID),
-	FOREIGN KEY (Spiel_ID) REFERENCES spiel(Spiel_ID),
-	FOREIGN KEY (Wette_ID) REFERENCES wette(Wette_ID)
-	)';
+	FOREIGN KEY (Spiel_ID) REFERENCES spiel(Spiel_ID) ON DELETE CASCADE,
+	FOREIGN KEY (Wette_ID) REFERENCES wette(Wette_ID) ON DELETE CASCADE
+	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
 	//spiel_team
 	$sql = 'CREATE TABLE IF NOT EXISTS spiel_team(
 	Spiel_ID int,
 	Team_ID int,
-	FOREIGN KEY (Spiel_ID) REFERENCES spiel(Spiel_ID),
-	FOREIGN KEY (Team_ID) REFERENCES team(Team_ID)
-	)';
+	FOREIGN KEY (Spiel_ID) REFERENCES spiel(Spiel_ID) ON DELETE CASCADE,
+	FOREIGN KEY (Team_ID) REFERENCES team(Team_ID) ON DELETE CASCADE
+	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 ?>

@@ -4,15 +4,15 @@
   header("Content-Type: text/html;charset=UTF-8");
 
   $temp = array();
-  $resultGruppen = array();
-  $sql = "SELECT * FROM gruppe ORDER BY Gruppenname";
+  $resultTeams = array();
+  $sql = "SELECT * FROM team LEFT JOIN gruppe ON team.Gruppe_ID = gruppe.Gruppe_ID ORDER BY gruppe.Gruppenname";
   $temp = mysqli_query($db_link, $sql);
   $index = 0;
   while($zeile = mysqli_fetch_assoc($temp))
   {
-    $resultGruppen[$index] = $zeile;
+    $resultTeams[$index] = $zeile;
     $index = $index + 1;
   };
 
-  echo json_encode($resultGruppen);
+  echo json_encode($resultTeams);
 ?>
