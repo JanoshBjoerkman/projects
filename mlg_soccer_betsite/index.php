@@ -13,9 +13,10 @@
     <title>Fussball-Wetten</title>
 
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/bootstrap-theme.min.css" rel="stylesheet">
-
+    <link href="css/bootstrap.css" rel="stylesheet">
+		<link href="css/bootstrap-theme.css" rel="stylesheet">
+		<link href="fonts/glyphicons-halflings-regular.ttf" rel="application/x-font-ttf">
+		<link href="css/bootstrap-switch.css" rel="stylesheet">
 		<!--Eigenes Stylesheet-->
 		<link rel="stylesheet" href="/css/main.css" type="text/css">
   </head>
@@ -72,8 +73,8 @@
 				<div class="col-md-12">
 					<div id="adminContent">
 						<!--Button und Formular um ein Turnier zu erstellen-->
-						<button id="btnturnierErstellen" href="#turnierVerwalten" class="btn btn-default btn-block" data-toggle="collapse">Turnier erstellen</button>
-						<br style="line-height:50px" />
+						<button id="btnturnierVerwalten" href="#turnierVerwalten" class="btn btn-default btn-block" data-toggle="collapse">Turnier verwalten</button>
+						<br style="line-height:40px" />
 						<!--Turniere verwalten-->
 						<div id="turnierVerwalten" class="collapse">
 							<div class="row">
@@ -109,16 +110,18 @@
 										 </div>
 										</form>
 									</div>
+									<br style="line-height:40px" />
 								</div>
 							</div>
 							<!--Turnier Übersicht-->
 							<div class="row">
 								<div class="col-md-12">
 									<div id="turnierUebersicht">
-										<h4>Übersicht:</h4>
+										<h4>Aktuelles Turnier:</h4>
 										<div id="aktuelleTurniere">
 										</div>
 									</div>
+									<br style="line-height:40px" />
 								</div>
 							</div>
 						</div>
@@ -127,7 +130,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<button id="btnGruppenVerwalten" href="#gruppenVerwalten" class="btn btn-default btn-block" data-toggle="collapse">Gruppen verwalten</button>
-								<br style="line-height:50px" />
+								<br style="line-height:40px" />
 								<div id="gruppenVerwalten" class="collapse">
 									<div class="row">
 										<!--Gruppenübersicht-->
@@ -267,7 +270,8 @@
 		<script>
     	var loggedIn = <?php echo isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == 'yes' ? 'true' : 'false'; ?>;
 		</script>
-		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap.js"></script>
+		<script src="js/bootstrap-switch.js"></script>
 	  <script type="text/javascript" src="js/script.js"></script>
 
   </body>
