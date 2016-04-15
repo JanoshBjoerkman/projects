@@ -205,6 +205,74 @@
 								</div>
 							</div>
 						</div>
+						<!--Vorrunden-->
+						<div class="row">
+							<div class="col-md-12">
+								<button id="btnVorrundenVerwalten" href="#vorrundenVerwalten" class="btn btn-default btn-block" data-toggle="collapse">Vorrunden verwalten</button>
+								<br style="line-height:40px" />
+								<div id="vorrundenVerwalten" class="collapse">
+									<!--Gruppen A-B-->
+									<div class="row">
+										<div class="col-md-6">
+											<div id="vorrundenGruppeA">
+												<table class="table table-striped">
+													<thead>
+														<th>Datum</th>
+														<th>Team 1</th>
+														<th colspan="2">Resultat</th>
+														<th>Team 2</th>
+													</thead>
+													<tbody>
+														<td></td>
+														<td></td>
+														<td><input type="number" min="0" class="form-control input-sm-1" id="vorrunde A 1 t1"></td>
+														<td><input type="number" min="0" class="form-control input-sm-1" id="vorrunde A 1 t2"></td>
+														<td></td>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div id="vorrundenGruppeB">
+											</div>
+										</div>
+									</div>
+										<!--Gruppen C-D-->
+									<div class="row">
+										<div class="col-md-6">
+											<div id="vorrundenGruppeC">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div id="vorrundenGruppeD">
+											</div>
+										</div>
+									</div>
+									<!--Gruppen E-F-->
+									<div class="row">
+										<div class="col-md-6">
+											<div id="vorrundenGruppeE">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div id="vorrundenGruppeF">
+											</div>
+										</div>
+									</div>
+									<!--Gruppen G-H-->
+									<div class="row">
+										<div class="col-md-6">
+											<div id="vorrundenGruppeG">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div id="vorrundenGruppeH">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

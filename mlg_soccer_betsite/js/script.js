@@ -101,9 +101,20 @@ function refreshTeamErstellenDropdown(){
           dropdown += "<option value="+obj.Gruppe_ID+">"+obj.Gruppenname+"</option>";
         });
       $("#teamErstellenFormDropdown").html(dropdown);
+      $('#vorrundenSpielErstellenDropdown3').html(dropdown);
     }
   });
 };
+
+$('#vorrundenSpielErstellenForm').submit(function(e){
+  e.preventDefault();
+  var datum = $('#vorrundenSpielErstellenDatum').val();
+  var id_team1 = $('#vorrundenSpielErstellenDropdown1').val();
+  var id_team2 = $('#vorrundenSpielErstellenDropdown2').val();
+  var gruppe = $('#vorrundenSpielErstellenDropdown3 option:selected').val();
+  console.log(id_team2);
+  console.log(gruppe);
+});
 
 function showAktiveTurniere(){
   $.ajax({
@@ -158,7 +169,6 @@ function readGruppen(){
       $("#aktuelleGruppen").html("<table class='table'><thead><tr><th>Gruppe</th><th>Löschen</th></thead><tbody>"+tabelle+"</tbody></table>");
     },
     beforeSend:function(){
-      // macht, dass die Tabelle vor dem senden geleert wird
       $("#aktuelleGruppen").html = ("");
     }
   });

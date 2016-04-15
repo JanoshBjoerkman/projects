@@ -5,7 +5,7 @@
 
   $temp = array();
   $resultTeams = array();
-  $sql = "SELECT * FROM team LEFT JOIN gruppe ON team.Gruppe_ID = gruppe.Gruppe_ID ORDER BY gruppe.Gruppenname";
+  $sql = "SELECT * FROM team LEFT JOIN gruppe ON team.Gruppe_ID = gruppe.Gruppe_ID ORDER BY gruppe.Gruppenname, team.Land";
   $temp = mysqli_query($db_link, $sql);
   $index = 0;
   while($zeile = mysqli_fetch_assoc($temp))
