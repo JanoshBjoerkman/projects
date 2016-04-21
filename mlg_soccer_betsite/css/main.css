@@ -19,3 +19,13 @@ font-family: 'Sigmar One', cursive;
 .container {
 	margin: 100px auto;
 }
+
+.form-control-spiel {
+  width: 70%;
+}
+
+#btnErstellen {
+  display: block;
+  margin: 1% auto;
+  text-align: center;
+}

@@ -1,6 +1,7 @@
 $(document).ready(function(){
     $('#homeContent').ready(showAktiveTurniere);
-
+    $('#successSpielErstellen').hide();
+    $('#alertSpielErstellen').hide();
     $('#welcomeMessage').ready(function(){
         $.ajax({
           url:"./getLoggedName.php",
@@ -66,6 +67,7 @@ $('#gruppeErstellenCreateForm').submit(function(e){
       readGruppen();
       $('#gruppeBezeichnungEingeben').val(null);
       refreshTeamErstellenDropdown();
+      refreshSpielErstellenDropdown();
     }
   });
 });
@@ -85,8 +87,37 @@ $('#teamErstellenForm').submit(function(e){
   });
 });
 
+$('#spielErstellenForm').submit(function(e){
+  e.preventDefault();
+  var t1 = $('#spielErstellenFormDropdown1 option:selected').val();
+  var t2 = $('#spielErstellenFormDropdown2 option:selected').val();
+  var datum = $('#spielErstellenInputDatum').val();
+  var sDate = datum.split('.');
+  var spielnummer = 3;
+  if(datum.length != 10 || sDate[0] > 31 || sDate[1] > 12){
+    $("#alertSpielErstellen").fadeIn("slow");
+  }else{
+    $("#alertSpielErstellen").fadeOut(10);
+    datum = sDate[2]+"-"+sDate[1]+"-"+sDate[0];
+    console.log(datum);
+    $.ajax({
+      type: "GET",
+      data: "spielnr="+spielnummer+"&team1="+t1+"&datum="+datum+"&team2="+t2,
+      url: "./insert/insertSpiel.php",
+      success: function(data){
+        $('#spielErstellenInputDatum').val("");
+        $('#successSpielErstellen').fadeIn(800).fadeOut(2000);
+      }
+    });
+  }
+});
+
 $('#teamErstellen').ready(function(){
   refreshTeamErstellenDropdown();
+});
+
+$('#spielErstellen').ready(function() {
+  refreshSpielErstellenDropdown();
 });
 
 function refreshTeamErstellenDropdown(){
@@ -101,20 +132,26 @@ function refreshTeamErstellenDropdown(){
           dropdown += "<option value="+obj.Gruppe_ID+">"+obj.Gruppenname+"</option>";
         });
       $("#teamErstellenFormDropdown").html(dropdown);
-      $('#vorrundenSpielErstellenDropdown3').html(dropdown);
     }
   });
 };
 
-$('#vorrundenSpielErstellenForm').submit(function(e){
-  e.preventDefault();
-  var datum = $('#vorrundenSpielErstellenDatum').val();
-  var id_team1 = $('#vorrundenSpielErstellenDropdown1').val();
-  var id_team2 = $('#vorrundenSpielErstellenDropdown2').val();
-  var gruppe = $('#vorrundenSpielErstellenDropdown3 option:selected').val();
-  console.log(id_team2);
-  console.log(gruppe);
-});
+function refreshSpielErstellenDropdown() {
+  var data = "";
+  $.ajax({
+    url:"./read/readTeamsORDERBYTeams.php",
+    data: data,
+    dataType: "JSON",
+    success: function(data){
+      var dropdown = "";
+      $.each(data, function(id, obj){
+        dropdown += "<option value="+obj.Team_ID+">"+obj.Land+"</option>";
+      });
+      $("#spielErstellenFormDropdown1").html(dropdown);
+      $("#spielErstellenFormDropdown2").html(dropdown);
+    }
+  });
+}
 
 function showAktiveTurniere(){
   $.ajax({

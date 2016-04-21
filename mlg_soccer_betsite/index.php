@@ -153,7 +153,7 @@
 												 </div>
 												 <div class="form-group">
 													 <div class="col-sm-offset-2 col-sm-10">
-														 <button type="submit" class="btn btn-default">erstellen</button>
+														 <button type="submit" class="btn btn-primary">erstellen</button>
 													 </div>
 												 </div>
 												</form>
@@ -195,7 +195,7 @@
 												 </div>
 												 <div class="form-group">
 													 <div class="col-sm-offset-2 col-sm-10">
-														 <button type="submit" class="btn btn-default">erstellen</button>
+														 <button type="submit" class="btn btn-primary">erstellen</button>
 													 </div>
 												 </div>
 												</form>
@@ -208,65 +208,83 @@
 						<!--Vorrunden-->
 						<div class="row">
 							<div class="col-md-12">
-								<button id="btnVorrundenVerwalten" href="#vorrundenVerwalten" class="btn btn-default btn-block" data-toggle="collapse">Vorrunden verwalten</button>
+								<button id="btnSpieleVerwalten" href="#spieleVerwalten" class="btn btn-default btn-block" data-toggle="collapse">Spiele verwalten</button>
 								<br style="line-height:40px" />
-								<div id="vorrundenVerwalten" class="collapse">
-									<!--Gruppen A-B-->
+								<div id="spieleVerwalten" class="collapse">
+									<div class="row">
+										<div class="col-md-10">
+											<div id="spielErstellen">
+												<form class="form-horizontal" role="form" id="spielErstellenForm">
+												 <div class="form-group">
+													 <label class="control-label col-sm-2" for="spielErstellenFormDropdown1">Team 1:</label>
+													 <div class="col-sm-2">
+														 <select class='form-control' id='spielErstellenFormDropdown1' required></select>
+													 </div>
+													 <label class="control-label col-sm-2" for="spielErstellenFormDatum">Datum:</label>
+													 <div class="col-sm-2">
+														 <input type="text" class="form-control" id="spielErstellenInputDatum" placeholder="z.B: 14.04.2016" required>
+													 </div>
+													 <label class="control-label col-sm-2" for="spielErstellenFormDropdown2">Team 2:</label>
+													 <div class="col-sm-2">
+														 <select class='form-control' id='spielErstellenFormDropdown2' required></select>
+													 </div>
+												 </div>
+												 <div class="form-group">
+														 <button type="submit" class="btn btn-primary" id="btnErstellen">erstellen</button>
+												 </div>
+												</form>
+												<div class="alert alert-danger" id="alertSpielErstellen">
+													<strong>Fehler!</strong> Bitte folgendes Format verwenden: DD.MM.YYYY
+												</div>
+												<div class="alert alert-success" id="successSpielErstellen">
+												  <strong>Success!</strong> Spiel erfolgreich eingetragen.
+												</div>
+											</div>
+										</div>
+									</div>
+									<!--Übersicht Gruppen A-B-->
 									<div class="row">
 										<div class="col-md-6">
-											<div id="vorrundenGruppeA">
+											<div id="vorrundenUebersichtGruppeA">
 												<table class="table table-striped">
-													<thead>
-														<th>Datum</th>
-														<th>Team 1</th>
-														<th colspan="2">Resultat</th>
-														<th>Team 2</th>
-													</thead>
-													<tbody>
-														<td></td>
-														<td></td>
-														<td><input type="number" min="0" class="form-control input-sm-1" id="vorrunde A 1 t1"></td>
-														<td><input type="number" min="0" class="form-control input-sm-1" id="vorrunde A 1 t2"></td>
-														<td></td>
-													</tbody>
 												</table>
 											</div>
 										</div>
 										<div class="col-md-6">
-											<div id="vorrundenGruppeB">
+											<div id="vorrundenUebersichtGruppeB">
 											</div>
 										</div>
 									</div>
 										<!--Gruppen C-D-->
 									<div class="row">
 										<div class="col-md-6">
-											<div id="vorrundenGruppeC">
+											<div id="vorrundenUebersichtGruppeC">
 											</div>
 										</div>
 										<div class="col-md-6">
-											<div id="vorrundenGruppeD">
+											<div id="vorrundenUebersichtGruppeD">
 											</div>
 										</div>
 									</div>
 									<!--Gruppen E-F-->
 									<div class="row">
 										<div class="col-md-6">
-											<div id="vorrundenGruppeE">
+											<div id="vorrundenUebersichtGruppeE">
 											</div>
 										</div>
 										<div class="col-md-6">
-											<div id="vorrundenGruppeF">
+											<div id="vorrundenUebersichtGruppeF">
 											</div>
 										</div>
 									</div>
 									<!--Gruppen G-H-->
 									<div class="row">
 										<div class="col-md-6">
-											<div id="vorrundenGruppeG">
+											<div id="vorrundenUebersichtGruppeG">
 											</div>
 										</div>
 										<div class="col-md-6">
-											<div id="vorrundenGruppeH">
+											<div id="vorrundenUebersichtGruppeH">
 											</div>
 										</div>
 									</div>
@@ -382,6 +400,6 @@
 		<script src="js/bootstrap.js"></script>
 		<script src="js/bootstrap-switch.js"></script>
 	  <script type="text/javascript" src="js/script.js"></script>
-
+		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   </body>
 </html>

@@ -99,13 +99,16 @@
 	Turnier_ID int,
 	Spiel_Nr int,
 	Datum DATE NOT NULL,
-	Home_Team varchar(50),
-	Guest_Team varchar(50),
-	Home_Goals int,
-	Guest_Goals int,
-	Winner varchar(50),
+	Team1_ID int NOT NULL,
+	Team2_ID int NOT NULL,
+	Team1_goals int,
+	Team2_goals int,
+	Winner_ID int,
 	PRIMARY KEY (Spiel_ID),
-	FOREIGN KEY (Turnier_ID) REFERENCES turnier(Turnier_ID) ON DELETE CASCADE
+	FOREIGN KEY (Turnier_ID) REFERENCES turnier(Turnier_ID) ON DELETE CASCADE,
+	FOREIGN KEY (Team1_ID) REFERENCES team(Team_ID) ON DELETE CASCADE,
+	FOREIGN KEY (Team2_ID) REFERENCES team(Team_ID) ON DELETE CASCADE,
+	FOREIGN KEY (Winner_ID) REFERENCES team(Team_ID) ON DELETE CASCADE
 	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
@@ -124,6 +127,7 @@
 	mysqli_query($db_link, $sql);
 
 	//spiel_team
+	/*
 	$sql = 'CREATE TABLE IF NOT EXISTS spiel_team(
 	Spiel_ID int,
 	Team_ID int,
@@ -131,4 +135,5 @@
 	FOREIGN KEY (Team_ID) REFERENCES team(Team_ID) ON DELETE CASCADE
 	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
+	*/
 ?>
