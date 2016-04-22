@@ -127,7 +127,6 @@
 	mysqli_query($db_link, $sql);
 
 	//spiel_team
-	/*
 	$sql = 'CREATE TABLE IF NOT EXISTS spiel_team(
 	Spiel_ID int,
 	Team_ID int,
@@ -135,5 +134,5 @@
 	FOREIGN KEY (Team_ID) REFERENCES team(Team_ID) ON DELETE CASCADE
 	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
-	*/
+
 ?>

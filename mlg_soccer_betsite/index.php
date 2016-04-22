@@ -212,19 +212,23 @@
 								<br style="line-height:40px" />
 								<div id="spieleVerwalten" class="collapse">
 									<div class="row">
-										<div class="col-md-10">
+										<div class="col-md-12">
 											<div id="spielErstellen">
 												<form class="form-horizontal" role="form" id="spielErstellenForm">
 												 <div class="form-group">
-													 <label class="control-label col-sm-2" for="spielErstellenFormDropdown1">Team 1:</label>
+													 <label class="control-label col-sm-1" for="spielErstellenFormNr">Nr.</label>
+													 <div class="col-sm-1">
+														 <input type="number" min="1" class='form-control' id='spielErstellenFormNr' required>
+													 </div>
+													 <label class="control-label col-sm-1" for="spielErstellenFormDropdown1">Team 1:</label>
 													 <div class="col-sm-2">
 														 <select class='form-control' id='spielErstellenFormDropdown1' required></select>
 													 </div>
-													 <label class="control-label col-sm-2" for="spielErstellenFormDatum">Datum:</label>
+													 <label class="control-label col-sm-1" for="spielErstellenFormDatum">Datum:</label>
 													 <div class="col-sm-2">
 														 <input type="text" class="form-control" id="spielErstellenInputDatum" placeholder="z.B: 14.04.2016" required>
 													 </div>
-													 <label class="control-label col-sm-2" for="spielErstellenFormDropdown2">Team 2:</label>
+													 <label class="control-label col-sm-1" for="spielErstellenFormDropdown2">Team 2:</label>
 													 <div class="col-sm-2">
 														 <select class='form-control' id='spielErstellenFormDropdown2' required></select>
 													 </div>
@@ -356,7 +360,7 @@
 		<div class="modal-content">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Schliessen"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="meinModalLabel">Login</h4>
+			<h4 class="modal-title" id="meinModalLabel">Register</h4>
 		  </div>
 		  <div class="modal-body">
 			<form method="POST" action="register.php" role="form">

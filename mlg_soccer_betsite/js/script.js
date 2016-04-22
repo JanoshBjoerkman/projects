@@ -118,7 +118,7 @@ $('#spielErstellenForm').submit(function(e){
   e.preventDefault(); // Seite neuladen verhindern
   var datum = $('#spielErstellenInputDatum').val(); // Datum aus Formular auslesen und in Variable datum speicher
   var sDate = datum.split('.'); // den Inhalt der Variable datum "splitten", Punkt als Trennzeichen (um später von DD.MM.YYYY in YYYY.MM.DD umzuwandeln)
-  var spielnummer = 3;
+  var spielnummer = $('#spielErstellenFormNr').val();
   // Ist das Datum nicht genau 10 Zeichen lang oder wurde eine unzulässige Angabe bei Tag oder Monat gemacht, Admin-Alert einblenden
   if(datum.length != 10 || sDate[0] > 31 || sDate[1] > 12){
     $("#alertSpielErstellen").fadeIn("slow");
@@ -133,6 +133,7 @@ $('#spielErstellenForm').submit(function(e){
       url: "./insert/insertSpiel.php",
       success: function(data){
         $('#spielErstellenInputDatum').val(""); // Formular leeren
+        $('#spielErstellenFormNr').val(""); // same here
         $('#successSpielErstellen').fadeIn(800).fadeOut(2000); // Admin-Success: Meldung in 0.8sek einblenden, in 2sek ausblenden
       }
     });
@@ -338,4 +339,8 @@ function deleteTeam(id){
       }, 400); // bei Erfolg: Teamübersicht verzögert aktuallisieren
     }
   });
+}
+
+function readGames(){
+  
 }
