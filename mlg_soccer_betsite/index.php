@@ -400,6 +400,5 @@
 		<script src="js/bootstrap.js"></script>
 		<script src="js/bootstrap-switch.js"></script>
 	  <script type="text/javascript" src="js/script.js"></script>
-		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   </body>
 </html>

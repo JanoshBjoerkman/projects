@@ -1,87 +1,112 @@
+/*
+  Autor:              Janosh Björkman
+  Letzte Änderung:    21.04.2016
+  Projekt:            Fussballwetten-Online
+
+  Kleine Info:        jQuery ist der Grund, wieso diese Webseite nicht neu geladen wird, obwohl man Änderungen in der Datenbank
+                      machen kann und diese auch automatisch aktuell gehalten werden. Alle Aufrufe von PHP-Seiten innerhalb dieses
+                      Scripts geschehen ohne dass der User etwas mitbekommt, Stichwort "dynamisch". Kommentare meinerseits werden nur
+                      fürs grobe Verständis & zur Übersicht gemacht. Für ausführliche Beschreibungen der vorkommenden Funktionen besuche
+                      folgende Website: http://www.w3schools.com/jquery/
+                      oder nutze Google :P
+*/
+
+//Initialisierung der Website, wird nur einmal ausgeführt (sobald die das komplette Dokument (Webseite) geladen ist)
 $(document).ready(function(){
-    $('#homeContent').ready(showAktiveTurniere);
-    $('#successSpielErstellen').hide();
-    $('#alertSpielErstellen').hide();
+    $('#homeContent').ready(showAktiveTurniere);  //Meldung für den User ob ein Turnier aktiv ist
+    $('#successSpielErstellen').hide(); // Admin-Alert verstecken
+    $('#alertSpielErstellen').hide(); // Admin-Alert verstecken
+    // Willkommensnachricht (nur für User)
     $('#welcomeMessage').ready(function(){
+        // AJAX-Call um dynamisch herauszufinden ob ein User angemeldet ist
         $.ajax({
           url:"./getLoggedName.php",
           data: "",
           dataType: 'json',
           success: function(data){
             var userVorname = data;
+            // wenn ein User angemeldet ist, Willkommensnachricht einblenden
             if(!userVorname == '')
             {
               $('#welcomeMessage').hide();
-              $('#welcomeMessage').html("<h3>Hallo "+userVorname+".</h3>");
-              $('#welcomeMessage').fadeIn(1000).fadeOut(1000);
-            }
+              $('#welcomeMessage').html("<h3>Hallo "+userVorname+".</h3>"); // HTML im noch versteckten div(#welcomeMessage) vorbereiten
+              $('#welcomeMessage').fadeIn(1000).fadeOut(1000); // Willkommensnachricht einblenden: fadeIn -> 1sek, dann fadeOut 1sek
+            } // falls getLoggedName.php kein User zurückgibt, ist niemand angemeldet, somit keine Willkommensnachricht...
           }
         });
     });
 });
 
+// Admin-Content: sobald auf die Gruppenverwaltung geklickt wird aktuallisiert jQuery die Gruppenübersicht -> dynamisch
 $('#btnGruppenVerwalten').click(function(){
   readGruppen();
 });
 
+// Admin-Content: Turnierverwaltung angeklickt -> Turnierübersicht & "aktives Turnier"-Meldung aktualliesieren
 $('#btnturnierVerwalten').click(function(){
   showAktiveTurniere();
   readAktuelleTurniere();
 });
 
+// Admin-Content: Teamverwaltung bei aufruf aktuallisieren
 $('#btnTeamsVerwalten').click(function(){
   readTeams();
 });
 
+// Admin-Content: dynamisches Turnier-Erstellen sobald der submit-Button erstellt wurde
 $('#turnierErstellenCreateForm').submit(function(e){
-  e.preventDefault();
-  var name = $('#turnierNameEingeben').val();
-  var jahr = $('#turnierJahrEingeben').val();
-  var typ = $('#turnierTypEingeben :selected').text();
+  e.preventDefault(); // Default wäre Formular absenden und Seite neu laden -> das soll verhindert werden (um Dynamik bezubehalten)
+
+  /* AJAX-Call: Die Seite insertTurnier.php wird mittels AJAX aufgerufen.
+     Mitgegeben werden die Variabeln: $_POST['name'], $_POST['jahr'], $_POST['typ'] */
   $.ajax({
-    type: "POST",
-    url: "./insert/insertTurnier.php",
-    data: {name:name,jahr:jahr,typ:typ},
+    type: "POST", // Übertragungstyp setzen
+    url: "./insert/insertTurnier.php", // Zielseite angeben
+    data: {
+            name: $('#turnierNameEingeben').val(), // Name des Turniers mitgeben
+            jahr: $('#turnierJahrEingeben').val(), // Jahr in welchem das Turnier stattfindet
+            typ: $('#turnierTypEingeben :selected').text()  // von Dropdown ausgewählten Typ in Text umwandeln und mitgeben
+          },
+    // bei erfolgreichem PHP-Aufruf (success) folgendes ausführen
     success: function(data)
     {
-      console.log("insertTurnier ok");
-      //$("#btnturnierVerwalten").click();
-      showAktiveTurniere();
-      readAktuelleTurniere();
+      console.log("insertTurnier ok"); // debugging ;)
+      showAktiveTurniere(); // Turnierübersicht aktuallisieren
+      readAktuelleTurniere(); // same here
     },
+    // PHP-Aufruf fehlgeschlagen
     error: function(data){
-      console.log("insertTurnier totally failed");
+      console.log("insertTurnier totally failed"); // debugging
     }
   });
 });
 
+// Admin-Content: dynamisches Gruppen-Erstellen. Wird beim Absenden des Formulares ausgeführt
 $('#gruppeErstellenCreateForm').submit(function(e){
-  e.preventDefault();
-  var g_bez = $('#gruppeBezeichnungEingeben').val().toUpperCase();
+  e.preventDefault(); // Seite neuladen verhindern
   $.ajax({
-    type: "GET",
-    url: "./insert/insertGruppe.php",
-    data: "bezeichnung="+g_bez,
-    success: function()
+    type: "GET", // Übertragungstyp auf GET setzen
+    url: "./insert/insertGruppe.php", // Ziel-URL angeben
+    data: "bezeichnung="+$('#gruppeBezeichnungEingeben').val().toUpperCase(), // GET-Variable $_GET['bezeichnung'] = Gruppenname von Formular in Grossbuchstaben, mittels id selektiert
+    success: function() // insertGruppe.php ohne Fehler aufgerufen
     {
-      readGruppen();
-      $('#gruppeBezeichnungEingeben').val(null);
-      refreshTeamErstellenDropdown();
-      refreshSpielErstellenDropdown();
+      readGruppen(); // Gruppenübersich aktuallisieren
+      $('#gruppeBezeichnungEingeben').val(null); // Eingabe aus dem Formular löschen (mit preventDefault wurde auch das verhindert...)
+      refreshTeamErstellenDropdown();  // Team erstellen Dropdown aktuallisieren
+      refreshSpielErstellenDropdown(); // same here
     }
   });
 });
 
+// Admin-Content: dynamisches Team-Erstellen
 $('#teamErstellenForm').submit(function(e){
-  e.preventDefault();
-  var t_land = $('#teamErstellenLand').val();
-  var t_gruppe = $('#teamErstellenFormDropdown option:selected').val();
+  e.preventDefault(); // Seite neuladen verhindern
   $.ajax({
     type: "GET",
     url:"./insert/insertTeam.php",
-    data: "land="+t_land+"&gruppe="+t_gruppe,
+    data: "land="+$('#teamErstellenLand').val()+"&gruppe="+$('#teamErstellenFormDropdown option:selected').val(),
     success: function(){
-      var t_land = $('#teamErstellenLand').val("");
+      $('#teamErstellenLand').val("");
       readTeams();
     }
   });
