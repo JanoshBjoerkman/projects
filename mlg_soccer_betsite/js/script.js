@@ -1,6 +1,6 @@
 /*
   Autor:              Janosh Björkman
-  Letzte Änderung:    21.04.2016
+  Letzte Änderung:    22.04.2016
   Projekt:            Fussballwetten-Online
 
   Kleine Info:        jQuery ist der Grund, wieso diese Webseite nicht neu geladen wird, obwohl man Änderungen in der Datenbank
@@ -42,7 +42,7 @@ $('#btnGruppenVerwalten').click(function(){
   readGruppen();
 });
 
-// Admin-Content: Turnierverwaltung angeklickt -> Turnierübersicht & "aktives Turnier"-Meldung aktualliesieren
+// Admin-Content: Turnierverwaltung angeklickt -> Turnierübersicht & "aktives Turnier"-Meldung aktuallisieren
 $('#btnturnierVerwalten').click(function(){
   showAktiveTurniere();
   readAktuelleTurniere();
@@ -58,7 +58,7 @@ $('#turnierErstellenCreateForm').submit(function(e){
   e.preventDefault(); // Default wäre Formular absenden und Seite neu laden -> das soll verhindert werden (um Dynamik bezubehalten)
 
   /* AJAX-Call: Die Seite insertTurnier.php wird mittels AJAX aufgerufen.
-     Mitgegeben werden die Variabeln: $_POST['name'], $_POST['jahr'], $_POST['typ'] */
+     Mitgegeben werden die Variablen: $_POST['name'], $_POST['jahr'], $_POST['typ'] */
   $.ajax({
     type: "POST", // Übertragungstyp setzen
     url: "./insert/insertTurnier.php", // Zielseite angeben
@@ -88,7 +88,7 @@ $('#gruppeErstellenCreateForm').submit(function(e){
     type: "GET", // Übertragungstyp auf GET setzen
     url: "./insert/insertGruppe.php", // Ziel-URL angeben
     data: "bezeichnung="+$('#gruppeBezeichnungEingeben').val().toUpperCase(), // GET-Variable $_GET['bezeichnung'] = Gruppenname von Formular in Grossbuchstaben, mittels id selektiert
-    success: function() // insertGruppe.php ohne Fehler aufgerufen
+    success: function() // wenn insertGruppe.php ohne Fehler aufgerufen, dann:
     {
       readGruppen(); // Gruppenübersich aktuallisieren
       $('#gruppeBezeichnungEingeben').val(null); // Eingabe aus dem Formular löschen (mit preventDefault wurde auch das verhindert...)
@@ -102,49 +102,54 @@ $('#gruppeErstellenCreateForm').submit(function(e){
 $('#teamErstellenForm').submit(function(e){
   e.preventDefault(); // Seite neuladen verhindern
   $.ajax({
-    type: "GET",
-    url:"./insert/insertTeam.php",
-    data: "land="+$('#teamErstellenLand').val()+"&gruppe="+$('#teamErstellenFormDropdown option:selected').val(),
-    success: function(){
-      $('#teamErstellenLand').val("");
-      readTeams();
+    type: "GET", // Übertragungstyp auf GET setzen
+    url:"./insert/insertTeam.php", // Ziel-URL setzen
+    data: "land="+$('#teamErstellenLand').val()+"&gruppe="+$('#teamErstellenFormDropdown option:selected').val(), // $_GET['land'] = eingegebenes Land & $_GET['gruppe'] = ausgewählte Gruppe
+    success: function(){ // wenn insertTeam.php ohne Fehler aufgerufen, dann:
+      $('#teamErstellenLand').val(""); // Formular leeren
+      readTeams(); // Team-Übersich aktuallisieren
+      refreshSpielErstellenDropdown(); // Dropdown für Spiel-Erstellen aktuallisieren
     }
   });
 });
 
+// Admin-Content: dynamisches Spiel-Erstellen
 $('#spielErstellenForm').submit(function(e){
-  e.preventDefault();
-  var t1 = $('#spielErstellenFormDropdown1 option:selected').val();
-  var t2 = $('#spielErstellenFormDropdown2 option:selected').val();
-  var datum = $('#spielErstellenInputDatum').val();
-  var sDate = datum.split('.');
+  e.preventDefault(); // Seite neuladen verhindern
+  var datum = $('#spielErstellenInputDatum').val(); // Datum aus Formular auslesen und in Variable datum speicher
+  var sDate = datum.split('.'); // den Inhalt der Variable datum "splitten", Punkt als Trennzeichen (um später von DD.MM.YYYY in YYYY.MM.DD umzuwandeln)
   var spielnummer = 3;
+  // Ist das Datum nicht genau 10 Zeichen lang oder wurde eine unzulässige Angabe bei Tag oder Monat gemacht, Admin-Alert einblenden
   if(datum.length != 10 || sDate[0] > 31 || sDate[1] > 12){
     $("#alertSpielErstellen").fadeIn("slow");
   }else{
+    // wurden obige Bedingungen erfüllt, Admin-Alert ausblenden (falls er eingeblendet ist)
     $("#alertSpielErstellen").fadeOut(10);
-    datum = sDate[2]+"-"+sDate[1]+"-"+sDate[0];
-    console.log(datum);
+    datum = sDate[2]+"-"+sDate[1]+"-"+sDate[0]; // Variable datum in MYSQL verlangtes DATE-Format bringen
     $.ajax({
       type: "GET",
-      data: "spielnr="+spielnummer+"&team1="+t1+"&datum="+datum+"&team2="+t2,
+      // GET-Variablen setzen
+      data: "spielnr="+spielnummer+"&team1="+$('#spielErstellenFormDropdown1 option:selected').val()+"&datum="+datum+"&team2="+$('#spielErstellenFormDropdown2 option:selected').val(),
       url: "./insert/insertSpiel.php",
       success: function(data){
-        $('#spielErstellenInputDatum').val("");
-        $('#successSpielErstellen').fadeIn(800).fadeOut(2000);
+        $('#spielErstellenInputDatum').val(""); // Formular leeren
+        $('#successSpielErstellen').fadeIn(800).fadeOut(2000); // Admin-Success: Meldung in 0.8sek einblenden, in 2sek ausblenden
       }
     });
   }
 });
 
+// sobald der DIV mit ID teamErstellen geladen ist -> Dropdown aktuallisieren
 $('#teamErstellen').ready(function(){
   refreshTeamErstellenDropdown();
 });
 
+// soblad der DIV mit ID spielErstellen geladen ist -> Dropdown aktuallisieren
 $('#spielErstellen').ready(function() {
   refreshSpielErstellenDropdown();
 });
 
+// Admin-Content: Dropdown von Team-Erstellen Formular dynamisch aktuallisieren
 function refreshTeamErstellenDropdown(){
   var data = "";
   $.ajax({
@@ -161,107 +166,114 @@ function refreshTeamErstellenDropdown(){
   });
 };
 
+// Admin-Content: Dropdown von Spiel-Erstellen Formular dynamisch aktuallisieren
 function refreshSpielErstellenDropdown() {
-  var data = "";
+  var data = ""; // data-String vorbereiten
   $.ajax({
-    url:"./read/readTeamsORDERBYTeams.php",
-    data: data,
-    dataType: "JSON",
+    url:"./read/readTeamsORDERBYTeams.php", // Ziel-URL
+    data: data, // noch leerer String mitgeben
+    dataType: "JSON", // die PHP-Seite gibt uns Daten im JSON Format zurück
     success: function(data){
-      var dropdown = "";
+      var dropdown = ""; // HTML-Dropdown vorbereiten
+      // für jedes JSON Objekt im data-String einen neuen Eintrag in die dropdown-Variable schreiben
       $.each(data, function(id, obj){
         dropdown += "<option value="+obj.Team_ID+">"+obj.Land+"</option>";
       });
-      $("#spielErstellenFormDropdown1").html(dropdown);
-      $("#spielErstellenFormDropdown2").html(dropdown);
+      $("#spielErstellenFormDropdown1").html(dropdown); // vorbereitetes Dropdown anfügen
+      $("#spielErstellenFormDropdown2").html(dropdown); // same here
     }
   });
 }
 
+// User-Content: Meldung welches Turnier aktiv ist
 function showAktiveTurniere(){
   $.ajax({
-    url:"./read/readAktiveTurniere.php",
-    data: "",
-    dataType: 'json',
+    url:"./read/readAktiveTurniere.php", // Ziel-URL
+    data: "", // data-String vorbereiten
+    dataType: 'json', // return-Type JSOn
     success: function(data){
+      // wurde kein aktives Turnier gefunden, dann:
       if (data === null)
       {
-        $('#turnierUebersicht').hide();
-        $('#aktivesTurnier').hide();
-        $('#turnierErstellenCreate').show();
+        $('#turnierUebersicht').hide(); // Admin-Content: Turnierübersicht verstecken (die Seite würde eine leere Tabelle anzeigen)
+        $('#aktivesTurnier').hide(); // User-Content: Meldung über aktives Tunrier verstecken
+        $('#turnierErstellenCreate').show(); // Admin-Content: Turnier-Erstellen Formular anzeigen
       }else{
-        var turnierID = data[0];
-        var turnierName = data[1];
-        var turnierJahr = data[2];
-        var turnierStatus = data[3];
-        var turnierTypID = data[4];
-        if(!turnierName == '')
+        // Turniername nicht leer?
+        if(!data[1] == '')
         {
-          $('#turnierUebersicht').show();
-          $('#turnierErstellenCreate').hide();
-          $('#aktivesTurnier').hide();
-          $('#aktivesTurnier').html("<h4>Aktives Turnier:</h4><p>"+turnierName+"</p>");
-          $('#aktivesTurnier').fadeIn(800);
+          $('#turnierUebersicht').show(); // Admin-Content: Turnierübersicht anzeigen
+          $('#turnierErstellenCreate').hide(); // Admin-Content: Turnier-Erstellen Formular verstecken
+          $('#aktivesTurnier').hide(); // User-Content: aktives Turnier Meldung verstecken
+          $('#aktivesTurnier').html("<h4>Aktives Turnier:</h4><p>"+data[1]+"</p>"); // User-Content: "aktives Turnier" Meldung zum aktuellen Turniername vorbereiten
+          $('#aktivesTurnier').fadeIn(800); // User-Content: "aktives Turnier" Meldung in 0.8sek einblenden
         }
       }
     },
-    error:function(data){
-      console.log('readAktiveTurniere does not work.');
-    },
     beforeSend:function(){
-      $("#aktivesTurnier").html = ("");
+      $("#aktivesTurnier").html = (""); // vor dem eigentlichen AJAX-Call soll der ganze DIV mit ID aktivesTurnier durch "nichts" ersetzt werden um später mit neuen Daten zu befüllen
     }
   });
 };
 
+// Admin-Content: Gruppenübersicht dynamisch darstellen
 function readGruppen(){
-  var data = "";
+  var data = ""; // data-String vorbereiten
   $.ajax({
-    url:"./read/readGruppen.php",
+    url:"./read/readGruppen.php", // Ziel-URL
     data: data,
-    dataType: "JSON",
+    dataType: "JSON", // AJAX sagen das Daten von im JSON Format mitgegeben werden
     success: function(data){
-      var tabelle = "";
+      var tabelle = ""; // Tabelle vorbereiten
+      // für jedes JSON Objekt welches von der PHP-Seite kommt:
       $.each(data, function(id, object){
+        // neuer Eintrag in der Gruppenübersicht mittels HTML und JSON Objekte (durch object.OBJEKT angesprochen werden) erstellen
+        // WICHTIG: jedem Delete-Button wird dem onClick-Attribut die Funktion deletegruppe("Datenbank-ID der jeweiligen Gruppe") angefügt
         tabelle += "<tr>\
           <td>"+object.Gruppenname+"</td>\
           <td><button class='btn btn-danger btn-sm' id='"+object.Gruppe_ID+"' onclick='deleteGruppe("+object.Gruppe_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
         </tr>"
       });
-      $("#aktuelleGruppen").html("<table class='table'><thead><tr><th>Gruppe</th><th>Löschen</th></thead><tbody>"+tabelle+"</tbody></table>");
+      $("#aktuelleGruppen").html("<table class='table'><thead><tr><th>Gruppe</th><th>Löschen</th></thead><tbody>"+tabelle+"</tbody></table>"); // oben erstellte Tabelle im DIV mit ID aktuelleGruppen einfügen
     },
     beforeSend:function(){
-      $("#aktuelleGruppen").html = ("");
+      $("#aktuelleGruppen").html = (""); // vor dem AJAX-Call die Tabelle leeren (sie könnte evtl. veraltete Daten enthalten)
     }
   });
 };
 
+// Admin-Content: dynamisches Gruppen löschen (noch nicht Idiotensicher, ist ja auch ein Admin-Content)
 function deleteGruppe(id){
-  console.log(id);
   $.ajax({
-    type: "GET",
-    url:"./delete/deleteGruppe.php",
-    data:"id="+id,
+    type: "GET", // Typ auf GET setzen
+    url:"./delete/deleteGruppe.php", // Ziel-URL
+    data:"id="+id, // $_GET['id'] = "ID welche der Funktion mitgegeben wurde" -> Gruppe_ID aus Datenbank
     success: function(){
-      console.log('record deleted');
-      readGruppen();
+      readGruppen(); // Gruppenübersicht aktuallisieren
+      // verzögert (0.4sek): Team-Übersicht aktuallisieren, da das Eintragen in die DB kurz dauert
       setTimeout(function(){
         readTeams();
       }, 400);
-      refreshTeamErstellenDropdown();
+      refreshTeamErstellenDropdown(); // Team-Erstellen Dropdown für Gruppenauswahl aktuallisieren
     }
   });
 };
 
+// Admin-Content: aktives Turnier in Tabellenform dynamisch anzeigen
 function readAktuelleTurniere(){
-    var data = "";
+    var data = ""; // data-String vorbereiten
     $.ajax({
-      url:"./read/readAktuelleTurniere.php",
-      data: data,
-      dataType: "JSON",
+      url:"./read/readAktuelleTurniere.php", // Ziel-URL
+      data: data, // noch leerer data-String mitgeben
+      dataType: "JSON", // AJAX sagen das Daten im JSON-Format gesendet & verarbeitet werden
       success: function(data){
-        var tabelle = "";
+        var tabelle = ""; // Variable für Tabelle vorbereiten
+        // für jedes JSON Objekt dass von der PHP-Seite "zurückgegeben" wird (sollte nur 1 Objekt im gesamten String sein):
         $.each(data, function(id, obj){
+          /* einen neuen Tabelleneintrag erstellen
+             dem Delete-Button wird die Turnier_ID inkl. onClick-Parameter(disableTurnier[Turnier_ID]) mitgeben
+             WICHTIG: das Turnier wird nicht gelöscht, bloss deaktiviert -> "unsichtbar" gemacht
+             */
           tabelle += "<tr>\
             <td>"+obj.Turniername+"</td>\
             <td>"+obj.Jahr+"</td>\
@@ -269,56 +281,61 @@ function readAktuelleTurniere(){
             <td><button class='btn btn-danger btn-sm' id='"+obj.Turnier_ID+"' onclick='disableTurnier("+obj.Turnier_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
             "
         });
-        $("#aktuelleTurniere").html("<table class='table'><thead><tr><th>Name</th><th>Jahr</th><th>Typ</th><th></th></thead><tbody>"+tabelle+"</tbody></table>");
+        $("#aktuelleTurniere").html("<table class='table'><thead><tr><th>Name</th><th>Jahr</th><th>Typ</th><th></th></thead><tbody>"+tabelle+"</tbody></table>"); // oben erstellte Tabelle einfügen
       },
       beforeSend:function(){
-        $('#aktuelleTurniere').html = ("");
+        $('#aktuelleTurniere').html = (""); // vor dem AJAX-Call die Tabelle leeren
       }
     });
 };
 
+// Admin-Content: Turnier deaktivieren
 function disableTurnier(id){
-  console.log(id);
   $.ajax({
-    type: "GET",
-    url:"./disable/disableTurnier.php",
-    data:"id="+id,
+    type: "GET", // Typ GET
+    url:"./disable/disableTurnier.php", // Ziel-URL
+    data:"id="+id, // $_GET['id'] = Turnier_ID
     success: function(data){
-      console.log("Turnier mit ID: "+data+" erfolgreich deaktiviert");
-      showAktiveTurniere();
-      readAktuelleTurniere();
+      showAktiveTurniere(); // Turnierübersicht aktuallisieren
+      readAktuelleTurniere(); // same here
     }
   });
 }
 
+// Admin-Content: Teamübersicht aktuallisieren
 function readTeams(){
-  var data = "";
+  var data = ""; // data-String vorbereiten
   $.ajax({
-    url:"./read/readTeams.php",
+    url:"./read/readTeams.php", // Ziel-URL angeben
     data: data,
-    dataType: "JSON",
+    dataType: "JSON", // AJAX sagen das Daten im JSON-Format gesendet & verarbeitet werden
     success: function(data){
-      var tabelle = "";
+      var tabelle = ""; // tabelle vorbereiten
+      // für jedes JSON Objekt dass von der PHP-Seite kommt:
       $.each(data, function(id, obj){
+        // Variable tabelle mit neuem Tabelleneintrag befüllen
+        // dem Delete-Button wird die Team_ID inkl. onClick-Parameter(deleteTeam[Team_ID]) mitgeben
         tabelle += "<tr>\
           <td>"+obj.Land+"</td>\
           <td>"+obj.Gruppenname+"</td>\
           <td><button class='btn btn-danger btn-sm' id='"+obj.Team_ID+"' onclick='deleteTeam("+obj.Team_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
           "
       });
-      $("#aktuelleTeams").html("<table class='table'><thead><tr><th>Land</th><th>Gruppe</th><th></th></thead><tbody>"+tabelle+"</tbody></table>");
+      $("#aktuelleTeams").html("<table class='table'><thead><tr><th>Land</th><th>Gruppe</th><th></th></thead><tbody>"+tabelle+"</tbody></table>"); // oben erstellte Tabelle einfügen
     }
   });
 }
 
+// Admin-Content: Team dynamisch löschen
 function deleteTeam(id){
   $.ajax({
-    type: "GET",
-    url:"./delete/deleteTeam.php",
-    data:"id="+id,
+    type: "GET", // Typ GET setzen
+    url:"./delete/deleteTeam.php", // Ziel-URL
+    data:"id="+id, // Team_ID von DB mitgeben (hardcoded im button)
     success: function(){
-      console.log('laatz');
-      readTeams();
+      setTimeout(function(){
+        readTeams();
+      }, 400); // bei Erfolg: Teamübersicht verzögert aktuallisieren
     }
   });
 }
