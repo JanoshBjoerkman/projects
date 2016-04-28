@@ -248,10 +248,14 @@
 									</div>
 									<!--Übersicht Gruppen A-B-->
 									<div class="row">
+										<div class="col-md-12">
+											<div id="spielUebersicht">
+											</div>
+										</div>
+									</div>
+									<div class="row">
 										<div class="col-md-6">
 											<div id="vorrundenUebersichtGruppeA">
-												<table class="table table-striped">
-												</table>
 											</div>
 										</div>
 										<div class="col-md-6">
@@ -289,6 +293,28 @@
 										</div>
 										<div class="col-md-6">
 											<div id="vorrundenUebersichtGruppeH">
+											</div>
+										</div>
+									</div>
+									<!--Gruppen AF-VF-->
+									<div class="row">
+										<div class="col-md-6">
+											<div id="spielUebersichtGruppeAF">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div id="spielUebersichtGruppeVF">
+											</div>
+										</div>
+									</div>
+									<!--Gruppen HF-FINALE-->
+									<div class="row">
+										<div class="col-md-6">
+											<div id="spielUebersichtGruppeHF">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div id="spielUebersichtGruppeFINALE">
 											</div>
 										</div>
 									</div>
