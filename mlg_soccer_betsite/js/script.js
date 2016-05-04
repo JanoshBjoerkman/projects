@@ -1,6 +1,6 @@
 /*
   Autor:              Janosh Björkman
-  Letzte Änderung:    22.04.2016
+  Letzte Änderung:    28.04.2016
   Projekt:            Fussballwetten-Online
 
   Kleine Info:        jQuery ist der Grund, wieso diese Webseite nicht neu geladen wird, obwohl man Änderungen in der Datenbank
@@ -35,11 +35,6 @@ $(document).ready(function(){
           }
         });
     });
-});
-
-// Admin-Content: sobald auf die Gruppenverwaltung geklickt wird aktuallisiert jQuery die Gruppenübersicht -> dynamisch
-$('#btnGruppenVerwalten').click(function(){
-  readGruppen();
 });
 
 // Admin-Content: Turnierverwaltung angeklickt -> Turnierübersicht & "aktives Turnier"-Meldung aktuallisieren
@@ -78,6 +73,7 @@ $('#turnierErstellenCreateForm').submit(function(e){
       setTimeout(function(){ // verzögert
         showAktiveTurniere(); // Turnierübersicht aktuallisieren
         readAktuelleTurniere(); // same here
+        refreshSpielErstellenGruppeDropdown();
       }, 400);
 
 
@@ -89,30 +85,13 @@ $('#turnierErstellenCreateForm').submit(function(e){
   });
 });
 
-// Admin-Content: dynamisches Gruppen-Erstellen. Wird beim Absenden des Formulares ausgeführt
-$('#gruppeErstellenCreateForm').submit(function(e){
-  e.preventDefault(); // Seite neuladen verhindern
-  $.ajax({
-    type: "GET", // Übertragungstyp auf GET setzen
-    url: "./insert/insertGruppe.php", // Ziel-URL angeben
-    data: "bezeichnung="+$('#gruppeBezeichnungEingeben').val().toUpperCase(), // GET-Variable $_GET['bezeichnung'] = Gruppenname von Formular in Grossbuchstaben, mittels id selektiert
-    success: function() // wenn insertGruppe.php ohne Fehler aufgerufen, dann:
-    {
-      readGruppen(); // Gruppenübersich aktuallisieren
-      $('#gruppeBezeichnungEingeben').val(null); // Eingabe aus dem Formular löschen (mit preventDefault wurde auch das verhindert...)
-      refreshTeamErstellenDropdown();  // Team erstellen Dropdown aktuallisieren
-      refreshSpielErstellenDropdown(); // same here
-    }
-  });
-});
-
 // Admin-Content: dynamisches Team-Erstellen
 $('#teamErstellenForm').submit(function(e){
   e.preventDefault(); // Seite neuladen verhindern
   $.ajax({
     type: "GET", // Übertragungstyp auf GET setzen
     url:"./insert/insertTeam.php", // Ziel-URL setzen
-    data: "land="+$('#teamErstellenLand').val()+"&gruppe="+$('#teamErstellenFormDropdown option:selected').val(), // $_GET['land'] = eingegebenes Land & $_GET['gruppe'] = ausgewählte Gruppe
+    data: "land="+$('#teamErstellenLand').val(), // $_GET['land'] = eingegebenes Land & $_GET['gruppe'] = ausgewählte Gruppe |+"&gruppe="+$('#teamErstellenFormDropdown option:selected').val()
     success: function(){ // wenn insertTeam.php ohne Fehler aufgerufen, dann:
       $('#teamErstellenLand').val(""); // Formular leeren
       readTeams(); // Team-Übersich aktuallisieren
@@ -136,8 +115,7 @@ $('#spielErstellenForm').submit(function(e){
     datum = sDate[2]+"-"+sDate[1]+"-"+sDate[0]; // Variable datum in MYSQL verlangtes DATE-Format bringen
     $.ajax({
       type: "GET",
-      // GET-Variablen setzen
-      data: "spielnr="+spielnummer+"&team1="+$('#spielErstellenFormDropdown1 option:selected').val()+"&datum="+datum+"&team2="+$('#spielErstellenFormDropdown2 option:selected').val(),
+      data: "spielnr="+spielnummer+"&team1="+$('#spielErstellenFormDropdown1 option:selected').val()+"&datum="+datum+"&team2="+$('#spielErstellenFormDropdown2 option:selected').val()+"&gruppe="+$('#spielErstellenGruppeDropdown option:selected').val(),
       url: "./insert/insertSpiel.php",
       success: function(data){
         $('#spielErstellenInputDatum').val(""); // Formular leeren
@@ -157,6 +135,7 @@ $('#teamErstellen').ready(function(){
 // soblad der DIV mit ID spielErstellen geladen ist -> Dropdown aktuallisieren
 $('#spielErstellen').ready(function() {
   refreshSpielErstellenDropdown();
+  refreshSpielErstellenGruppeDropdown();
 });
 
 // Admin-Content: Dropdown von Team-Erstellen Formular dynamisch aktuallisieren
@@ -180,7 +159,7 @@ function refreshTeamErstellenDropdown(){
 function refreshSpielErstellenDropdown() {
   var data = ""; // data-String vorbereiten
   $.ajax({
-    url:"./read/readTeamsORDERBYTeams.php", // Ziel-URL
+    url:"./read/readTeams.php", // Ziel-URL
     data: data, // noch leerer String mitgeben
     dataType: "JSON", // die PHP-Seite gibt uns Daten im JSON Format zurück
     success: function(data){
@@ -191,6 +170,23 @@ function refreshSpielErstellenDropdown() {
       });
       $("#spielErstellenFormDropdown1").html(dropdown); // vorbereitetes Dropdown anfügen
       $("#spielErstellenFormDropdown2").html(dropdown); // same here
+    }
+  });
+}
+
+function refreshSpielErstellenGruppeDropdown(){
+  var data = ""; // data-String vorbereiten
+  $.ajax({
+    url:"./read/readGruppen.php", // Ziel-URL
+    data: data, // noch leerer String mitgeben
+    dataType: "JSON", // die PHP-Seite gibt uns Daten im JSON Format zurück
+    success: function(data){
+      var dropdown = ""; // HTML-Dropdown vorbereiten
+      // für jedes JSON Objekt im data-String einen neuen Eintrag in die dropdown-Variable schreiben
+      $.each(data, function(id, obj){
+        dropdown += "<option value="+obj.Gruppe_ID+">"+obj.Gruppenname+"</option>";
+      });
+      $("#spielErstellenGruppeDropdown").html(dropdown); // vorbereitetes Dropdown anfügen
     }
   });
 }
@@ -226,32 +222,6 @@ function showAktiveTurniere(){
   });
 };
 
-// Admin-Content: Gruppenübersicht dynamisch darstellen
-function readGruppen(){
-  var data = ""; // data-String vorbereiten
-  $.ajax({
-    url:"./read/readGruppen.php", // Ziel-URL
-    data: data,
-    dataType: "JSON", // AJAX sagen das Daten von im JSON Format mitgegeben werden
-    success: function(data){
-      var tabelle = ""; // Tabelle vorbereiten
-      // für jedes JSON Objekt welches von der PHP-Seite kommt:
-      $.each(data, function(id, object){
-        // neuer Eintrag in der Gruppenübersicht mittels HTML und JSON Objekte (durch object.OBJEKT angesprochen werden) erstellen
-        // WICHTIG: jedem Delete-Button wird dem onClick-Attribut die Funktion deletegruppe("Datenbank-ID der jeweiligen Gruppe") angefügt
-        tabelle += "<tr>\
-          <td>"+object.Gruppenname+"</td>\
-          <td><button class='btn btn-danger btn-sm' id='"+object.Gruppe_ID+"' onclick='deleteGruppe("+object.Gruppe_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
-        </tr>"
-      });
-      $("#aktuelleGruppen").html("<table class='table'><thead><tr><th>Gruppe</th><th>Löschen</th></tr></thead><tbody>"+tabelle+"</tbody></table>"); // oben erstellte Tabelle im DIV mit ID aktuelleGruppen einfügen
-    },
-    beforeSend:function(){
-      $("#aktuelleGruppen").html = (""); // vor dem AJAX-Call die Tabelle leeren (sie könnte evtl. veraltete Daten enthalten)
-    }
-  });
-};
-
 // Admin-Content: dynamisches Gruppen löschen (noch nicht Idiotensicher, ist ja auch ein Admin-Content)
 function deleteGruppe(id){
   $.ajax({
@@ -259,7 +229,7 @@ function deleteGruppe(id){
     url:"./delete/deleteGruppe.php", // Ziel-URL
     data:"id="+id, // $_GET['id'] = "ID welche der Funktion mitgegeben wurde" -> Gruppe_ID aus Datenbank
     success: function(){
-      readGruppen(); // Gruppenübersicht aktuallisieren
+      //readGruppen(); // Gruppenübersicht aktuallisieren
       // verzögert (0.4sek): Team-Übersicht aktuallisieren, da das Eintragen in die DB kurz dauert
       setTimeout(function(){
         readTeams();
@@ -327,11 +297,10 @@ function readTeams(){
         // dem Delete-Button wird die Team_ID inkl. onClick-Parameter(deleteTeam[Team_ID]) mitgeben
         tabelle += "<tr>\
           <td>"+obj.Land+"</td>\
-          <td>"+obj.Gruppenname+"</td>\
           <td><button class='btn btn-danger btn-sm' id='"+obj.Team_ID+"' onclick='deleteTeam("+obj.Team_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
           </tr>"
       });
-      $("#aktuelleTeams").html("<table class='table'><thead><tr><th>Land</th><th>Gruppe</th><th></th></tr></thead><tbody>"+tabelle+"</tbody></table>"); // oben erstellte Tabelle einfügen
+      $("#aktuelleTeams").html("<table class='table'><thead><tr><th>Land</th><th></th></tr></thead><tbody>"+tabelle+"</tbody></table>"); // oben erstellte Tabelle einfügen
     }
   });
 }

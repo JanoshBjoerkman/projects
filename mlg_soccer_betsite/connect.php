@@ -44,21 +44,11 @@
 	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
-	//gruppe
-	$sql = 'CREATE TABLE IF NOT EXISTS gruppe(
-	Gruppe_ID int NOT NULL AUTO_INCREMENT,
-	Gruppenname varchar(50),
-	PRIMARY KEY (Gruppe_ID)
-	) ENGINE=InnoDB';
-	mysqli_query($db_link, $sql);
-
 	//team
 	$sql = 'CREATE TABLE IF NOT EXISTS team(
 	Team_ID int NOT NULL AUTO_INCREMENT,
 	Land varchar(50) NOT NULL,
-	Gruppe_ID int,
-	PRIMARY KEY (Team_ID),
-	FOREIGN KEY (Gruppe_ID) REFERENCES gruppe(Gruppe_ID) ON DELETE CASCADE
+	PRIMARY KEY (Team_ID)
 	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
@@ -93,10 +83,20 @@
 	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 
+	//gruppe
+	$sql = 'CREATE TABLE IF NOT EXISTS gruppe(
+	Gruppe_ID int NOT NULL AUTO_INCREMENT,
+	Gruppenname varchar(50),
+	Turnier_ID int,
+	PRIMARY KEY (Gruppe_ID),
+	FOREIGN KEY (Turnier_ID) REFERENCES turnier(Turnier_ID) ON DELETE CASCADE
+	) ENGINE=InnoDB';
+	mysqli_query($db_link, $sql);
+
 	//spiel
 	$sql = 'CREATE TABLE IF NOT EXISTS spiel(
 	Spiel_ID int NOT NULL AUTO_INCREMENT,
-	Turnier_ID int,
+	Gruppe_ID int NOT NULL,
 	Spiel_Nr int,
 	Datum DATE NOT NULL,
 	Team1_ID int NOT NULL,
@@ -105,10 +105,7 @@
 	Team2_goals int,
 	Winner_ID int,
 	PRIMARY KEY (Spiel_ID),
-	FOREIGN KEY (Turnier_ID) REFERENCES turnier(Turnier_ID) ON DELETE CASCADE,
-	FOREIGN KEY (Team1_ID) REFERENCES team(Team_ID) ON DELETE CASCADE,
-	FOREIGN KEY (Team2_ID) REFERENCES team(Team_ID) ON DELETE CASCADE,
-	FOREIGN KEY (Winner_ID) REFERENCES team(Team_ID) ON DELETE CASCADE
+	FOREIGN KEY (Gruppe_ID) REFERENCES gruppe(Gruppe_ID) ON DELETE CASCADE
 	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
 

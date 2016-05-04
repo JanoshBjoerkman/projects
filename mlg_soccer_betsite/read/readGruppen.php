@@ -5,7 +5,7 @@
 
   $temp = array();
   $resultGruppen = array();
-  $sql = "SELECT * FROM gruppe ORDER BY Gruppenname";
+  $sql = "SELECT * FROM gruppe ORDER BY Gruppe_ID";
   $temp = mysqli_query($db_link, $sql);
   $index = 0;
   while($zeile = mysqli_fetch_assoc($temp))
