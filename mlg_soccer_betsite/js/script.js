@@ -53,6 +53,10 @@ $('#btnSpieleVerwalten').click(function(){
   readGames();
 });
 
+$('#toggleVorrunden').click(function(){
+  $('#spielVorrundenUebersicht').toggle();
+});
+
 // Admin-Content: dynamisches Turnier-Erstellen sobald der submit-Button erstellt wurde
 $('#turnierErstellenCreateForm').submit(function(e){
   e.preventDefault(); // Default-Verhalten eines Submit-Buttons wäre Formular absenden und Seite neu laden -> das soll verhindert werden (um Dynamik beizubehalten)
@@ -119,7 +123,10 @@ $('#spielErstellenForm').submit(function(e){
       url: "./insert/insertSpiel.php",
       success: function(data){
         $('#spielErstellenInputDatum').val(""); // Formular leeren
-        $('#spielErstellenFormNr').val(""); // same here
+        // Spielnummer um 1 erhöhen
+        $('#spielErstellenFormNr').val( function(i, oldval) {
+          return parseInt( oldval, 10) + 1;
+      });
         $('#successSpielErstellen').fadeIn(800).fadeOut(2000); // Admin-Success: Meldung in 0.8sek einblenden, in 2sek ausblenden
         readGames();
       }
