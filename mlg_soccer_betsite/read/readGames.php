@@ -6,8 +6,9 @@
   $resultSpiel = array();
 
   $sql = "SELECT gruppe.Gruppe_ID, gruppe.Gruppenname,
-                 spiel.Spiel_ID, spiel.Gruppe_ID, spiel.Spiel_Nr, spiel.Datum,
+                 spiel.Spiel_ID, spiel.Gruppe_ID, spiel.Datum,
                  spiel.Team1_ID, spiel.Team2_ID,
+                 spiel.Team1_goals, spiel.Team2_goals,
                  spiel_team.Spiel_ID, spiel_team.Team_ID,
                  team.Team_ID, team.Land
             FROM gruppe

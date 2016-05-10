@@ -66,36 +66,6 @@
 		</div>
 	</nav>
 
-	<!--Content für den User oder Admin, unterscheidung mittels PHP-Login-->
-	<div class="container" id="homeContent">
-		<?php if(isset($_SESSION['mail']) && $_SESSION['isAdmin']) { ?>
-			<div class="row">
-				<div class="col-md-12">
-					<div id="adminContent">
-					</div>
-				</div>
-			</div>
-		<?php }elseif (isset($_SESSION['mail']) && !$_SESSION['isAdmin']) { ?>
-			<div class="row">
-				<div class="col-md-12">
-					<div id="welcomeMessage">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<div id="userContent">
-					</div>
-				</div>
-			</div>
-	<?php }else{ ?>
-		<div id="homeContentGuest">
-			<h1>Rangliste</h1>
-
-		</div>
-	<?php } ?>
-	<br style="line-height:50px" />
-	</div>
 
 	<!-- LoginModal -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="meinModalLabel">
@@ -165,11 +135,12 @@
 		</div>
 	  </div>
 	</div>
+
 		<!-- Einbinden der Skripts -->
 	  <!--<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.1.min.js"></script>-->
 		<script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
 		<script>
-	  	var loggedIn = <?php echo isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == 'yes' ? 'true' : 'false'; ?>;
+    	var loggedIn = <?php echo isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == 'yes' ? 'true' : 'false'; ?>;
 		</script>
 		<script src="js/bootstrap.js"></script>
 		<script src="js/bootstrap-switch.js"></script>

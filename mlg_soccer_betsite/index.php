@@ -16,7 +16,6 @@
     <link href="css/bootstrap.css" rel="stylesheet">
 		<link href="css/bootstrap-theme.css" rel="stylesheet">
 		<link href="fonts/glyphicons-halflings-regular.ttf" rel="application/x-font-ttf">
-		<link href="css/bootstrap-switch.css" rel="stylesheet">
 		<!--Eigenes Stylesheet-->
 		<link rel="stylesheet" href="/css/main.css" type="text/css">
   </head>
@@ -105,7 +104,7 @@
 										 </div>
 										 <div class="form-group">
 											 <div class="col-sm-offset-2 col-sm-10">
-												 <button type="submit" class="btn btn-default">erstellen</button>
+												 <button type="submit" class="btn btn-primary">erstellen</button>
 											 </div>
 										 </div>
 										</form>
@@ -165,45 +164,42 @@
 						<div class="row">
 							<div class="col-md-12">
 								<button id="btnSpieleVerwalten" href="#spieleVerwalten" class="btn btn-default btn-block" data-toggle="collapse">Spiele verwalten</button>
-								<br style="line-height:40px" />
 								<div id="spieleVerwalten" class="collapse">
-									<div class="row">
-										<div class="col-md-12">
-											<div id="spielErstellen">
-												<form class="form-horizontal" role="form" id="spielErstellenForm">
-												 <div class="form-group">
-													 <label class="control-label col-sm-1" for="spielErstellenFormNr">Nr.</label>
-													 <div class="col-sm-1">
-														 <input type="number" min="1" class='form-control' id='spielErstellenFormNr' required>
-													 </div>
-													 <label class="control-label col-sm-1" for="spielErstellenFormDropdown1">Team 1:</label>
-													 <div class="col-sm-2">
-														 <select class='form-control' id='spielErstellenFormDropdown1' required></select>
-													 </div>
-													 <label class="control-label col-sm-1" for="spielErstellenFormDatum">Datum:</label>
-													 <div class="col-sm-2">
-														 <input type="text" class="form-control" id="spielErstellenInputDatum" placeholder="z.B: 14.04.2016" required>
-													 </div>
-													 <label class="control-label col-sm-1" for="spielErstellenFormDropdown2">Team 2:</label>
-													 <div class="col-sm-2">
-														 <select class='form-control' id='spielErstellenFormDropdown2' required></select>
-													 </div>
-													 <label class="control-label col-sm-1" for="spielErstellenGruppeDropdown">Gruppe:</label>
-													 <div class="col-sm-1">
-														 <select class='form-control' id='spielErstellenGruppeDropdown' required></select>
-													 </div>
+									<div id="spielErstellen">
+										<form class="form-horizontal container" role="form" id="spielErstellenForm">
+											<div class="row">
+											 <div class="form-group col-md-12">
+												 <label class="control-label col-sm-1" for="spielErstellenFormDropdown1">Team 1:</label>
+												 <div class="col-sm-2">
+													 <select class='form-control' id='spielErstellenFormDropdown1' required></select>
 												 </div>
-												 <div class="form-group">
-														 <button type="submit" class="btn btn-primary" id="btnErstellen">erstellen</button>
+												 <label class="control-label col-sm-1" for="spielErstellenFormDatum">Datum:</label>
+												 <div class="col-sm-2">
+													 <input type="text" class="form-control" id="spielErstellenInputDatum" placeholder="z.B: 14.04.2016" required>
 												 </div>
-												</form>
-												<div class="alert alert-danger" id="alertSpielErstellen">
-													<strong>Fehler!</strong> Bitte folgendes Format verwenden: DD.MM.YYYY
-												</div>
-												<div class="alert alert-success" id="successSpielErstellen">
-												  <strong>Success!</strong> Spiel erfolgreich eingetragen.
+												 <label class="control-label col-sm-1" for="spielErstellenFormDropdown2">Team 2:</label>
+												 <div class="col-sm-2">
+													 <select class='form-control' id='spielErstellenFormDropdown2' required></select>
+												 </div>
+												 <label class="control-label col-sm-1" for="spielErstellenGruppeDropdown">Gruppe:</label>
+												 <div class="col-sm-1">
+													<select class='form-control' id='spielErstellenGruppeDropdown' required></select>
+												 </div>
 												</div>
 											</div>
+											<div class="row">
+												<div class="form-group col-md-12">
+												</div>
+											 	<div class="form-group">
+													<button type="submit" class="btn btn-primary" id="btnErstellen">erstellen</button>
+												</div>
+											</div>
+										</form>
+										<div class="alert alert-danger" id="alertSpielErstellen">
+											<strong>Fehler!</strong> Bitte folgendes Format verwenden: DD.MM.YYYY
+										</div>
+										<div class="alert alert-success" id="successSpielErstellen">
+											<strong>Success!</strong> Spiel erfolgreich eingetragen.
 										</div>
 									</div>
 									<!--diverse Buttons-->
@@ -302,22 +298,53 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div id="userContent">
+						<button id="btnMeineWetten" href="#meineWetten" class="btn btn-primary btn-block" data-toggle="collapse">Meine Wetten</button>
+						<div id=meineWetten class="collapse">
+							<div class="row">
+								<div class="col-md-3" id="meineWettenUebersicht">
+								</div>
+							</div>
+						</div>
+						<br style="line-height:50px" />
+						<div class="row linie">
+							<h3 class="titel-center">Info</h4>
+							<div class="col-md-3">
+								<dl>
+									<dt>Preise:</dt>
+									<dd>1. Rang 40%</dd>
+									<dd>2. Rang 30%</dd>
+									<dd>3. Rang 20%</dd>
+									<dt>...</dt>
+									<dd>10% für gemeinsamen Znüni</dd>
+								</dl>
+							</div>
+							<div class="col-md-4">
+								<p><strong>Getippt wird nach dem Toto-System:</strong></p>
+								<p><strong>1</strong> - Erstgenannte Mannschaft gewinnt</p>
+								<p><strong>X</strong> - unentschieden</p>
+								<p><strong>2</strong> - Zweitgenannte Mannschaft gewinnt</p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 	<?php }else{ ?>
 		<div id="homeContentGuest">
-			<h1>Herzlich Wilkommen</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			<div class="row">
+				<div class="col-md-12">
+					<h1>Fussballwetten</h1>
+					<h5>provided by BERNINA IT</h5>
+				</div
+			</div>
+		</div>
+		<br style="line-height:50px" />
+		<div class="row">
+			<div class="col-md-12">
+				<h3><a data-toggle="modal" data-target="#registerModal">jetzt registrieren und gewinnen!</a></h3>
+			</div>
 		</div>
 	<?php } ?>
 	<br style="line-height:50px" />
-	<div class="row">
-		<div class="col-md-12">
-			<div id="aktivesTurnier">
-			</div>
-		</div>
-	</div>
 	</div>
 
 	<!-- LoginModal -->
@@ -389,14 +416,41 @@
 	  </div>
 	</div>
 
+	<!--Spiel bearbeiten-->
+  <div class="modal fade" id="editSpielModal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Resultat bearbeiten</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form" id="editResultForm">
+						<div class="form-group">
+							<label for="editResultT1">Tore Team1</label>
+      				<input type="number" class="form-control" id="editResultT1">
+						</div>
+						<div class="form-group">
+							<label for="editResultT2">Tore Team2</label>
+      				<input type="number" class="form-control" id="editResultT2">
+						</div>
+						<button type="submit" class="btn btn-primary">speichern</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">schliessen</button>
+        </div>
+      </div>
+
 		<!-- Einbinden der Skripts -->
 	  <!--<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.1.min.js"></script>-->
 		<script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
 		<script>
-    	var loggedIn = <?php echo isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == 'yes' ? 'true' : 'false'; ?>;
+	  	var loggedIn = <?php echo isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == 'yes' ? 'true' : 'false'; ?>;
 		</script>
 		<script src="js/bootstrap.js"></script>
-		<script src="js/bootstrap-switch.js"></script>
+		<!--<script src="js/bootstrap-switch.js"></script>-->
 	  <script type="text/javascript" src="js/script.js"></script>
   </body>
 </html>

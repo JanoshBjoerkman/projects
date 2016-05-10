@@ -1,6 +1,6 @@
 /*
   Autor:              Janosh Björkman
-  Letzte Änderung:    28.04.2016
+  Letzte Änderung:    09.05.2016
   Projekt:            Fussballwetten-Online
 
   Kleine Info:        jQuery ist der Grund, wieso diese Webseite nicht neu geladen wird, obwohl man Änderungen in der Datenbank
@@ -10,7 +10,7 @@
                       folgende Website: http://www.w3schools.com/jquery/
                       oder nutze Google :P
 */
-
+var editResultSID = 0;
 //Initialisierung der Website, wird nur einmal ausgeführt (sobald die das komplette Dokument (Webseite) geladen ist)
 $(document).ready(function(){
     $('#homeContent').ready(showAktiveTurniere);  //Meldung für den User ob ein Turnier aktiv ist
@@ -28,13 +28,26 @@ $(document).ready(function(){
             // wenn ein User angemeldet ist, Willkommensnachricht einblenden
             if(!userVorname == '')
             {
-              $('#welcomeMessage').hide();
-              $('#welcomeMessage').html("<h3>Hallo "+userVorname+".</h3>"); // HTML im noch versteckten div(#welcomeMessage) vorbereiten
-              $('#welcomeMessage').fadeIn(1000).fadeOut(1000); // Willkommensnachricht einblenden: fadeIn -> 1sek, dann fadeOut 1sek
+              $('#userContent').hide(function(){
+                $('#welcomeMessage').hide();
+                $('#welcomeMessage').html("<h2>Hallo "+userVorname+".</h2>");
+                $('#welcomeMessage').fadeIn(1000).fadeOut(1000, function(){
+                  $('#userContent').fadeIn(2000);
+                });
+              });
             } // falls getLoggedName.php kein User zurückgibt, ist niemand angemeldet, somit keine Willkommensnachricht...
           }
         });
     });
+});
+
+function editSpiel(id){
+  $('#editSpielModal').modal('show');
+  editResultSID = id;
+}
+
+$('#btnMeineWetten').click(function(){
+  readWetten();
 });
 
 // Admin-Content: Turnierverwaltung angeklickt -> Turnierübersicht & "aktives Turnier"-Meldung aktuallisieren
@@ -53,6 +66,7 @@ $('#btnSpieleVerwalten').click(function(){
   readGames();
 });
 
+// Vorrunden in Spielverwaltung verstecken
 $('#toggleVorrunden').click(function(){
   $('#spielVorrundenUebersicht').toggle();
 });
@@ -119,19 +133,28 @@ $('#spielErstellenForm').submit(function(e){
     datum = sDate[2]+"-"+sDate[1]+"-"+sDate[0]; // Variable datum in MYSQL verlangtes DATE-Format bringen
     $.ajax({
       type: "GET",
-      data: "spielnr="+spielnummer+"&team1="+$('#spielErstellenFormDropdown1 option:selected').val()+"&datum="+datum+"&team2="+$('#spielErstellenFormDropdown2 option:selected').val()+"&gruppe="+$('#spielErstellenGruppeDropdown option:selected').val(),
+      data: "team1="+$('#spielErstellenFormDropdown1 option:selected').val()+"&datum="+datum+"&team2="+$('#spielErstellenFormDropdown2 option:selected').val()+"&gruppe="+$('#spielErstellenGruppeDropdown option:selected').val(),
       url: "./insert/insertSpiel.php",
       success: function(data){
         $('#spielErstellenInputDatum').val(""); // Formular leeren
-        // Spielnummer um 1 erhöhen
-        $('#spielErstellenFormNr').val( function(i, oldval) {
-          return parseInt( oldval, 10) + 1;
-      });
         $('#successSpielErstellen').fadeIn(800).fadeOut(2000); // Admin-Success: Meldung in 0.8sek einblenden, in 2sek ausblenden
         readGames();
       }
     });
   }
+});
+
+$('#editResultForm').submit(function(e){
+  e.preventDefault();
+  $.ajax({
+    type:"GET",
+    data:"id="+editResultSID+"&pT1="+$('#editResultT1').val()+"&pT2="+$('#editResultT2').val(),
+    url:"./insert/updateResult.php",
+    success: function(){
+      readGames();
+    }
+  });
+  $('#editSpielModal').modal('hide');
 });
 
 // sobald der DIV mit ID teamErstellen geladen ist -> Dropdown aktuallisieren
@@ -327,6 +350,19 @@ function deleteTeam(id){
   });
 }
 
+function deleteSpiel(id){
+  $.ajax({
+    type:"GET",
+    url:"./delete/deleteSpiel.php",
+    data:"id="+id,
+    success: function(){
+      setTimeout(function(){
+        readGames();
+      }, 600);
+    }
+  });
+}
+
 // Spielübersicht
 function readGames(){
   $.ajax({
@@ -341,72 +377,78 @@ function readGames(){
                                           //danach zum nächsten Spiel gehen (i+2: 2 aufeinanderfolgende Reihen gehören immer zum selben Spiel).
         // Team1 = aktuelles JSON-Objekt-Land, Team2 = nächstes JSON-Objekt-Land
         tbl += "<tr>\
-          <td>"+data[i].Spiel_Nr+"</td>\
           <td>"+serveDateFromDB(data[i].Datum)+"</td>\
-          <td>"+data[i].Land+"</td>\
-          <td>:</td>\
-          <td>"+data[i+1].Land+"</td>\
-          </tr>";
+          <td>"+data[i].Land+"</td>";
+        if(data[i].Team1_goals == null){
+          tbl += "<td>-</td>";
+        }else{
+          tbl += "<td>"+data[i].Team1_goals+":"+data[i].Team2_goals+"</td>";
+        }
+        tbl += "<td>"+data[i+1].Land+"</td>\
+                <td><button class='btn btn-default btn-sm' id='edit:"+data[i].Spiel_ID+"' onclick='editSpiel("+data[i].Spiel_ID+")'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></td>\
+                <td><button class='btn btn-danger btn-sm' id='"+data[i].Spiel_ID+"' onclick='deleteSpiel("+data[i].Spiel_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
+                </tr>";
+
         // In welche Übersichtstabelle soll die Zeile?
         switch(data[i].Gruppenname){
           case 'A':
               $("#vorrundenUebersichtGruppeA").html("<h4>A</h4><table class='table'><thead>\
-                <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+                <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
                 </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'B':
             $("#vorrundenUebersichtGruppeB").html("<h4>B</h4><table class='table'><thead>\
-              <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+              <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'C':
             $("#vorrundenUebersichtGruppeC").html("<h4>C</h4><table class='table'><thead>\
-              <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+              <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'D':
             $("#vorrundenUebersichtGruppeD").html("<h4>D</h4><table class='table'><thead>\
-              <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+              <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'E':
             $("#vorrundenUebersichtGruppeE").html("<h4>E</h4><table class='table'><thead>\
-              <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+              <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'F':
             $("#vorrundenUebersichtGruppeF").html("<h4>F</h4><table class='table'><thead>\
-              <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+              <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'G':
             $("#vorrundenUebersichtGruppeG").html("<h4>G</h4><table class='table'><thead>\
-              <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+              <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'H':
             $("#vorrundenUebersichtGruppeH").html("<h4>H</h4><table class='table'><thead>\
-              <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+              <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'AF':
             $("#spielUebersichtGruppeAF").html("<h4>Achtel-Finale</h4><table class='table'><thead>\
-              <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+              <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'VF':
             $("#spielUebersichtGruppeVF").html("<h4>Viertel-Finale</h4><table class='table'><thead>\
-              <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+              <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'HF':
             $("#spielUebersichtGruppeHF").html("<h4>Halb-Finale</h4><table class='table'><thead>\
-              <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+              <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'FINALE':
             $("#spielUebersichtGruppeFINALE").html("<h4>Finale</h4><table class='table'><thead>\
-              <tr><th>#</th><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th></tr>\
+              <tr><th>Datum</th><th>Team1</th><th>Resultat</th><th>Team2</th><th></th><th></th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
         }
@@ -426,4 +468,42 @@ function readGames(){
 function serveDateFromDB(d){
   ds = d.split('-'); // YYYY-MM-DD splitten
   return ds[2]+"."+ds[1]+"."+ds[0]; // YYYY-MM-DD to DD.MM.YYYY
+}
+
+function readWetten(){
+  $.ajax({
+    url:"./read/readWetten.php",
+    data:"",
+    dataType:"JSON",
+    success: function(data){
+      var tbl = "";
+      var zaehler = 0;
+      $.each(data, function(id, obj){
+        zaehler += 1;
+        tbl += "<tr>\
+          <td>Wettschein "+zaehler+"</td>\
+          <td><button class='btn btn-default btn-sm' id='wette:"+obj.Wette_ID+"&user:"+obj.User_ID+"' onclick='editWette("+obj.Wette_ID+")'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></td>\
+          <td><button class='btn btn-danger btn-sm' id='Wette_ID:"+obj.Wette_ID+"' onclick='deleteWette("+obj.Wette_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
+          </tr>";
+      });
+      $('#meineWettenUebersicht').html("<table class='table'><thead><tr><th>Übersicht</th><th></th><th></th></tr></thead><tbody>"+tbl+"</tbody></table>"); // oben erstellte Tabelle einfügen
+    }
+  });
+}
+
+function deleteWette(id){
+  $.ajax({
+    type:"GET",
+    url:"./delete/deleteWette.php",
+    data:"id="+id,
+    success: function(data){
+      setTimeout(function(){
+        readWetten();
+      }, 600);
+    }
+  });
+}
+
+function editWette(id){
+  window.location.href = "editWette.php";
 }

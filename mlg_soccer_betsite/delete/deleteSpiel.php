@@ -2,8 +2,7 @@
   session_start();
   require '../connect.php';
   header("Content-Type: text/html;charset=UTF-8");
-  $sql = "UPDATE turnier SET Status=0 WHERE Turnier_ID='".$_GET['id']."'";
-  mysqli_query($db_link, $sql);
-  $sql = "DELETE FROM gruppe";
+  $s_id = $_GET['id'];
+  $sql = "DELETE FROM spiel WHERE Spiel_ID='".$s_id."'";
   mysqli_query($db_link, $sql);
 ?>

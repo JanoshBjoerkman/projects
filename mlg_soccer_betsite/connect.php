@@ -97,7 +97,6 @@
 	$sql = 'CREATE TABLE IF NOT EXISTS spiel(
 	Spiel_ID int NOT NULL AUTO_INCREMENT,
 	Gruppe_ID int NOT NULL,
-	Spiel_Nr int,
 	Datum DATE NOT NULL,
 	Team1_ID int NOT NULL,
 	Team2_ID int NOT NULL,
@@ -114,7 +113,7 @@
 	Tip_ID int NOT NULL AUTO_INCREMENT,
 	Home_Team varchar(50),
 	Guest_Team varchar(50),
-	Winner varchar(50),
+	Toto varchar(1),
 	Spiel_ID int,
 	Wette_ID int,
 	PRIMARY KEY (Tip_ID),
