@@ -21,8 +21,8 @@
   </head>
   <body>
 	 <!-- Navigation aus Bootstrap-->
-	<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-		<div class="container-fluid navbar">
+	<nav class="navbar-default navbar-custom navbar-fixed-top">
+		<div class="container-fluid " id="navbar">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header page-scroll">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
