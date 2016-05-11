@@ -22,7 +22,7 @@
   <body>
 	 <!-- Navigation aus Bootstrap-->
 	<nav class="navbar-default navbar-custom navbar-fixed-top">
-		<div class="container-fluid " id="navbar">
+		<div class="container-fluid navbar" id="navbar">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header page-scroll">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -38,27 +38,27 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1s">
 				<ul class="nav navbar-nav navbar-right" id="navbar-right">
 					<li>
-						<a href="index.php">Home</a>
+						<a id="navbaritem" href="index.php">Home</a>
 					</li>
 					<li>
-						<a href="ranking.php">Rangliste</a>
+						<a id="navbaritem" href="ranking.php">Rangliste</a>
 					</li>
 					<?php
 					if(!isset($_SESSION['mail'])){
 					?>
 					<li>
-						<button class="btn btn-info center-block" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">
+						<button id="navbaritem" class="btn btn-success center-block btnlogin" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">
 							Login
 						</button>
 					</li>
 					<li>
-						<button class="btn btn-info center-block" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#registerModal">
+						<button id="navbaritem" class="btn btn-success center-block btnlogout" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#registerModal">
 							Register
 						</button>
 					</li>
 					<?php
 					} else
-						echo "<li><a href='logout.php'>".$_SESSION['mail']."</a></li>";
+						echo "<li><a  id='navbaritem' href='logout.php'>".$_SESSION['mail']."</a></li>";
 					?>
 				</ul>
 			</div>
@@ -72,7 +72,7 @@
 				<div class="col-md-12">
 					<div id="adminContent">
 						<!--Button und Formular um ein Turnier zu erstellen-->
-						<button id="btnturnierVerwalten" href="#turnierVerwalten" class="btn btn-default btn-block" data-toggle="collapse">Turnier verwalten</button>
+						<button id="btnturnierVerwalten" href="#turnierVerwalten" class="btn btn-block btnadmin" data-toggle="collapse">Turnier verwalten</button>
 						<br style="line-height:40px" />
 						<!--Turniere verwalten-->
 						<div id="turnierVerwalten" class="collapse">
@@ -104,7 +104,7 @@
 										 </div>
 										 <div class="form-group">
 											 <div class="col-sm-offset-2 col-sm-10">
-												 <button type="submit" class="btn btn-primary">erstellen</button>
+												 <button type="submit" class="btn btn-success">erstellen</button>
 											 </div>
 										 </div>
 										</form>
@@ -150,7 +150,7 @@
 												 </div>
 												 <div class="form-group">
 													 <div class="col-sm-offset-2 col-sm-10">
-														 <button type="submit" class="btn btn-primary">erstellen</button>
+														 <button type="submit" class="btn btn-success">erstellen</button>
 													 </div>
 												 </div>
 												</form>
@@ -191,7 +191,7 @@
 												<div class="form-group col-md-12">
 												</div>
 											 	<div class="form-group">
-													<button type="submit" class="btn btn-primary" id="btnErstellen">erstellen</button>
+													<button type="submit" class="btn btn-success" id="btnErstellen">erstellen</button>
 												</div>
 											</div>
 										</form>
@@ -205,7 +205,7 @@
 									<!--diverse Buttons-->
 									<div class="row">
 										<div class="col-md-12">
-											<button type="button" class="btn btn-primary" id="toggleVorrunden">Vorrunden</button>
+											<button type="button" class="btn btn-success" id="toggleVorrunden">Vorrunden</button>
 										</div>
 									</div>
 									<!--Übersicht Gruppen A-B-->
@@ -346,7 +346,7 @@
 		<br style="line-height:50px" />
 		<div class="row">
 			<div class="col-md-12">
-				<h3><a data-toggle="modal" data-target="#registerModal">jetzt registrieren und gewinnen!</a></h3>
+				<h3><a id="startcontent" data-toggle="modal" data-target="#registerModal">Jetzt registrieren und gewinnen!</a></h3>
 			</div>
 		</div>
 	<?php } ?>
@@ -371,11 +371,8 @@
 				  <label for="pwd">Passwort:</label>
 				  <input type="password" class="form-control" id="loginPassword" name="loginPassword" required="required" placeholder="Passwort eingeben">
 				</div>
-				<button type="submit" name="loginSubmit" id="loginSubmit" class="btn btn-info">Login</button>
+				<button type="submit" name="loginSubmit" id="loginSubmit" class="btn btn-success">Login</button>
 			  </form>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">close</button>
 		  </div>
 		</div>
 	  </div>
@@ -411,12 +408,8 @@
 				  <label for="pwd">Passwort wiederholen:</label>
 				  <input type="password" class="form-control" name="RegisterPw2" required="required" placeholder="Passwort wiederholen">
 				</div>
-				<button name="RegisterSubmit" type="submit" class="btn btn-info">Register</button>
+				<button name="RegisterSubmit" type="submit" class="btn btn-success">Register</button>
 			  </form>
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">close</button>
-			<!--<button type="button" class="btn btn-primary">save changes</button>-->
 		  </div>
 		</div>
 	  </div>

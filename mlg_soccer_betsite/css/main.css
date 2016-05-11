@@ -1,4 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Bangers);
+@import url(https://fonts.googleapis.com/css?family=Droid+Sans);
+
 
 .center-block {
     margin: 10px 15px 10px 5px;
@@ -30,9 +32,13 @@
   margin-top: 5%;
 }
 
+/*ab hier made by claudio*/
+
+
 #navbar{
   background-color: black;
 }
+
 #home{
   color: white;
   font-family: bangers;
@@ -43,4 +49,29 @@
   font-family: bangers;
   font-size: 20px;
   color: white;
+}
+
+#navbaritem{
+  color: white;
+}
+
+.btnlogin, .btnlogout{
+  color: green;
+}
+
+#startcontent{
+  color: green;
+}
+
+a:hover{
+  color: green;
+}
+
+.btnadmin{
+  background-color: grey;
+  color: white;
+}
+
+.btnadmin:hover {
+    color: white
 }
