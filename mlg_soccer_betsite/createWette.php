@@ -57,10 +57,23 @@
 	<?php
 		if(isset($_SESSION['mail'])){
 	 ?>
-	 <!--Wette editieren-->
+	 <!--Wette erstellen-->
 	 <div class="container">
 		 <div class="row">
 			 <div class="col-md-12" id="createWetteContent">
+         <div class="col-md-6">
+					 <table class="table table-hover">
+						<thead>
+							<tr>
+								<th>Datum</th>
+								<th>Team 1</th>
+								<th>Team 2</th>
+							</tr>
+						</thead>
+						<tbody id="tblbodyCreatetWetteContent">
+						</tbody>
+					</table>
+				 </div>
 			 </div>
 		 </div>
 	 </div>
