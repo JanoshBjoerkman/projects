@@ -44,26 +44,29 @@
 						<a href="ranking.php">Rangliste</a>
 					</li>
 					<?php
-					if(!isset($_SESSION['mail'])){
-					?>
-					<li>
-						<button class="btn btn-info center-block" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">
-							Login
-						</button>
-					</li>
-					<li>
-						<button class="btn btn-info center-block" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#registerModal">
-							Register
-						</button>
-					</li>
-					<?php
-					} else
+					if(isset($_SESSION['mail'])){
 						echo "<li><a href='logout.php'>".$_SESSION['mail']."</a></li>";
+          }
 					?>
 				</ul>
 			</div>
 		</div>
 	</nav>
+	
+	<!--Wenn angemeldet, Content anzeigen, sonst auf index.php weiterleiten-->
+	<?php
+		if(isset($_SESSION['mail'])){
+	 ?>
+	 <!--Wette editieren-->
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12" id="editWetteContent">
+			 </div>
+		 </div>
+	 </div>
+	 <?php }else{
+		 header('Location: index.php');
+	 } ?>
 
 		<!-- Einbinden der Skripts -->
 	  <!--<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.1.min.js"></script>-->

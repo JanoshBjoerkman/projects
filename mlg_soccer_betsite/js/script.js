@@ -10,15 +10,14 @@
                       folgende Website: http://www.w3schools.com/jquery/
                       oder nutze Google :P
 */
-var editResultSID = 0;
+var EDITRESULTSID = 0; //
 //Initialisierung der Website, wird nur einmal ausgeführt (sobald die das komplette Dokument (Webseite) geladen ist)
 $(document).ready(function(){
-    $('#homeContent').ready(showAktiveTurniere);  //Meldung für den User ob ein Turnier aktiv ist
+    $('#homeContent').ready(showAktiveTurniere);  // User-Content: Meldung ob ein Turnier aktiv ist
     $('#successSpielErstellen').hide(); // Admin-Alert verstecken
     $('#alertSpielErstellen').hide(); // Admin-Alert verstecken
-    // Willkommensnachricht (nur für User)
-    $('#welcomeMessage').ready(function(){
-        // AJAX-Call um dynamisch herauszufinden ob ein User angemeldet ist
+    // User-Content: Willkommensnachricht
+    $('#welcomeMessage').ready(function(){ // AJAX-Call um dynamisch herauszufinden ob ein User angemeldet ist
         $.ajax({
           url:"./getLoggedName.php",
           data: "",
@@ -39,11 +38,15 @@ $(document).ready(function(){
           }
         });
     });
+    // User-Content: Wette editieren
+    $('#editWetteContent').ready(function(){
+      $('#editWetteContent').html("<h1>YOLOMOLO</h1>");
+    });
 });
 
 function editSpiel(id){
   $('#editSpielModal').modal('show');
-  editResultSID = id;
+  EDITRESULTSID = id;
 }
 
 $('#btnMeineWetten').click(function(){
@@ -148,7 +151,7 @@ $('#editResultForm').submit(function(e){
   e.preventDefault();
   $.ajax({
     type:"GET",
-    data:"id="+editResultSID+"&pT1="+$('#editResultT1').val()+"&pT2="+$('#editResultT2').val(),
+    data:"id="+EDITRESULTSID+"&pT1="+$('#editResultT1').val()+"&pT2="+$('#editResultT2').val(),
     url:"./insert/updateResult.php",
     success: function(){
       readGames();
@@ -479,12 +482,17 @@ function readWetten(){
       var tbl = "";
       var zaehler = 0;
       $.each(data, function(id, obj){
-        zaehler += 1;
-        tbl += "<tr>\
-          <td>Wettschein "+zaehler+"</td>\
-          <td><button class='btn btn-default btn-sm' id='wette:"+obj.Wette_ID+"&user:"+obj.User_ID+"' onclick='editWette("+obj.Wette_ID+")'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></td>\
-          <td><button class='btn btn-danger btn-sm' id='Wette_ID:"+obj.Wette_ID+"' onclick='deleteWette("+obj.Wette_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
-          </tr>";
+        if(obj.Wette_ID == null)
+        {
+          tbl = "<tr><td>bisher noch keine Wetten</td><td></td><td></td></tr>";
+        }else{
+          zaehler += 1;
+          tbl += "<tr>\
+            <td>Wettschein "+zaehler+"</td>\
+            <td><button class='btn btn-default btn-sm' id='wette:"+obj.Wette_ID+"&user:"+obj.User_ID+"' onclick='editWetteOnClick("+obj.Wette_ID+")'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></td>\
+            <td><button class='btn btn-danger btn-sm' id='Wette_ID:"+obj.Wette_ID+"' onclick='deleteWette("+obj.Wette_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
+            </tr>";
+        }
       });
       $('#meineWettenUebersicht').html("<table class='table'><thead><tr><th>Übersicht</th><th></th><th></th></tr></thead><tbody>"+tbl+"</tbody></table>"); // oben erstellte Tabelle einfügen
     }
@@ -504,6 +512,6 @@ function deleteWette(id){
   });
 }
 
-function editWette(id){
-  window.location.href = "editWette.php";
+function editWetteOnClick(id){
+  window.location.href = "editWette.php?id="+id;
 }
