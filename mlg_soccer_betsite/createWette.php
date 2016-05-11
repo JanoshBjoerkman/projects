@@ -60,20 +60,7 @@
 	 <!--Wette editieren-->
 	 <div class="container">
 		 <div class="row">
-			 <div class="col-md-12" id="editWetteContent">
-				 <div class="col-md-6">
-					 <table class="table table-hover">
-						<thead>
-							<tr>
-								<th>Datum</th>
-								<th>Team 1</th>
-								<th>Team 2</th>
-							</tr>
-						</thead>
-						<tbody id="tblbodyEditWetteContent">
-						</tbody>
-					</table>
-				 </div>
+			 <div class="col-md-12" id="createWetteContent">
 			 </div>
 		 </div>
 	 </div>

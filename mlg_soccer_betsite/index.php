@@ -303,6 +303,12 @@
 							<div class="row">
 								<div class="col-md-3" id="meineWettenUebersicht">
 								</div>
+								<div class="col-md-3">
+								</div>
+								<div class="col-md-3" id="meineWettenCreate">
+									<br style="line-height:40px" />
+									<button id="btnMeineWettenCreate" class="btn btn-primary btn-block">Neuer Wettschein</button>
+								</div>
 							</div>
 						</div>
 						<br style="line-height:50px" />

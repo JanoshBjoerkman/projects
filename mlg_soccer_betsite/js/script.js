@@ -40,7 +40,7 @@ $(document).ready(function(){
     });
     // User-Content: Wette editieren
     $('#editWetteContent').ready(function(){
-      $('#editWetteContent').html("<h1>YOLOMOLO</h1>");
+      editWette();
     });
 });
 
@@ -48,6 +48,10 @@ function editSpiel(id){
   $('#editSpielModal').modal('show');
   EDITRESULTSID = id;
 }
+
+$('#btnMeineWettenCreate').click(function(){
+  window.location.href = "createWette.php";
+});
 
 $('#btnMeineWetten').click(function(){
   readWetten();
@@ -514,4 +518,8 @@ function deleteWette(id){
 
 function editWetteOnClick(id){
   window.location.href = "editWette.php?id="+id;
+}
+
+function editWette(){
+
 }
