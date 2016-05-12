@@ -303,29 +303,30 @@
 								</div>
 								<div class="col-md-3">
 								</div>
+								<br style="line-height:40px" />
 								<div class="col-md-3" id="meineWettenCreate">
 									<button id="btnMeineWettenCreate" class="btn btn-success btn-block">Neuer Wettschein</button>
 								</div>
 							</div>
 						</div>
-						<div class="row linie">
+						<div class="row linie" >
 							<h3 class="titel-center">Info</h4>
-							<div class="col-md-3">
-								<dl>
-									<dt>Preise:</dt>
-									<dd>1. Rang 40%</dd>
-									<dd>2. Rang 30%</dd>
-									<dd>3. Rang 20%</dd>
-									<dt>...</dt>
-									<dd>10% für gemeinsamen Znüni</dd>
-								</dl>
-							</div>
-							<div class="col-md-4">
-								<p><strong>Getippt wird nach dem Toto-System:</strong></p>
-								<p><strong>1</strong> - Erstgenannte Mannschaft gewinnt</p>
-								<p><strong>X</strong> - unentschieden</p>
-								<p><strong>2</strong> - Zweitgenannte Mannschaft gewinnt</p>
-							</div>
+								<div class="col-md-3">
+									<dl>
+										<dt>Preise:</dt>
+										<dd>1. Rang 40%</dd>
+										<dd>2. Rang 30%</dd>
+										<dd>3. Rang 20%</dd>
+										<dt>...</dt>
+										<dd>10% für gemeinsamen Znüni</dd>
+									</dl>
+								</div>
+								<div class="col-md-4">
+									<p><strong>Getippt wird nach dem Toto-System:</strong></p>
+									<p><strong>1</strong> - Erstgenannte Mannschaft gewinnt</p>
+									<p><strong>X</strong> - unentschieden</p>
+									<p><strong>2</strong> - Zweitgenannte Mannschaft gewinnt</p>
+								</div>
 						</div>
 					</div>
 				</div>
