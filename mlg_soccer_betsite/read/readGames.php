@@ -15,7 +15,7 @@
             JOIN spiel ON gruppe.Gruppe_ID = spiel.Gruppe_ID
             JOIN spiel_team ON spiel.Spiel_ID = spiel_team.Spiel_ID
             JOIN team ON spiel_team.Team_ID = team.Team_ID
-          ORDER BY spiel.Datum";
+          ORDER BY spiel.Spiel_ID";
   $temp = mysqli_query($db_link, $sql);
   $index = 0;
   while($zeile = mysqli_fetch_assoc($temp))

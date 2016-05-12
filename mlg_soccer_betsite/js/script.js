@@ -146,7 +146,9 @@ $('#spielErstellenForm').submit(function(e){
       success: function(data){
         $('#spielErstellenInputDatum').val(""); // Formular leeren
         $('#successSpielErstellen').fadeIn(800).fadeOut(2000); // Admin-Success: Meldung in 0.8sek einblenden, in 2sek ausblenden
-        readGames();
+        setTimeout(function(){
+          readGames();
+        }, 400);
       }
     });
   }
@@ -369,7 +371,7 @@ function deleteSpiel(id){
     success: function(){
       setTimeout(function(){
         readGames();
-      }, 600);
+      }, 800);
     }
   });
 }
