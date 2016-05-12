@@ -92,6 +92,6 @@ body{
   font-family: Archivo+Narrow;
 }
 
-#loginModal, #registerModal{
+#loginModal, #registerModal, #editSpielModal{
   color: black;
 }
