@@ -58,7 +58,7 @@
 					</li>
 					<?php
 					} else
-						echo "<li><a  id='navbaritem' href='logout.php'>".$_SESSION['mail']."</a></li>";
+						echo "<li><a  id='navbaritem' class='navmail' href='logout.php'>".$_SESSION['mail']."</a></li>";
 					?>
 				</ul>
 			</div>

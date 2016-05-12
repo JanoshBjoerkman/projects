@@ -60,6 +60,11 @@
   color: white;
 }
 
+#navbaritem:hover{
+  color: green;
+  font-size: 25px;
+}
+
 .btnlogin, .btnlogout{
   color: green;
 }
@@ -107,7 +112,9 @@ body{
   border: thin solid;
 }
 
-#createWetteVorrundeA, #createWetteVorrundeB, #createWetteVorrundeC, #createWetteVorrundeD, #createWetteVorrundeE, #createWetteVorrundeF, #createWetteVorrundeG, #createWetteVorrundeH{
+#createWetteVorrundeA, #createWetteVorrundeB, #createWetteVorrundeC, #createWetteVorrundeD, #createWetteVorrundeE, #createWetteVorrundeF, #createWetteVorrundeG, #createWetteVorrundeH,
+#createWetteVorrundeAF, #createWetteVorrundeVF, #createWetteVorrundeHF, #createWetteVorrundeFINALE{
+  font-size: 18px;
   background-color: rgba(204, 204, 204, 0.4);
   border-radius: 10px 10px 10px 10px;
   margin-top: 10px;
@@ -115,6 +122,9 @@ body{
   border: thin solid;
 }
 
+#btnCreateWetteErstellen{
+  margin-bottom: 20px;
+}
 
 a{
   color: white;
