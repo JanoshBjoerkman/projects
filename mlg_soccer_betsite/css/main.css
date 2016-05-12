@@ -1,7 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Bangers);
-@import url(https://fonts.googleapis.com/css?family=Roboto);
-@import url(https://fonts.googleapis.com/css?family=Archivo+Narrow);
-
+@import url(https://fonts.googleapis.com/css?family=Lato);
 
 
 .center-block {
@@ -73,6 +71,7 @@
 #btnturnierVerwalten, #btnTeamsVerwalten, #btnSpieleVerwalten, #btnMeineWetten{
   color: white;
   background-color: grey;
+  margin-bottom: 20px;
 }
 
 .gameplayer{
@@ -89,9 +88,30 @@ body{
   background-repeat: norepeat;
   background-size: cover;
   color: white;
-  font-family: Archivo+Narrow;
+  font-family: Lato;
 }
 
 #loginModal, #registerModal, #editSpielModal{
   color: black;
+}
+
+#turnierVerwalten, #teamsVerwalten, #spieleVerwalten, #meineWetten{
+  background-color: rgba(204, 204, 204, 0.4);
+  border-radius: 10px 10px 10px 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+
+}
+
+a{
+  color: white;
+}
+
+a:hover{
+  color: white;
+  text-decoration: none;
 }

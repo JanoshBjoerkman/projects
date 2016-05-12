@@ -10,6 +10,7 @@
                       folgende Website: http://www.w3schools.com/jquery/
                       oder nutze Google :P
 */
+
 var EDITRESULTSID = 0; //
 //Initialisierung der Website, wird nur einmal ausgeführt (sobald die das komplette Dokument (Webseite) geladen ist)
 $(document).ready(function(){
@@ -29,7 +30,7 @@ $(document).ready(function(){
             {
               $('#userContent').hide(function(){
                 $('#welcomeMessage').hide();
-                $('#welcomeMessage').html("<h2>Hallo "+userVorname+".</h2>");
+                $('#welcomeMessage').html("<a href='../game.php'><h2>Hallo "+userVorname+".</h2></a>");
                 $('#welcomeMessage').fadeIn(1000).fadeOut(1000, function(){
                   $('#userContent').fadeIn(2000);
                 });

@@ -73,11 +73,10 @@
 					<div id="adminContent">
 						<!--Button und Formular um ein Turnier zu erstellen-->
 						<button id="btnturnierVerwalten" href="#turnierVerwalten" class="btn btn-block btnadmin" data-toggle="collapse">Turnier verwalten</button>
-						<br style="line-height:40px" />
 						<!--Turniere verwalten-->
 						<div id="turnierVerwalten" class="collapse">
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-md-5">
 									<div id="turnierErstellenCreate">
 										<!--Formular um Turnier zu erstellen-->
 										<form class="form-horizontal" role="form" id="turnierErstellenCreateForm" method="POST">
@@ -128,7 +127,6 @@
 						<div class="row">
 							<div class="col-md-12">
 								<button id="btnTeamsVerwalten" href="#teamsVerwalten" class="btn btn-block" data-toggle="collapse">Teams verwalten</button>
-								<br style="line-height:40px" />
 								<div id="teamsVerwalten" class="collapse">
 									<div class="row">
 										<div class="col-md-4">
@@ -160,7 +158,7 @@
 								</div>
 							</div>
 						</div>
-						<!--Spiele-->
+						<!--Spiele verwalten-->
 						<div class="row">
 							<div class="col-md-12">
 								<button id="btnSpieleVerwalten" href="#spieleVerwalten" class="btn btn-block" data-toggle="collapse">Spiele verwalten</button>
@@ -306,12 +304,10 @@
 								<div class="col-md-3">
 								</div>
 								<div class="col-md-3" id="meineWettenCreate">
-									<br style="line-height:40px" />
 									<button id="btnMeineWettenCreate" class="btn btn-success btn-block">Neuer Wettschein</button>
 								</div>
 							</div>
 						</div>
-						<br style="line-height:50px" />
 						<div class="row linie">
 							<h3 class="titel-center">Info</h4>
 							<div class="col-md-3">
@@ -350,7 +346,6 @@
 			</div>
 		</div>
 	<?php } ?>
-	<br style="line-height:50px" />
 	</div>
 
 	<!-- LoginModal -->
