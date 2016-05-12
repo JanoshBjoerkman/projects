@@ -327,6 +327,11 @@
 									<p><strong>X</strong> - unentschieden</p>
 									<p><strong>2</strong> - Zweitgenannte Mannschaft gewinnt</p>
 								</div>
+								<div class="col-md-5">
+									<p><strong>Bezahlung:</strong></p>
+									<p>Ein Wettschein kostet 10.-</p>
+									<p>Momentan kann nur Bar und direkt bei Erika Vollenweider bezahlt werden, vielen Dank für Ihr Verständis</p>
+								</div>
 						</div>
 					</div>
 				</div>
