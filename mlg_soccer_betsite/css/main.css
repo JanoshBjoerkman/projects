@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Bangers);
-@import url(https://fonts.googleapis.com/css?family=Droid+Sans);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Archivo+Narrow);
+
 
 
 .center-block {
@@ -34,8 +36,13 @@
 
 /*ab hier made by claudio*/
 
-
 #navbar{
+  background-color: black;
+  border-radius: 0px 0px 0px 0px;
+}
+
+.topnav{
+  height: 0px;
   background-color: black;
 }
 
@@ -63,15 +70,28 @@
   color: green;
 }
 
-a:hover{
-  color: green;
-}
-
-.btnadmin{
-  background-color: grey;
+#btnturnierVerwalten, #btnTeamsVerwalten, #btnSpieleVerwalten, #btnMeineWetten{
   color: white;
+  background-color: grey;
 }
 
-.btnadmin:hover {
-    color: white
+.gameplayer{
+  height: 100%;
+  width: 100%;
+}
+
+/*html{
+  font-family: Archivo+Narrow;
+}*/
+body{
+  background-image: url(/pics/soccer.jpg);
+  background-attachment: fixed;
+  background-repeat: norepeat;
+  background-size: cover;
+  color: white;
+  font-family: Archivo+Narrow;
+}
+
+#loginModal, #registerModal{
+  color: black;
 }

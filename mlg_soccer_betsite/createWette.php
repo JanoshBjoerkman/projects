@@ -21,37 +21,49 @@
   </head>
   <body>
 	 <!-- Navigation aus Bootstrap-->
-	<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header page-scroll">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="index.php">Fussball-Wetten</a>
-			</div>
+	 <nav class="navbar-default navbar-custom navbar-fixed-top topnav">
+ 		<div class="container-fluid navbar" id="navbar">
+ 			<!-- Brand and toggle get grouped for better mobile display -->
+ 			<div class="navbar-header page-scroll">
+ 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+ 					<span class="sr-only">Toggle navigation</span>
+ 					<span class="icon-bar"></span>
+ 					<span class="icon-bar"></span>
+ 					<span class="icon-bar"></span>
+ 				</button>
+ 				<a class="navbar-brand" id="home" href="index.php">Fussball-Wetten</a>
+ 			</div>
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="index.php">Home</a>
-					</li>
-					<li>
-						<a href="ranking.php">Rangliste</a>
-					</li>
-					<?php
-					if(isset($_SESSION['mail'])){
-						echo "<li><a href='logout.php'>".$_SESSION['mail']."</a></li>";
-          }
-					?>
-				</ul>
-			</div>
-		</div>
-	</nav>
+ 			<!-- Collect the nav links, forms, and other content for toggling -->
+ 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1s">
+ 				<ul class="nav navbar-nav navbar-right" id="navbar-right">
+ 					<li>
+ 						<a id="navbaritem" href="index.php">Home</a>
+ 					</li>
+ 					<li>
+ 						<a id="navbaritem" href="ranking.php">Rangliste</a>
+ 					</li>
+ 					<?php
+ 					if(!isset($_SESSION['mail'])){
+ 					?>
+ 					<li>
+ 						<button id="navbaritem" class="btn btn-success center-block btnlogin" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal">
+ 							Login
+ 						</button>
+ 					</li>
+ 					<li>
+ 						<button id="navbaritem" class="btn btn-success center-block btnlogout" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#registerModal">
+ 							Register
+ 						</button>
+ 					</li>
+ 					<?php
+ 					} else
+ 						echo "<li><a  id='navbaritem' href='logout.php'>".$_SESSION['mail']."</a></li>";
+ 					?>
+ 				</ul>
+ 			</div>
+ 		</div>
+ 	</nav>
 
 	<!--Wenn angemeldet, Content anzeigen, sonst auf index.php weiterleiten-->
 	<?php
