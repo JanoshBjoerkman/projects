@@ -73,42 +73,102 @@
 	 <div class="container">
 		 <div class="row">
        <div id="createWetteVorrunden" class="col-md-12">
-         <div class="row">
-           <div id="createWetteVorrundeA" class="col-md-6">
-           </div>
-           <div id="createWetteVorrundeB" class="col-md-6">
-           </div>
-         </div>
-         <div class="row">
-           <div id="createWetteVorrundeC" class="col-md-6">
-           </div>
-           <div id="createWetteVorrundeD" class="col-md-6">
-           </div>
-         </div>
-         <div class="row">
-           <div id="createWetteVorrundeE" class="col-md-6">
-           </div>
-           <div id="createWetteVorrundeF" class="col-md-6">
-           </div>
-         </div>
-         <div class="row">
-           <div id="createWetteVorrundeG" class="col-md-6">
-           </div>
-           <div id="createWetteVorrundeH" class="col-md-6">
-           </div>
-         </div>
-         <div class="row">
-           <div id="createWetteVorrundeAF" class="col-md-6">
-           </div>
-           <div id="createWetteVorrundeVF" class="col-md-6">
-           </div>
-         </div>
-         <div class="row">
-           <div id="createWetteVorrundeHF" class="col-md-6">
-           </div>
-           <div id="createWetteVorrundeFINALE" class="col-md-6">
-           </div>
-         </div>
+        <div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeA" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeB" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeC" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeD" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeE" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeF" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeG" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeH" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeAF" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeVF" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeHF" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+          <div id="createWetteVorrundeFINALE" class="col-md-8">
+          </div>
+					<div class="col-md-2">
+					</div>
+				</div>
        </div>
 		 </div>
 	 </div>
