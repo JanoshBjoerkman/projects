@@ -21,7 +21,7 @@
   </head>
   <body>
 	 <!-- Navigation aus Bootstrap-->
-	<nav class="navbar-default navbar-custom navbar-fixed-top topnav">
+	<nav class="navbar-default navbar-custom navbar-fixed-top">
 		<div class="container-fluid navbar" id="navbar">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header page-scroll">
@@ -127,7 +127,7 @@
 						<!--Teamverwaltung-->
 						<div class="row">
 							<div class="col-md-12">
-								<button id="btnTeamsVerwalten" href="#teamsVerwalten" class="btn btn-block" data-toggle="collapse">Teams verwalten</button>
+								<button id="btnTeamsVerwalten" href="#teamsVerwalten" class="btn btn-default btn-block" data-toggle="collapse">Teams verwalten</button>
 								<br style="line-height:40px" />
 								<div id="teamsVerwalten" class="collapse">
 									<div class="row">
@@ -163,7 +163,7 @@
 						<!--Spiele-->
 						<div class="row">
 							<div class="col-md-12">
-								<button id="btnSpieleVerwalten" href="#spieleVerwalten" class="btn btn-block" data-toggle="collapse">Spiele verwalten</button>
+								<button id="btnSpieleVerwalten" href="#spieleVerwalten" class="btn btn-default btn-block" data-toggle="collapse">Spiele verwalten</button>
 								<div id="spieleVerwalten" class="collapse">
 									<div id="spielErstellen">
 										<form class="form-horizontal container" role="form" id="spielErstellenForm">
@@ -298,7 +298,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div id="userContent">
-						<button id="btnMeineWetten" href="#meineWetten" class="btn btn-block" data-toggle="collapse">Meine Wetten</button>
+						<button id="btnMeineWetten" href="#meineWetten" class="btn btn-primary btn-block" data-toggle="collapse">Meine Wetten</button>
 						<div id=meineWetten class="collapse">
 							<div class="row">
 								<div class="col-md-3" id="meineWettenUebersicht">
@@ -307,7 +307,7 @@
 								</div>
 								<div class="col-md-3" id="meineWettenCreate">
 									<br style="line-height:40px" />
-									<button id="btnMeineWettenCreate" class="btn btn-success btn-block">Neuer Wettschein</button>
+									<button id="btnMeineWettenCreate" class="btn btn-primary btn-block">Neuer Wettschein</button>
 								</div>
 							</div>
 						</div>
@@ -434,8 +434,11 @@
 							<label for="editResultT2">Tore Team2</label>
       				<input type="number" class="form-control" id="editResultT2">
 						</div>
-						<button type="submit" class="btn btn-success">speichern</button>
+						<button type="submit" class="btn btn-primary">speichern</button>
           </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">schliessen</button>
         </div>
       </div>
 
