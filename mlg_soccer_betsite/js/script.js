@@ -79,6 +79,12 @@ $('#toggleVorrunden').click(function(){
   $('#spielVorrundenUebersicht').toggle();
 });
 
+// User-Content: Wettschein erstellen
+$('#btnCreateWetteErstellen').click(function(){
+  $('input[type="radio"]:checked').each(function(){
+    console.log("rbutton");
+  });
+});
 // Admin-Content: dynamisches Turnier-Erstellen sobald der submit-Button erstellt wurde
 $('#turnierErstellenCreateForm').submit(function(e){
   e.preventDefault(); // Default-Verhalten eines Submit-Buttons wäre Formular absenden und Seite neu laden -> das soll verhindert werden (um Dynamik beizubehalten)
