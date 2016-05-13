@@ -38,10 +38,10 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1s">
 				<ul class="nav navbar-nav navbar-right" id="navbar-right">
 					<li>
-						<a id="navbaritem" href="index.php">Home</a>
+						<a id="navbaritem" class="navbaritem" href="index.php">Home</a>
 					</li>
 					<li>
-						<a id="navbaritem" href="ranking.php">Rangliste</a>
+						<a id="navbaritem" class="navbaritem" href="ranking.php">Rangliste</a>
 					</li>
 					<?php
 					if(!isset($_SESSION['mail'])){
@@ -58,7 +58,7 @@
 					</li>
 					<?php
 					} else
-						echo "<li><a  id='navbaritem' class='navmail' href='logout.php'>".$_SESSION['mail']."</a></li>";
+						echo "<li><a  id='navbaritem' class='navbaritem' href='logout.php'>".$_SESSION['mail']."</a></li>";
 					?>
 				</ul>
 			</div>
@@ -428,11 +428,11 @@
         <div class="modal-body">
           <form role="form" id="editResultForm">
 						<div class="form-group">
-							<label for="editResultT1">Tore Team1</label>
+							<label for="editResultT1">Punkte Team1</label>
       				<input type="number" class="form-control" id="editResultT1">
 						</div>
 						<div class="form-group">
-							<label for="editResultT2">Tore Team2</label>
+							<label for="editResultT2">Punkte Team2</label>
       				<input type="number" class="form-control" id="editResultT2">
 						</div>
 						<button type="submit" class="btn btn-success">speichern</button>

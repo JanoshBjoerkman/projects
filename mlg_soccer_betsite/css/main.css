@@ -39,17 +39,6 @@
   border-radius: 0px 0px 0px 0px;
 }
 
-.topnav{
-  height: 0px;
-  background-color: black;
-}
-
-#home{
-  color: white;
-  font-family: bangers;
-  font-size: 40px;
-}
-
 #navbar-right {
   font-family: bangers;
   font-size: 20px;
@@ -62,31 +51,28 @@
 
 #navbaritem:hover{
   color: green;
+
+}
+
+.navbaritem:hover{
   font-size: 25px;
 }
 
-.btnlogin, .btnlogout{
-  color: green;
+.topnav{
+  height: 0px;
+  background-color: black;
+}
+
+#home{
+  color: white;
+  font-family: bangers;
+  font-size: 40px;
 }
 
 #startcontent{
   color: green;
 }
 
-#btnturnierVerwalten, #btnTeamsVerwalten, #btnSpieleVerwalten, #btnMeineWetten{
-  color: white;
-  background-color: grey;
-  margin-bottom: 20px;
-}
-
-.gameplayer{
-  height: 100%;
-  width: 100%;
-}
-
-/*html{
-  font-family: Archivo+Narrow;
-}*/
 body{
   background-image: url(/pics/soccer.jpg);
   background-attachment: fixed;
@@ -98,6 +84,17 @@ body{
 
 #loginModal, #registerModal, #editSpielModal{
   color: black;
+}
+
+#btnturnierVerwalten, #btnTeamsVerwalten, #btnSpieleVerwalten, #btnMeineWetten{
+  color: white;
+  background-color: grey;
+  margin-bottom: 20px;
+}
+
+.gameplayer{
+  height: 100%;
+  width: 100%;
 }
 
 #turnierVerwalten, #teamsVerwalten, #spieleVerwalten, #meineWetten{
@@ -130,7 +127,7 @@ a{
   color: white;
 }
 
-a:hover{
+#gamelink:hover{
   color: white;
   text-decoration: none;
 }
@@ -138,8 +135,4 @@ a:hover{
 #btnMeineWettenCreate{
   margin-top: auto;
   margin-bottom: auto;
-}
-.info{
-  margin-left: auto;
-  margin-right: auto;
 }

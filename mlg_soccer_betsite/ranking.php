@@ -39,10 +39,10 @@
  			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1s">
  				<ul class="nav navbar-nav navbar-right" id="navbar-right">
  					<li>
- 						<a id="navbaritem" href="index.php">Home</a>
+ 						<a id="navbaritem" class="navbaritem" href="index.php">Home</a>
  					</li>
  					<li>
- 						<a id="navbaritem" href="ranking.php">Rangliste</a>
+ 						<a id="navbaritem" class="navbaritem" href="ranking.php">Rangliste</a>
  					</li>
  					<?php
  					if(!isset($_SESSION['mail'])){
@@ -59,7 +59,7 @@
  					</li>
  					<?php
  					} else
- 						echo "<li><a  id='navbaritem' href='logout.php'>".$_SESSION['mail']."</a></li>";
+ 						echo "<li><a  id='navbaritem' class='navbaritem' href='logout.php'>".$_SESSION['mail']."</a></li>";
  					?>
  				</ul>
  			</div>
