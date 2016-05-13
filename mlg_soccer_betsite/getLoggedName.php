@@ -3,7 +3,6 @@
 	session_start();
 	require 'connect.php';
 	header("Content-Type: text/html;charset=UTF-8");
-  $sql = "SELECT Vorname FROM user WHERE ";
 
   $liste = mysqli_query($db_link, 'SELECT * FROM user;');
   while($row = mysqli_fetch_object($liste))

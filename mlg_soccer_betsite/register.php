@@ -11,7 +11,7 @@
 					$liste = mysqli_query($db_link, 'SELECT count(*) AS Existenz FROM user WHERE Email = \''.$_POST['RegisterEmail'].'\';');
 					$row = mysqli_fetch_row($liste);
 					if($row[0]==1){
-						die("Dieser Benutzer existiert bereits.");
+						die("Diese Email existiert bereits.");
 					}else{
 						if(strlen($_POST['RegisterEmail']) > 50 || strlen($_POST['RegisterPw']) > 255){
 							echo "Email-Adresse oder Passwort zu lang.";

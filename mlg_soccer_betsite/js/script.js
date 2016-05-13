@@ -40,9 +40,9 @@ $(document).ready(function(){
         });
     });
     // User-Content: Wette editieren
-    $('#editWetteContent').ready(function(){
-      editWette();
-    });
+    // $('#editWetteContent').ready(function(){
+    //   editWette();
+    // });
 });
 
 function editSpiel(id){
@@ -531,10 +531,6 @@ function editWetteOnClick(id){
   window.location.href = "editWette.php?id="+id;
 }
 
-function editWette(){
-
-}
-
 // User-Content: Wettscheine für createWette.php
 function readGamesForCreateWette(){
   $.ajax({
@@ -634,8 +630,23 @@ function readGamesForCreateWette(){
 
 // User-Content: Wettschein erstellen
 $('#btnCreateWetteErstellen').click(function(){
-  insertTipVorrunde("A");
+  createWette();
 });
+
+function createWette(){
+  $.ajax({
+    url:"./insert/insertWette.php",
+    data:"",
+    dataType:"JSON",
+    success: function(data){
+      var wID = "";
+      $.each(data, function(id, obj){
+        wID = obj.currentWette_ID; 
+      });
+      console.log(wID);
+    }
+  });
+}
 
 function insertTipVorrunde(g){
   // jeder Tip in DB eintragen
@@ -651,7 +662,7 @@ function insertTipVorrunde(g){
   });
 }
 
-// User-Content: gibt Tips von User für mitgegebene Tabelle im JSON-Format zurück
+// User-Content: gibt Tips von User für mitgegebene Tabelle als Objekt zurück
 function getVorrunden(g){
   var json = [];
   $('#tblCreateWette-'+g+' input[type="radio"]:checked').each(function(){
