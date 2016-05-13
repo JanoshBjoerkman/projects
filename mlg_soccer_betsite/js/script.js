@@ -79,12 +79,6 @@ $('#toggleVorrunden').click(function(){
   $('#spielVorrundenUebersicht').toggle();
 });
 
-// User-Content: Wettschein erstellen
-$('#btnCreateWetteErstellen').click(function(){
-  $('input[type="radio"]:checked').each(function(){
-    console.log("rbutton");
-  });
-});
 // Admin-Content: dynamisches Turnier-Erstellen sobald der submit-Button erstellt wurde
 $('#turnierErstellenCreateForm').submit(function(e){
   e.preventDefault(); // Default-Verhalten eines Submit-Buttons wäre Formular absenden und Seite neu laden -> das soll verhindert werden (um Dynamik beizubehalten)
@@ -536,6 +530,7 @@ function editWette(){
 
 }
 
+// User-Content: Wettscheine für createWette.php
 function readGamesForCreateWette(){
   $.ajax({
     url:"./read/readGames.php",
@@ -560,62 +555,62 @@ function readGamesForCreateWette(){
         // In welche Übersichtstabelle soll die Zeile?
         switch(data[i].Gruppenname){
           case 'A':
-              $("#createWetteVorrundeA").html("<h4>A</h4><table class='table'><thead>\
+              $("#createWetteVorrundeA").html("<h4>A</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
                 <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
                 </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'B':
-            $("#createWetteVorrundeB").html("<h4>B</h4><table class='table'><thead>\
+            $("#createWetteVorrundeB").html("<h4>B</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'C':
-            $("#createWetteVorrundeC").html("<h4>C</h4><table class='table'><thead>\
+            $("#createWetteVorrundeC").html("<h4>C</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'D':
-            $("#createWetteVorrundeD").html("<h4>D</h4><table class='table'><thead>\
+            $("#createWetteVorrundeD").html("<h4>D</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'E':
-            $("#createWetteVorrundeE").html("<h4>E</h4><table class='table'><thead>\
+            $("#createWetteVorrundeE").html("<h4>E</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'F':
-            $("#createWetteVorrundeF").html("<h4>F</h4><table class='table'><thead>\
+            $("#createWetteVorrundeF").html("<h4>F</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'G':
-            $("#createWetteVorrundeG").html("<h4>G</h4><table class='table'><thead>\
+            $("#createWetteVorrundeG").html("<h4>G</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'H':
-            $("#createWetteVorrundeH").html("<h4>H</h4><table class='table'><thead>\
+            $("#createWetteVorrundeH").html("<h4>H</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'AF':
-            $("#createWetteVorrundeAF").html("<h4>Achtel-Finale</h4><table class='table'><thead>\
+            $("#createWetteVorrundeAF").html("<h4>Achtel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'VF':
-            $("#createWetteVorrundeVF").html("<h4>Viertel-Finale</h4><table class='table'><thead>\
+            $("#createWetteVorrundeVF").html("<h4>Viertel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'HF':
-            $("#createWetteVorrundeHF").html("<h4>Halb-Finale</h4><table class='table'><thead>\
+            $("#createWetteVorrundeHF").html("<h4>Halb-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'FINALE':
-            $("#createWetteVorrundeFINALE").html("<h4>Finale</h4><table class='table'><thead>\
+            $("#createWetteVorrundeFINALE").html("<h4>Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
@@ -630,4 +625,42 @@ function readGamesForCreateWette(){
       }
     }
   });
+}
+
+// User-Content: Wettschein erstellen
+$('#btnCreateWetteErstellen').click(function(){
+  createWetteErstellenGETVorrunden("A");
+  createWetteErstellenGETVorrunden("B");
+  createWetteErstellenGETVorrunden("C");
+  createWetteErstellenGETVorrunden("D");
+  createWetteErstellenGETVorrunden("E");
+  createWetteErstellenGETVorrunden("F");
+  createWetteErstellenGETVorrunden("G");
+  createWetteErstellenGETVorrunden("H");
+});
+
+function createWetteErstellenINSERTTIPVorrunde(g){
+
+}
+
+function createWetteErstellenGETVorrunden(g){
+  var objects = "";
+  $('#tblCreateWette-'+g+' input[type="radio"]:checked').each(function(){
+    var spielID = $(this).attr("name");
+    var i = $(this).parent().index();
+    var myObj = {};
+    myObj["Spiel_ID"] = spielID;
+    if(i == 3){
+      myObj["Toto"] = 1;
+    }
+    if(i == 4){
+      myObj["Toto"] = "X";
+    }
+    if(i == 5){
+      myObj["Toto"] = 2;
+    }
+    objects += JSON.stringify(myObj);
+  });
+  var json = "["+objects+"]"
+  console.log(json);
 }

@@ -114,8 +114,8 @@
 	Home_Team varchar(50),
 	Guest_Team varchar(50),
 	Toto varchar(1),
-	Spiel_ID int,
-	Wette_ID int,
+	Spiel_ID int NOT NULL,
+	Wette_ID int NOT NULL,
 	PRIMARY KEY (Tip_ID),
 	FOREIGN KEY (Spiel_ID) REFERENCES spiel(Spiel_ID) ON DELETE CASCADE,
 	FOREIGN KEY (Wette_ID) REFERENCES wette(Wette_ID) ON DELETE CASCADE
