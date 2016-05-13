@@ -37,6 +37,7 @@
 #navbar{
   background-color: black;
   border-radius: 0px 0px 0px 0px;
+  height: 50px;;
 }
 
 #navbar-right {
@@ -74,7 +75,7 @@
 }
 
 body{
-  background-image: url(/pics/soccer.jpg);
+   background-image: url(/pics/soccer.jpg);
   background-attachment: fixed;
   background-repeat: norepeat;
   background-size: cover;
@@ -82,7 +83,7 @@ body{
   font-family: Lato;
 }
 
-#loginModal, #registerModal, #editSpielModal{
+#loginModal, #registerModal, #editSpielModal, #turnierTypEingeben{
   color: black;
 }
 

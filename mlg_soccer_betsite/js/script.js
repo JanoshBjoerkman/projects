@@ -30,7 +30,7 @@ $(document).ready(function(){
             {
               $('#userContent').hide(function(){
                 $('#welcomeMessage').hide();
-                $('#welcomeMessage').html("<a id='gamelink' href='../game.php'><h2>Hallo "+userVorname+".</h2></a>");
+                $('#welcomeMessage').html("<h2 id='gamelink'>Hallo "+userVorname+".</h2>");
                 $('#welcomeMessage').fadeIn(1000).fadeOut(1000, function(){
                   $('#userContent').fadeIn(2000);
                 });
@@ -76,6 +76,10 @@ $('#btnSpieleVerwalten').click(function(){
 
 // Vorrunden in Spielverwaltung verstecken
 $('#toggleVorrunden').click(function(){
+  $('#spielVorrundenUebersicht').toggle();
+});
+// Vorrunden in Spielverwaltung einblenden
+$('#toggleVorrundeneinblenden').click(function(){
   $('#spielVorrundenUebersicht').toggle();
 });
 
@@ -668,3 +672,16 @@ function getVorrunden(g){
   });
   return json;
 }
+
+
+// (function () {
+//   var count = 0;
+//
+//   $(#gamelink).click(function () {
+//     count += 1;
+//
+//     if (count == 3) {
+//
+//     }
+//   });
+// })();
