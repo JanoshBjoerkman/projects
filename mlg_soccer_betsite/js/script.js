@@ -509,6 +509,7 @@ function readWetten(){
   });
 }
 
+// User-Content: Wettschein löschen
 function deleteWette(id){
   $.ajax({
     type:"GET",
@@ -629,38 +630,41 @@ function readGamesForCreateWette(){
 
 // User-Content: Wettschein erstellen
 $('#btnCreateWetteErstellen').click(function(){
-  createWetteErstellenGETVorrunden("A");
-  createWetteErstellenGETVorrunden("B");
-  createWetteErstellenGETVorrunden("C");
-  createWetteErstellenGETVorrunden("D");
-  createWetteErstellenGETVorrunden("E");
-  createWetteErstellenGETVorrunden("F");
-  createWetteErstellenGETVorrunden("G");
-  createWetteErstellenGETVorrunden("H");
+  insertTipVorrunde("A");
 });
 
-function createWetteErstellenINSERTTIPVorrunde(g){
-
+function insertTipVorrunde(g){
+  // jeder Tip in DB eintragen
+  $.each(getVorrunden(g), function(id, obj){
+    $.ajax({
+      type:"GET",
+      data:"sid="+obj.Spiel_ID+"&Toto="+obj.Toto,
+      url:"./insert/insertTip.php",
+      success: function(){
+        console.log("läuft");
+      }
+    });
+  });
 }
 
-function createWetteErstellenGETVorrunden(g){
-  var objects = "";
+// User-Content: gibt Tips von User für mitgegebene Tabelle im JSON-Format zurück
+function getVorrunden(g){
+  var json = [];
   $('#tblCreateWette-'+g+' input[type="radio"]:checked').each(function(){
     var spielID = $(this).attr("name");
     var i = $(this).parent().index();
-    var myObj = {};
-    myObj["Spiel_ID"] = spielID;
+    var item = {};
+    item["Spiel_ID"] = spielID;
     if(i == 3){
-      myObj["Toto"] = 1;
+      item["Toto"] = 1;
     }
     if(i == 4){
-      myObj["Toto"] = "X";
+      item["Toto"] = "X";
     }
     if(i == 5){
-      myObj["Toto"] = 2;
+      item["Toto"] = 2;
     }
-    objects += JSON.stringify(myObj);
+    json.push(item)
   });
-  var json = "["+objects+"]"
-  console.log(json);
+  return json;
 }
