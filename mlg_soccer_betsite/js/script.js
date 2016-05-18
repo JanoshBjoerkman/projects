@@ -1,6 +1,6 @@
 /*
   Autor:              Janosh Björkman
-  Letzte Änderung:    12.05.2016
+  Letzte Änderung:    18.05.2016
   Projekt:            Fussballwetten-Online
 
   Kleine Info:        jQuery ist der Grund, wieso diese Webseite nicht neu geladen wird, obwohl man Änderungen in der Datenbank
@@ -11,7 +11,9 @@
                       oder nutze Google :P
 */
 
-var EDITRESULTSID = 0; //
+var EDITRESULTSID = 0; // Globale Variable: Spiel_ID des zu editierenden Resultats
+var TURNIERTYP = ""; // Globale Variable: Typ des aktiven Turniers
+
 //Initialisierung der Website, wird nur einmal ausgeführt (sobald die das komplette Dokument (Webseite) geladen ist)
 $(document).ready(function(){
     $('#homeContent').ready(showAktiveTurniere);  // User-Content: Meldung ob ein Turnier aktiv ist
@@ -30,7 +32,7 @@ $(document).ready(function(){
             {
               $('#userContent').hide(function(){
                 $('#welcomeMessage').hide();
-                $('#welcomeMessage').html("<h2 id='gamelink'>Hallo "+userVorname+".</h2>");
+                $('#welcomeMessage').html("<a id='gamelink' href='../game.php'><h2>Hallo "+userVorname+".</h2></a>");
                 $('#welcomeMessage').fadeIn(1000).fadeOut(1000, function(){
                   $('#userContent').fadeIn(2000);
                 });
@@ -43,6 +45,13 @@ $(document).ready(function(){
     // $('#editWetteContent').ready(function(){
     //   editWette();
     // });
+});
+
+// loadingModal für createWette.php
+$body = $("body#createWette");
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+     ajaxStop: function() { $body.removeClass("loading"); }
 });
 
 function editSpiel(id){
@@ -76,10 +85,6 @@ $('#btnSpieleVerwalten').click(function(){
 
 // Vorrunden in Spielverwaltung verstecken
 $('#toggleVorrunden').click(function(){
-  $('#spielVorrundenUebersicht').toggle();
-});
-// Vorrunden in Spielverwaltung einblenden
-$('#toggleVorrundeneinblenden').click(function(){
   $('#spielVorrundenUebersicht').toggle();
 });
 
@@ -596,22 +601,22 @@ function readGamesForCreateWette(){
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'AF':
-            $("#createWetteVorrundeAF").html("<h4>Achtel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteGruppeAF").html("<h4>Achtel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'VF':
-            $("#createWetteVorrundeVF").html("<h4>Viertel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteGruppeVF").html("<h4>Viertel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'HF':
-            $("#createWetteVorrundeHF").html("<h4>Halb-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteGruppeHF").html("<h4>Halb-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'FINALE':
-            $("#createWetteVorrundeFINALE").html("<h4>Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteGruppeFINALE").html("<h4>Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
@@ -630,40 +635,114 @@ function readGamesForCreateWette(){
 
 // User-Content: Wettschein erstellen
 $('#btnCreateWetteErstellen').click(function(){
-  createWette();
+  getTurniertyp(); // Turniertyp herausfinden und in (leider) globale Variable schreiben
+  // alle Tips ausgefüllt?
+  if(checkWettscheinVorrunden("A")){
+    if(checkWettscheinVorrunden("B")){
+      if(checkWettscheinVorrunden("C")){
+        if(checkWettscheinVorrunden("D")){
+          if(checkWettscheinVorrunden("E")){
+            if(checkWettscheinVorrunden("F")){
+              if(TURNIERTYP == "WM"){
+                if(checkWettscheinVorrunden("G")){
+                  if(checkWettscheinVorrunden("H")){
+                    neuerWettschein(); // neue Wette erstellen + alle Tips in DB schreiben
+                  }else{
+                    alert("Bitte füllen Sie alle Tips der Gruppe: H aus.");
+                  }
+                }else{
+                  alert("Bitte füllen Sie alle Tips der Gruppe: G aus.");
+                }
+              }
+              neuerWettschein(); // neue Wette erstellen + alle Tips in DB schreiben
+            }else{
+              alert("Bitte füllen Sie alle Tips der Gruppe: F aus.");
+            }
+          }else{
+            alert("Bitte füllen Sie alle Tips der Gruppe: E aus.");
+          }
+        }else{
+          alert("Bitte füllen Sie alle Tips der Gruppe: D aus.");
+        }
+      }else{
+        alert("Bitte füllen Sie alle Tips der Gruppe: C aus.");
+      }
+    }else{
+      alert("Bitte füllen Sie alle Tips der Gruppe: B aus.");
+    }
+  }else{
+    alert("Bitte füllen Sie alle Tips der Gruppe: A aus.");
+  }
 });
 
-function createWette(){
-  $.ajax({
+function neuerWettschein(){
+    $.ajax({
     url:"./insert/insertWette.php",
     data:"",
     dataType:"JSON",
     success: function(data){
       var wID = "";
       $.each(data, function(id, obj){
-        wID = obj.currentWette_ID; 
+        wID = obj;
       });
-      console.log(wID);
+      // Tips eintragen
+      insertTip("A", wID);
+      insertTip("B", wID);
+      insertTip("C", wID);
+      insertTip("D", wID);
+      insertTip("E", wID);
+      insertTip("F", wID);
+      if(TURNIERTYP == "WM"){
+        insertTip("G", wID);
+        insertTip("H", wID);
+      }
     }
   });
 }
 
-function insertTipVorrunde(g){
+function checkWettscheinVorrunden(g){
+  var anzahl = 0;
+  $('#tblCreateWette-'+g+' input[type="radio"]:checked').each(function(){
+    anzahl += 1;
+  });
+  if(anzahl != 6){
+    return false;
+  }else{
+    return true;
+  }
+}
+
+function getTurniertyp(){
+    var turniertyp = "";
+    $.ajax({
+      url:"./read/readAktuelleTurniere.php",
+      data:"",
+      dataType: "JSON",
+      success: function(data){
+        var tabelle = "";
+        $.each(data, function(id, obj){
+          TURNIERTYP = obj.Typ;
+        });
+      }
+    });
+};
+
+function insertTip(g, wID){
   // jeder Tip in DB eintragen
-  $.each(getVorrunden(g), function(id, obj){
+  $.each(getSpiele(g), function(id, obj){
     $.ajax({
       type:"GET",
-      data:"sid="+obj.Spiel_ID+"&Toto="+obj.Toto,
+      data:"sid="+obj.Spiel_ID+"&Toto="+obj.Toto+"&wid="+wID,
       url:"./insert/insertTip.php",
       success: function(){
-        console.log("läuft");
+        console.log("insert für Gruppe: "+g+" und WetteID: "+wID+" ok.");
       }
     });
   });
 }
 
 // User-Content: gibt Tips von User für mitgegebene Tabelle als Objekt zurück
-function getVorrunden(g){
+function getSpiele(g){
   var json = [];
   $('#tblCreateWette-'+g+' input[type="radio"]:checked').each(function(){
     var spielID = $(this).attr("name");
@@ -683,16 +762,3 @@ function getVorrunden(g){
   });
   return json;
 }
-
-
-// (function () {
-//   var count = 0;
-//
-//   $(#gamelink).click(function () {
-//     count += 1;
-//
-//     if (count == 3) {
-//
-//     }
-//   });
-// })();

@@ -19,7 +19,7 @@
 		<!--Eigenes Stylesheet-->
 		<link rel="stylesheet" href="/css/main.css" type="text/css">
   </head>
-  <body>
+  <body id="createWette">
 	 <!-- Navigation aus Bootstrap-->
 	 <nav class="navbar-default navbar-custom navbar-fixed-top topnav">
  		<div class="container-fluid navbar" id="navbar">
@@ -140,7 +140,7 @@
 				<div class="row">
 					<div class="col-md-2">
 					</div>
-          <div id="createWetteVorrundeAF" class="col-md-8">
+          <div id="createWetteGruppeAF" class="col-md-8">
           </div>
 					<div class="col-md-2">
 					</div>
@@ -148,7 +148,7 @@
 				<div class="row">
 					<div class="col-md-2">
 					</div>
-          <div id="createWetteVorrundeVF" class="col-md-8">
+          <div id="createWetteGruppeVF" class="col-md-8">
           </div>
 					<div class="col-md-2">
 					</div>
@@ -156,7 +156,7 @@
 				<div class="row">
 					<div class="col-md-2">
 					</div>
-          <div id="createWetteVorrundeHF" class="col-md-8">
+          <div id="createWetteGruppeHF" class="col-md-8">
           </div>
 					<div class="col-md-2">
 					</div>
@@ -164,7 +164,7 @@
 				<div class="row">
 					<div class="col-md-2">
 					</div>
-          <div id="createWetteVorrundeFINALE" class="col-md-8">
+          <div id="createWetteGruppeFINALE" class="col-md-8">
           </div>
 					<div class="col-md-2">
 					</div>
@@ -180,6 +180,7 @@
        </div>
 		 </div>
 	 </div>
+	 <div class="loadingModal"></div>
 	 <?php }else{
 		 header('Location: index.php');
 	 } ?>

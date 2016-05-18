@@ -58,7 +58,7 @@
 					</li>
 					<?php
 					} else
-						echo "<li><a  id='navbaritem' class='navbar data-toggle='tooltip' title='Logout' item' href='logout.php'>".$_SESSION['mail']."</a></li>";
+						echo "<li><a  id='navbaritem' class='navbaritem' href='logout.php'>".$_SESSION['mail']."</a></li>";
 					?>
 				</ul>
 			</div>
@@ -203,8 +203,7 @@
 									<!--diverse Buttons-->
 									<div class="row">
 										<div class="col-md-12">
-											<button type="button" class="btn btn-success" id="toggleVorrunden">Vorrunden ausblenden</button>
-											<button type="button" class="btn btn-success hidden" id="toggleVorrundeneinblenden">Vorrunden einblenden</button>
+											<button type="button" class="btn btn-success" id="toggleVorrunden">Vorrunden</button>
 										</div>
 									</div>
 									<!--Übersicht Gruppen A-B-->
@@ -331,7 +330,7 @@
 								<div class="col-md-5">
 									<p><strong>Bezahlung:</strong></p>
 									<p>Ein Wettschein kostet 10.-</p>
-									<p>Momentan kann nur Bar und direkt bei Erika Vollenweider bezahlt werden, vielen Dank für Ihr Verständis</p>
+									<p>Es kann nur Bar und direkt bei Erika Vollenweider, jeweils Montag - Mittwoch, bezahlt werden, vielen Dank für Ihr Verständis</p>
 								</div>
 						</div>
 					</div>
@@ -447,19 +446,6 @@
 		<script>
 	  	var loggedIn = <?php echo isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == 'yes' ? 'true' : 'false'; ?>;
 		</script>
-
-		<script>
-		$("#toggleVorrunden").on("click", function(){
-			$("#toggleVorrunden").toggleClass("hidden");
-			$("#toggleVorrundeneinblenden").toggleClass("hidden");
-		})
-
-		$("#toggleVorrundeneinblenden").on("click", function(){
-			$("#toggleVorrundeneinblenden").toggleClass("hidden");
-			$("#toggleVorrunden").toggleClass("hidden");;
-		})
-		</script>
-
 		<script src="js/bootstrap.js"></script>
 		<!--<script src="js/bootstrap-switch.js"></script>-->
 	  <script type="text/javascript" src="js/script.js"></script>

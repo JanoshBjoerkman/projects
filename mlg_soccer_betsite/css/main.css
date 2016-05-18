@@ -37,7 +37,6 @@
 #navbar{
   background-color: black;
   border-radius: 0px 0px 0px 0px;
-  height: 50px;;
 }
 
 #navbar-right {
@@ -75,7 +74,7 @@
 }
 
 body{
-   background-image: url(/pics/soccer.jpg);
+  background-image: url(/pics/soccer.jpg);
   background-attachment: fixed;
   background-repeat: norepeat;
   background-size: cover;
@@ -83,7 +82,7 @@ body{
   font-family: Lato;
 }
 
-#loginModal, #registerModal, #editSpielModal, #turnierTypEingeben{
+#loginModal, #registerModal, #editSpielModal{
   color: black;
 }
 
@@ -111,7 +110,7 @@ body{
 }
 
 #createWetteVorrundeA, #createWetteVorrundeB, #createWetteVorrundeC, #createWetteVorrundeD, #createWetteVorrundeE, #createWetteVorrundeF, #createWetteVorrundeG, #createWetteVorrundeH,
-#createWetteVorrundeAF, #createWetteVorrundeVF, #createWetteVorrundeHF, #createWetteVorrundeFINALE{
+#createWetteGruppeAF, #createWetteGruppeVF, #createWetteGruppeHF, #createWetteGruppeFINALE{
   font-size: 18px;
   background-color: rgba(204, 204, 204, 0.4);
   border-radius: 10px 10px 10px 10px;
@@ -136,4 +135,35 @@ a{
 #btnMeineWettenCreate{
   margin-top: auto;
   margin-bottom: auto;
+}
+
+/* Start by setting display:none to make this hidden.
+   Then we position it in relation to the viewport window
+   with position:fixed. Width, height, top and left speak
+   for themselves. Background we set to 80% white with
+   our animation centered, and no-repeating */
+.loadingModal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 )
+                url('http://i.stack.imgur.com/FhHRx.gif')
+                50% 50%
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .loadingModal {
+    display: block;
 }
