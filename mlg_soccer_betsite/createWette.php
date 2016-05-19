@@ -141,20 +141,118 @@
 					<div class="col-md-2">
 					</div>
           <div id="createWetteGruppeAF" class="col-md-8">
-						<form class="form-horizontal container" role="form" id="FORMcreateWetteGruppeAF">
-							<div class="row">
-							 <div class="form-group col-md-12">
-								 <label class="control-label col-sm-1" for="spielErstellenFormDropdown1">Team 1:</label>
-								 <div class="col-sm-2">
-									 <select class='form-control' id='spielErstellenFormDropdown1' required></select>
-								 </div>
-								 <label class="control-label col-sm-1" for="spielErstellenFormDropdown2">Team 2:</label>
-								 <div class="col-sm-2">
-									 <select class='form-control' id='spielErstellenFormDropdown2' required></select>
-								 </div>
-								</div>
-							</div>
-						</form>
+						<h4>Achtel-Finale</h4>
+						<table id="tblCreateWette-AF" class="table">
+							<thead>
+			        <tr><th>#</th><th>Team 1</th><th>Team 2</th></tr>
+			        </thead>
+							<tbody>
+								<tr>
+				          <td>1</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-1-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-1-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+								<tr>
+				          <td>2</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-2-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-2-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+								<tr>
+				          <td>3</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-3-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-3-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+								<tr>
+				          <td>4</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-4-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-4-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+								<tr>
+				          <td>5</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-5-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-5-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+								<tr>
+				          <td>6</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-6-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-6-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+								<tr>
+				          <td>7</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-7-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-7-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+								<tr>
+				          <td>8</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-8-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-AF-8-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+							</tbody>
+						</table>
           </div>
 					<div class="col-md-2">
 					</div>
@@ -163,6 +261,66 @@
 					<div class="col-md-2">
 					</div>
           <div id="createWetteGruppeVF" class="col-md-8">
+						<h4>Viertel-Finale</h4>
+						<table id="tblCreateWette-VF" class="table">
+							<thead>
+			        <tr><th>#</th><th>Team 1</th><th>Team 2</th></tr>
+			        </thead>
+							<tbody>
+								<tr>
+				          <td>1</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-VF-1-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-VF-1-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+								<tr>
+				          <td>2</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-VF-2-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-VF-2-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+								<tr>
+				          <td>3</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-VF-3-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-VF-3-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+								<tr>
+				          <td>4</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-VF-4-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-VF-4-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+							</tbody>
+						</table>
           </div>
 					<div class="col-md-2">
 					</div>
@@ -171,6 +329,40 @@
 					<div class="col-md-2">
 					</div>
           <div id="createWetteGruppeHF" class="col-md-8">
+						<h4>Halb-Finale</h4>
+						<table id="tblCreateWette-HF" class="table">
+							<thead>
+			        <tr><th>#</th><th>Team 1</th><th>Team 2</th></tr>
+			        </thead>
+							<tbody>
+								<tr>
+				          <td>1</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-HF-1-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-HF-1-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+								<tr>
+				          <td>2</td>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-HF-2-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-HF-2-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+							</tbody>
+						</table>
           </div>
 					<div class="col-md-2">
 					</div>
@@ -179,7 +371,48 @@
 					<div class="col-md-2">
 					</div>
           <div id="createWetteGruppeFINALE" class="col-md-8">
+						<h4>Finale</h4>
+						<table id="tblCreateWette-FINALE" class="table">
+							<thead>
+			        <tr><th>Team 1</th><th>Team 2</th></tr>
+			        </thead>
+							<tbody>
+								<tr>
+				          <td>
+				            <div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-HF-1-1" required></select>
+				            </div>
+				          </td>
+				          <td>
+										<div class="col-sm-8">
+				              <select class="form-control" id="createWetteSpielGruppe-HF-1-2" required></select>
+				            </div>
+				          </td>
+					      </tr>
+							</tbody>
+						</table>
           </div>
+					<div class="col-md-2">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2">
+					</div>
+					<div id="createWetteGruppeWELTMEISTER" class="col-md-8">
+						<h4>Weltmeister</h4>
+						<table id="tblCreateWette-WELTMEISTER" class="table">
+							<tbody>
+								<tr>
+									<th scope="row">Team</th>
+									<td>
+										<div class="col-sm-8">
+											<select class="form-control" id="createWetteSpielGruppe-HF-1-2" required></select>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 					<div class="col-md-2">
 					</div>
 				</div>
