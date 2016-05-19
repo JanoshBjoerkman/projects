@@ -643,10 +643,11 @@ $('#btnCreateWetteErstellen').click(function(){
         if(checkWettscheinVorrunden("D")){
           if(checkWettscheinVorrunden("E")){
             if(checkWettscheinVorrunden("F")){
-              if(TURNIERTYP == "WM"){
+              if(TURNIERTYP == "WM"){ // bei WM Gruppe G & H überprüfen
                 if(checkWettscheinVorrunden("G")){
                   if(checkWettscheinVorrunden("H")){
                     neuerWettschein(); // neue Wette erstellen + alle Tips in DB schreiben
+                    window.location.href = "index.php"; // auf index umleiten
                   }else{
                     alert("Bitte füllen Sie alle Tips der Gruppe: H aus.");
                   }
@@ -655,6 +656,7 @@ $('#btnCreateWetteErstellen').click(function(){
                 }
               }
               neuerWettschein(); // neue Wette erstellen + alle Tips in DB schreiben
+              window.location.href = "index.php"; // auf index umleiten
             }else{
               alert("Bitte füllen Sie alle Tips der Gruppe: F aus.");
             }
@@ -675,6 +677,7 @@ $('#btnCreateWetteErstellen').click(function(){
   }
 });
 
+// User-Content: Wettschein erstellen
 function neuerWettschein(){
     $.ajax({
     url:"./insert/insertWette.php",
@@ -700,6 +703,7 @@ function neuerWettschein(){
   });
 }
 
+// User-Content: Sind 6 radiobuttons angekreuzt?
 function checkWettscheinVorrunden(g){
   var anzahl = 0;
   $('#tblCreateWette-'+g+' input[type="radio"]:checked').each(function(){
@@ -712,6 +716,7 @@ function checkWettscheinVorrunden(g){
   }
 }
 
+// User-Content: EM oder WM?
 function getTurniertyp(){
     var turniertyp = "";
     $.ajax({
@@ -727,8 +732,8 @@ function getTurniertyp(){
     });
 };
 
+// User-Content: Tips einer gruppe eintragen
 function insertTip(g, wID){
-  // jeder Tip in DB eintragen
   $.each(getSpiele(g), function(id, obj){
     $.ajax({
       type:"GET",
