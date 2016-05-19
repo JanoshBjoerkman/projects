@@ -188,6 +188,7 @@ $('#spielErstellen').ready(function() {
 });
 
 $('#createWetteVorrunden').ready(function(){
+  readVorrundenForCreateWette();
   readGamesForCreateWette();
 });
 // Admin-Content: Dropdown von Team-Erstellen Formular dynamisch aktuallisieren
@@ -508,7 +509,7 @@ function readWetten(){
           zaehler += 1;
           tbl += "<tr>\
             <td>Wettschein "+zaehler+"</td>\
-            <td><button class='btn btn-default btn-sm' id='wette:"+obj.Wette_ID+"&user:"+obj.User_ID+"' onclick='editWetteOnClick("+obj.Wette_ID+")'><span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></button></td>\
+            <td><button class='btn btn-default btn-sm' id='wette:"+obj.Wette_ID+"&user:"+obj.User_ID+"' onclick='editWetteOnClick("+obj.Wette_ID+")'><span class='glyphicon glyphicon-eye-open' aria-hidden='true'></span></button></td>\
             <td><button class='btn btn-danger btn-sm' id='Wette_ID:"+obj.Wette_ID+"' onclick='deleteWette("+obj.Wette_ID+")'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td>\
             </tr>";
         }
@@ -537,7 +538,7 @@ function editWetteOnClick(id){
 }
 
 // User-Content: Wettscheine für createWette.php
-function readGamesForCreateWette(){
+function readVorrundenForCreateWette(){
   $.ajax({
     url:"./read/readGames.php",
     data:"",
@@ -597,26 +598,6 @@ function readGamesForCreateWette(){
             break;
           case 'H':
             $("#createWetteVorrundeH").html("<h4>H</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
-              <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
-              </thead><tbody>"+tbl+"</tbody></table>");
-            break;
-          case 'AF':
-            $("#createWetteGruppeAF").html("<h4>Achtel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
-              <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
-              </thead><tbody>"+tbl+"</tbody></table>");
-            break;
-          case 'VF':
-            $("#createWetteGruppeVF").html("<h4>Viertel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
-              <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
-              </thead><tbody>"+tbl+"</tbody></table>");
-            break;
-          case 'HF':
-            $("#createWetteGruppeHF").html("<h4>Halb-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
-              <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
-              </thead><tbody>"+tbl+"</tbody></table>");
-            break;
-          case 'FINALE':
-            $("#createWetteGruppeFINALE").html("<h4>Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
@@ -766,4 +747,79 @@ function getSpiele(g){
     json.push(item)
   });
   return json;
+}
+
+function readGamesForCreateWette(){
+  $.ajax({
+    url:"./read/readGames.php",
+    data:"",
+    dataType:"JSON",
+    success: function(data){
+      var anzahlReihen = data.length; // anzahl Reihen aus DB-Abfrage
+      // HINT: anzalhReihen/2 = anzahl "realer" Spiele
+      var tbl = ""; // Tabelle für Übersicht
+      var z = 1; // Spiel_NR (Zähler) für AF,VF,HF,FINALE
+      for(i = 0; i < anzahlReihen; i+=2){ // solange Index aktuelles Spiel kleiner als anzahl Reihen aus DB-Abfrage -> Zeile in Übersichtstabelle erstellen,
+                                          //danach zum nächsten Spiel gehen (i+2: 2 aufeinanderfolgende Reihen gehören immer zum selben Spiel).
+                                          // Team1 = aktuelles JSON-Objekt-Land, Team2 = nächstes JSON-Objekt-Land
+        tbl += "<tr>\
+          <td>"+z+"</td>\
+          <td>\
+            <div class='col-sm-8'>\
+              <select class='form-control' id='createWetteSpielGruppe-"+data[i].Gruppenname+"-"+data[i].Spiel_ID+"' required></select>\
+            </div>\
+          </td>\
+          <td>\
+            <div class='col-sm-8'>\
+              <select class='form-control' id='createWetteSpielGruppe-"+data[i+1].Gruppenname+"-"+data[i+1].Spiel_ID+"' required></select>\
+            </div>\
+          </td>\
+          </tr>";
+        z += 1;
+        // In welche Übersichtstabelle soll die Zeile?
+        switch(data[i].Gruppenname){
+          case 'AF':
+            $("#createWetteGruppeAF").html("<h4>Achtel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+              <tr><th>#</th><th>Team1</th><th>Team2</th></tr>\
+              </thead><tbody>"+tbl+"</tbody></table>");
+            break;
+          case 'VF':
+            $("#createWetteGruppeVF").html("<h4>Viertel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+              <tr><th>#</th><th>Team1</th><th>Team2</th></tr>\
+              </thead><tbody>"+tbl+"</tbody></table>");
+            break;
+          case 'HF':
+            $("#createWetteGruppeHF").html("<h4>Halb-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+              <tr><th>#</th><th>Team1</th><th>Team2</th></tr>\
+              </thead><tbody>"+tbl+"</tbody></table>");
+            break;
+          case 'FINALE':
+            $("#createWetteGruppeFINALE").html("<h4>Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+              <tr><th>#</th><th>Team1</th><th>Team2</th></tr>\
+              </thead><tbody>"+tbl+"</tbody></table>");
+            break;
+        }
+        // ist das aktuelles Spiel nicht das letzte?
+        if(i < anzahlReihen-2){
+          // wenn das nächste Spiel nicht in der selben Gruppe ist, neue tbl leeren
+          if(data[i+2].Gruppenname != data[i].Gruppenname){
+            tbl = "";
+            z = 1; // Zähler zurücksetzen
+          }
+        }
+      }
+      $.ajax({
+        url:"./read/readTeams.php",
+        data:"",
+        dataType: "JSON",
+        success: function(data){
+          var dropdown = "";
+          $.each(data, function(id, obj){
+            dropdown += "<option value="+obj.Team_ID+">"+obj.Land+"</option>";
+          });
+          $("[id^=createWetteSpielGruppe]").html(dropdown);
+        }
+      });
+    }
+  });
 }

@@ -141,6 +141,20 @@
 					<div class="col-md-2">
 					</div>
           <div id="createWetteGruppeAF" class="col-md-8">
+						<form class="form-horizontal container" role="form" id="FORMcreateWetteGruppeAF">
+							<div class="row">
+							 <div class="form-group col-md-12">
+								 <label class="control-label col-sm-1" for="spielErstellenFormDropdown1">Team 1:</label>
+								 <div class="col-sm-2">
+									 <select class='form-control' id='spielErstellenFormDropdown1' required></select>
+								 </div>
+								 <label class="control-label col-sm-1" for="spielErstellenFormDropdown2">Team 2:</label>
+								 <div class="col-sm-2">
+									 <select class='form-control' id='spielErstellenFormDropdown2' required></select>
+								 </div>
+								</div>
+							</div>
+						</form>
           </div>
 					<div class="col-md-2">
 					</div>
