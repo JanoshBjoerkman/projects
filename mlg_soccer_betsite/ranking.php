@@ -59,7 +59,7 @@
  					</li>
  					<?php
  					} else
- 						echo "<li><a  id='navbaritem' class='navbaritem' href='logout.php'>".$_SESSION['mail']."</a></li>";
+ 						echo "<li><a  id='navbaritem' class='navbaritem' data-toggle='tooltip' title='Logout' href='logout.php'>".$_SESSION['mail']."</a></li>";
  					?>
  				</ul>
  			</div>
