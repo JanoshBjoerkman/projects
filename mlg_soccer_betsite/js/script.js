@@ -669,7 +669,8 @@ function neuerWettschein(t){
     success: function(data){
       var wID = data.currentWette_ID;
       // Tips eintragen
-      $.when(insertTip('A', wID), insertTip('B', wID), insertTip('C', wID), insertTip('D', wID), insertTip('E', wID), insertTip('F', wID)).done(function(){
+      $.when(insertTip('A', wID), insertTip('B', wID), insertTip('C', wID), insertTip('D', wID), insertTip('E', wID), insertTip('F', wID),
+      insertTipFS('AF',wID), insertTipFS('VF',wID), insertTipFS('HF',wID), insertTipFS('FINALE',wID), insertTipFS('WELTMEISTER',wID)).done(function(){
         if(t == 'WM'){
           $.when(insertTip('G', wID), insertTip('H', wID)).done(function(){
             //redirectTo("index.php");
@@ -712,7 +713,6 @@ function getTurniertyp(){
 // User-Content: Tips einer gruppe eintragen
 function insertTip(g, wID){
   $.each(getSpiele(g), function(id, obj){
-    console.log("löuft");
     $.ajax({
       type:"GET",
       data:"sid="+obj.Spiel_ID+"&Toto="+obj.Toto+"&wid="+wID,
@@ -721,6 +721,32 @@ function insertTip(g, wID){
         console.log("insert für Gruppe: "+g+" und WetteID: "+wID+" ok.");
       }
     });
+  });
+}
+
+function insertTipFS(g, wID){
+  $.each(getFSSpiele(g), function(id, obj){
+
+  });
+}
+
+// Teams aus Dropdowns auslesen (Finalspiele, die nach den Vorrunden)
+function getFSSpiele(g){
+  var json = [];
+  var th = 1; // "Zähler" für Spiele
+  var i = 1; // Zahl gerade: Team1, Zahl ungerade: Team2
+  var r = 0;
+  $('#tblCreateWette-'+g+' option:selected').each(function(){
+    th += 1; // "Zähler, itteriert durch alle Dropdowns"
+    var tID = $(this).val(); // Team_ID von aktuellem Dropdown
+    var splitted = $(this).parent().attr('id').split('-');
+    r = splitted[2];
+    if(th % 2 === 0){
+      i = 1;
+    }else{
+      i = 2
+    }
+    console.log(" Gruppe: "+g+" SpielNr: "+r+"Team_ID: "+tID+" Team"+i);
   });
 }
 

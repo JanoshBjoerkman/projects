@@ -50,6 +50,7 @@
   $sql .= "INSERT INTO gruppe VALUES (NULL, 'VF', '".$tid[0]."');";
   $sql .= "INSERT INTO gruppe VALUES (NULL, 'HF', '".$tid[0]."');";
   $sql .= "INSERT INTO gruppe VALUES (NULL, 'FINALE', '".$tid[0]."');";
+  $sql .= "INSERT INTO gruppe VALUES (NULL, 'WELTMEISTER', '".$tid[0]."');";
   mysqli_multi_query($db_link, $sql);
 
 ?>
