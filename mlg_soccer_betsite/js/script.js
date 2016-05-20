@@ -562,42 +562,42 @@ function readVorrundenForCreateWette(){
         // In welche Übersichtstabelle soll die Zeile?
         switch(data[i].Gruppenname){
           case 'A':
-              $("#createWetteVorrundeA").html("<h4>Gruppe A</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+              $("#createWetteVorrundeA").html("<h4 class='ueberschrift'>Gruppe A</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
                 <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
                 </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'B':
-            $("#createWetteVorrundeB").html("<h4>Gruppe B</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeB").html("<h4 class='ueberschrift'>Gruppe B</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'C':
-            $("#createWetteVorrundeC").html("<h4>Gruppe C</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeC").html("<h4 class='ueberschrift'>Gruppe C</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'D':
-            $("#createWetteVorrundeD").html("<h4>Gruppe D</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeD").html("<h4 class='ueberschrift'>Gruppe D</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'E':
-            $("#createWetteVorrundeE").html("<h4>Gruppe E</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeE").html("<h4 class='ueberschrift'>Gruppe E</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'F':
-            $("#createWetteVorrundeF").html("<h4>Gruppe F</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeF").html("<h4 class='ueberschrift'>Gruppe F</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'G':
-            $("#createWetteVorrundeG").html("<h4>Gruppe G</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeG").html("<h4 class='ueberschrift'>Gruppe G</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'H':
-            $("#createWetteVorrundeH").html("<h4>Gruppe H</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeH").html("<h4 class='ueberschrift'>Gruppe H</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;

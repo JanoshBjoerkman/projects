@@ -168,7 +168,12 @@ body.loading .loadingModal {
     display: block;
 }
 
-#createWetteVorrundeA, #createWetteVorrundeB, #createWetteVorrundeC, #createWetteVorrundeD, #createWetteVorrundeE, #createWetteVorrundeF, #createWetteVorrundeG, #createWetteVorrundeH,
+/*#createWetteVorrundeA, #createWetteVorrundeB, #createWetteVorrundeC, #createWetteVorrundeD, #createWetteVorrundeE, #createWetteVorrundeF, #createWetteVorrundeG, #createWetteVorrundeH,
 #createWetteGruppeAF, #createWetteGruppeVF, #createWetteGruppeHF, #createWetteGruppeFINALE{
   text-align: center;
+}*/
+
+.ueberschrift{
+  text-align: center;
+  font-size: 25px;
 }

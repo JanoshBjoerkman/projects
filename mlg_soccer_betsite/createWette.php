@@ -141,7 +141,7 @@
 					<div class="col-md-2">
 					</div>
           <div id="createWetteGruppeAF" class="col-md-8">
-						<h4>Achtel-Finale</h4>
+						<h4 class="ueberschrift">Achtel-Finale</h4>
 						<table id="tblCreateWette-AF" class="table">
 							<thead>
 			        <tr><th>#</th><th>Team 1</th><th>Team 2</th></tr>
@@ -261,7 +261,7 @@
 					<div class="col-md-2">
 					</div>
           <div id="createWetteGruppeVF" class="col-md-8">
-						<h4>Viertel-Finale</h4>
+						<h4 class="ueberschrift">Viertel-Finale</h4>
 						<table id="tblCreateWette-VF" class="table">
 							<thead>
 			        <tr><th>#</th><th>Team 1</th><th>Team 2</th></tr>
@@ -329,7 +329,7 @@
 					<div class="col-md-2">
 					</div>
           <div id="createWetteGruppeHF" class="col-md-8">
-						<h4>Halb-Finale</h4>
+						<h4 class="ueberschrift">Halb-Finale</h4>
 						<table id="tblCreateWette-HF" class="table">
 							<thead>
 			        <tr><th>#</th><th>Team 1</th><th>Team 2</th></tr>
@@ -371,7 +371,7 @@
 					<div class="col-md-2">
 					</div>
           <div id="createWetteGruppeFINALE" class="col-md-8">
-						<h4>Finale</h4>
+						<h4 class="ueberschrift">Finale</h4>
 						<table id="tblCreateWette-FINALE" class="table">
 							<thead>
 			        <tr><th>Team 1</th><th>Team 2</th></tr>
@@ -399,7 +399,7 @@
 					<div class="col-md-2">
 					</div>
 					<div id="createWetteGruppeWELTMEISTER" class="col-md-8">
-						<h4>Weltmeister</h4>
+						<h4 class="ueberschrift">Weltmeister</h4>
 						<table id="tblCreateWette-WELTMEISTER" class="table">
 							<tbody>
 								<tr>
