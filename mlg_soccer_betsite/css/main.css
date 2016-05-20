@@ -110,7 +110,7 @@ body{
 }
 
 #createWetteVorrundeA, #createWetteVorrundeB, #createWetteVorrundeC, #createWetteVorrundeD, #createWetteVorrundeE, #createWetteVorrundeF, #createWetteVorrundeG, #createWetteVorrundeH,
-#createWetteGruppeAF, #createWetteGruppeVF, #createWetteGruppeHF, #createWetteGruppeFINALE{
+#createWetteGruppeAF, #createWetteGruppeVF, #createWetteGruppeHF, #createWetteGruppeFINALE, #createWetteGruppeWELTMEISTER{
   font-size: 18px;
   background-color: rgba(204, 204, 204, 0.4);
   border-radius: 10px 10px 10px 10px;

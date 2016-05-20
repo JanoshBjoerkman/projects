@@ -12,7 +12,7 @@
 */
 
 var EDITRESULTSID = 0; // Globale Variable: Spiel_ID des zu editierenden Resultats
-var TURNIERTYP = ""; // Globale Variable: Typ des aktiven Turniers
+
 
 //Initialisierung der Website, wird nur einmal ausgeführt (sobald die das komplette Dokument (Webseite) geladen ist)
 $(document).ready(function(){
@@ -60,7 +60,7 @@ function editSpiel(id){
 }
 
 $('#btnMeineWettenCreate').click(function(){
-  window.location.href = "createWette.php";
+  redirectTo("createWette.php");
 });
 
 $('#btnMeineWetten').click(function(){
@@ -391,7 +391,7 @@ function readGames(){
   $.ajax({
     url:"./read/readGames.php",
     data:"",
-    dataType:"JSON",
+    dataType:"json",
     success: function(data){
       var anzahlReihen = data.length; // anzahl Reihen aus DB-Abfrage
       // HINT: anzalhReihen/2 = anzahl "realer" Spiele
@@ -497,7 +497,7 @@ function readWetten(){
   $.ajax({
     url:"./read/readWetten.php",
     data:"",
-    dataType:"JSON",
+    dataType:"json",
     success: function(data){
       var tbl = "";
       var zaehler = 0;
@@ -534,7 +534,7 @@ function deleteWette(id){
 }
 
 function editWetteOnClick(id){
-  window.location.href = "editWette.php?id="+id;
+  redirectTo("editWette.php?id="+id);
 }
 
 // User-Content: Wettscheine für createWette.php
@@ -542,7 +542,7 @@ function readVorrundenForCreateWette(){
   $.ajax({
     url:"./read/readGames.php",
     data:"",
-    dataType:"JSON",
+    dataType:"json",
     success: function(data){
       var anzahlReihen = data.length; // anzahl Reihen aus DB-Abfrage
       // HINT: anzalhReihen/2 = anzahl "realer" Spiele
@@ -617,6 +617,9 @@ function readVorrundenForCreateWette(){
 // User-Content: Wettschein erstellen
 $('#btnCreateWetteErstellen').click(function(){
   getTurniertyp(); // Turniertyp herausfinden und in (leider) globale Variable schreiben
+});
+
+function checkWettscheinProcedure(t){
   // alle Tips ausgefüllt?
   if(checkWettscheinVorrunden("A")){
     if(checkWettscheinVorrunden("B")){
@@ -624,20 +627,19 @@ $('#btnCreateWetteErstellen').click(function(){
         if(checkWettscheinVorrunden("D")){
           if(checkWettscheinVorrunden("E")){
             if(checkWettscheinVorrunden("F")){
-              if(TURNIERTYP == "WM"){ // bei WM Gruppe G & H überprüfen
+              if(t == 'WM'){ // bei WM Gruppe G & H überprüfen
                 if(checkWettscheinVorrunden("G")){
                   if(checkWettscheinVorrunden("H")){
-                    neuerWettschein(); // neue Wette erstellen + alle Tips in DB schreiben
-                    window.location.href = "index.php"; // auf index umleiten
+                    neuerWettschein(t); // neue Wette erstellen + alle Tips in DB schreiben
                   }else{
                     alert("Bitte füllen Sie alle Tips der Gruppe: H aus.");
                   }
                 }else{
                   alert("Bitte füllen Sie alle Tips der Gruppe: G aus.");
                 }
+              }else{
+                neuerWettschein(t); // neue Wette erstellen + alle Tips in DB schreiben
               }
-              neuerWettschein(); // neue Wette erstellen + alle Tips in DB schreiben
-              window.location.href = "index.php"; // auf index umleiten
             }else{
               alert("Bitte füllen Sie alle Tips der Gruppe: F aus.");
             }
@@ -656,30 +658,26 @@ $('#btnCreateWetteErstellen').click(function(){
   }else{
     alert("Bitte füllen Sie alle Tips der Gruppe: A aus.");
   }
-});
+}
 
 // User-Content: Wettschein erstellen
-function neuerWettschein(){
+function neuerWettschein(t){
     $.ajax({
     url:"./insert/insertWette.php",
     data:"",
-    dataType:"JSON",
+    dataType:"json",
     success: function(data){
-      var wID = "";
-      $.each(data, function(id, obj){
-        wID = obj;
-      });
+      var wID = data.currentWette_ID;
       // Tips eintragen
-      insertTip("A", wID);
-      insertTip("B", wID);
-      insertTip("C", wID);
-      insertTip("D", wID);
-      insertTip("E", wID);
-      insertTip("F", wID);
-      if(TURNIERTYP == "WM"){
-        insertTip("G", wID);
-        insertTip("H", wID);
-      }
+      $.when(insertTip('A', wID), insertTip('B', wID), insertTip('C', wID), insertTip('D', wID), insertTip('E', wID), insertTip('F', wID)).done(function(){
+        if(t == 'WM'){
+          $.when(insertTip('G', wID), insertTip('H', wID)).done(function(){
+            //redirectTo("index.php");
+          });
+        }else{
+          //redirectTo("index.php");
+        }
+      });
     }
   });
 }
@@ -699,16 +697,14 @@ function checkWettscheinVorrunden(g){
 
 // User-Content: EM oder WM?
 function getTurniertyp(){
-    var turniertyp = "";
+    var TURNIERTYP = "";
     $.ajax({
       url:"./read/readAktuelleTurniere.php",
       data:"",
       dataType: "JSON",
       success: function(data){
-        var tabelle = "";
-        $.each(data, function(id, obj){
-          TURNIERTYP = obj.Typ;
-        });
+        TURNIERTYP = data[0].Typ;
+        checkWettscheinProcedure(TURNIERTYP);
       }
     });
 };
@@ -716,6 +712,7 @@ function getTurniertyp(){
 // User-Content: Tips einer gruppe eintragen
 function insertTip(g, wID){
   $.each(getSpiele(g), function(id, obj){
+    console.log("löuft");
     $.ajax({
       type:"GET",
       data:"sid="+obj.Spiel_ID+"&Toto="+obj.Toto+"&wid="+wID,
@@ -751,75 +748,19 @@ function getSpiele(g){
 
 function readGamesForCreateWette(){
   $.ajax({
-    url:"./read/readGames.php",
+    url:"./read/readTeams.php",
     data:"",
-    dataType:"JSON",
+    dataType: "JSON",
     success: function(data){
-      var anzahlReihen = data.length; // anzahl Reihen aus DB-Abfrage
-      // HINT: anzalhReihen/2 = anzahl "realer" Spiele
-      var tbl = ""; // Tabelle für Übersicht
-      var z = 1; // Spiel_NR (Zähler) für AF,VF,HF,FINALE
-      for(i = 0; i < anzahlReihen; i+=2){ // solange Index aktuelles Spiel kleiner als anzahl Reihen aus DB-Abfrage -> Zeile in Übersichtstabelle erstellen,
-                                          //danach zum nächsten Spiel gehen (i+2: 2 aufeinanderfolgende Reihen gehören immer zum selben Spiel).
-                                          // Team1 = aktuelles JSON-Objekt-Land, Team2 = nächstes JSON-Objekt-Land
-        tbl += "<tr>\
-          <td>"+z+"</td>\
-          <td>\
-            <div class='col-sm-8'>\
-              <select class='form-control' id='createWetteSpielGruppe-"+data[i].Gruppenname+"-"+data[i].Spiel_ID+"' required></select>\
-            </div>\
-          </td>\
-          <td>\
-            <div class='col-sm-8'>\
-              <select class='form-control' id='createWetteSpielGruppe-"+data[i+1].Gruppenname+"-"+data[i+1].Spiel_ID+"' required></select>\
-            </div>\
-          </td>\
-          </tr>";
-        z += 1;
-        // In welche Übersichtstabelle soll die Zeile?
-        switch(data[i].Gruppenname){
-          case 'AF':
-            $("#createWetteGruppeAF").html("<h4>Achtel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
-              <tr><th>#</th><th>Team1</th><th>Team2</th></tr>\
-              </thead><tbody>"+tbl+"</tbody></table>");
-            break;
-          case 'VF':
-            $("#createWetteGruppeVF").html("<h4>Viertel-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
-              <tr><th>#</th><th>Team1</th><th>Team2</th></tr>\
-              </thead><tbody>"+tbl+"</tbody></table>");
-            break;
-          case 'HF':
-            $("#createWetteGruppeHF").html("<h4>Halb-Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
-              <tr><th>#</th><th>Team1</th><th>Team2</th></tr>\
-              </thead><tbody>"+tbl+"</tbody></table>");
-            break;
-          case 'FINALE':
-            $("#createWetteGruppeFINALE").html("<h4>Finale</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
-              <tr><th>#</th><th>Team1</th><th>Team2</th></tr>\
-              </thead><tbody>"+tbl+"</tbody></table>");
-            break;
-        }
-        // ist das aktuelles Spiel nicht das letzte?
-        if(i < anzahlReihen-2){
-          // wenn das nächste Spiel nicht in der selben Gruppe ist, neue tbl leeren
-          if(data[i+2].Gruppenname != data[i].Gruppenname){
-            tbl = "";
-            z = 1; // Zähler zurücksetzen
-          }
-        }
-      }
-      $.ajax({
-        url:"./read/readTeams.php",
-        data:"",
-        dataType: "JSON",
-        success: function(data){
-          var dropdown = "";
-          $.each(data, function(id, obj){
-            dropdown += "<option value="+obj.Team_ID+">"+obj.Land+"</option>";
-          });
-          $("[id^=createWetteSpielGruppe]").html(dropdown);
-        }
+      var dropdown = "";
+      $.each(data, function(id, obj){
+        dropdown += "<option value="+obj.Team_ID+">"+obj.Land+"</option>";
       });
+      $("[id^=createWetteSpielGruppe]").html(dropdown);
     }
   });
+}
+
+function redirectTo(url){
+  window.location.replace(url);
 }
