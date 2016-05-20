@@ -32,7 +32,7 @@ $(document).ready(function(){
             {
               $('#userContent').hide(function(){
                 $('#welcomeMessage').hide();
-                $('#welcomeMessage').html("<a id='gamelink' href='../game.php'><h2>Hallo "+userVorname+".</h2></a>");
+                $('#welcomeMessage').html("<h2>Hallo "+userVorname+".</h2>");
                 $('#welcomeMessage').fadeIn(1000).fadeOut(1000, function(){
                   $('#userContent').fadeIn(2000);
                 });
@@ -562,42 +562,42 @@ function readVorrundenForCreateWette(){
         // In welche Übersichtstabelle soll die Zeile?
         switch(data[i].Gruppenname){
           case 'A':
-              $("#createWetteVorrundeA").html("<h4>A</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+              $("#createWetteVorrundeA").html("<h4>Gruppe A</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
                 <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
                 </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'B':
-            $("#createWetteVorrundeB").html("<h4>B</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeB").html("<h4>Gruppe B</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'C':
-            $("#createWetteVorrundeC").html("<h4>C</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeC").html("<h4>Gruppe C</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'D':
-            $("#createWetteVorrundeD").html("<h4>D</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeD").html("<h4>Gruppe D</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'E':
-            $("#createWetteVorrundeE").html("<h4>E</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeE").html("<h4>Gruppe E</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'F':
-            $("#createWetteVorrundeF").html("<h4>F</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeF").html("<h4>Gruppe F</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'G':
-            $("#createWetteVorrundeG").html("<h4>G</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeG").html("<h4>Gruppe G</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;
           case 'H':
-            $("#createWetteVorrundeH").html("<h4>H</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
+            $("#createWetteVorrundeH").html("<h4>Gruppe H</h4><table id='tblCreateWette-"+data[i].Gruppenname+"' class='table'><thead>\
               <tr><th>Datum</th><th>Team1</th><th>Team2</th><th>1</th><th>X</th><th>2</th></tr>\
               </thead><tbody>"+tbl+"</tbody></table>");
             break;

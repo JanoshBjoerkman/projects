@@ -167,3 +167,8 @@ body.loading {
 body.loading .loadingModal {
     display: block;
 }
+
+#createWetteVorrundeA, #createWetteVorrundeB, #createWetteVorrundeC, #createWetteVorrundeD, #createWetteVorrundeE, #createWetteVorrundeF, #createWetteVorrundeG, #createWetteVorrundeH,
+#createWetteGruppeAF, #createWetteGruppeVF, #createWetteGruppeHF, #createWetteGruppeFINALE{
+  text-align: center;
+}
