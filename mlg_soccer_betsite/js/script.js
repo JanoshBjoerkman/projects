@@ -12,7 +12,7 @@
 */
 
 var EDITRESULTSID = 0; // Globale Variable: Spiel_ID des zu editierenden Resultats
-var TURNIERTYP = ""; // Globale Variable: Typ des aktiven Turniers
+
 
 //Initialisierung der Website, wird nur einmal ausgeführt (sobald die das komplette Dokument (Webseite) geladen ist)
 $(document).ready(function(){
@@ -60,7 +60,7 @@ function editSpiel(id){
 }
 
 $('#btnMeineWettenCreate').click(function(){
-  window.location.href = "createWette.php";
+  redirectTo("createWette.php");
 });
 
 $('#btnMeineWetten').click(function(){
@@ -391,7 +391,7 @@ function readGames(){
   $.ajax({
     url:"./read/readGames.php",
     data:"",
-    dataType:"JSON",
+    dataType:"json",
     success: function(data){
       var anzahlReihen = data.length; // anzahl Reihen aus DB-Abfrage
       // HINT: anzalhReihen/2 = anzahl "realer" Spiele
@@ -497,7 +497,7 @@ function readWetten(){
   $.ajax({
     url:"./read/readWetten.php",
     data:"",
-    dataType:"JSON",
+    dataType:"json",
     success: function(data){
       var tbl = "";
       var zaehler = 0;
@@ -534,7 +534,7 @@ function deleteWette(id){
 }
 
 function editWetteOnClick(id){
-  window.location.href = "editWette.php?id="+id;
+  redirectTo("editWette.php?id="+id);
 }
 
 // User-Content: Wettscheine für createWette.php
@@ -542,7 +542,7 @@ function readVorrundenForCreateWette(){
   $.ajax({
     url:"./read/readGames.php",
     data:"",
-    dataType:"JSON",
+    dataType:"json",
     success: function(data){
       var anzahlReihen = data.length; // anzahl Reihen aus DB-Abfrage
       // HINT: anzalhReihen/2 = anzahl "realer" Spiele
@@ -617,6 +617,9 @@ function readVorrundenForCreateWette(){
 // User-Content: Wettschein erstellen
 $('#btnCreateWetteErstellen').click(function(){
   getTurniertyp(); // Turniertyp herausfinden und in (leider) globale Variable schreiben
+});
+
+function checkWettscheinProcedure(t){
   // alle Tips ausgefüllt?
   if(checkWettscheinVorrunden("A")){
     if(checkWettscheinVorrunden("B")){
@@ -624,20 +627,19 @@ $('#btnCreateWetteErstellen').click(function(){
         if(checkWettscheinVorrunden("D")){
           if(checkWettscheinVorrunden("E")){
             if(checkWettscheinVorrunden("F")){
-              if(TURNIERTYP == "WM"){ // bei WM Gruppe G & H überprüfen
+              if(t == 'WM'){ // bei WM Gruppe G & H überprüfen
                 if(checkWettscheinVorrunden("G")){
                   if(checkWettscheinVorrunden("H")){
-                    neuerWettschein(); // neue Wette erstellen + alle Tips in DB schreiben
-                    window.location.href = "index.php"; // auf index umleiten
+                    neuerWettschein(t); // neue Wette erstellen + alle Tips in DB schreiben
                   }else{
                     alert("Bitte füllen Sie alle Tips der Gruppe: H aus.");
                   }
                 }else{
                   alert("Bitte füllen Sie alle Tips der Gruppe: G aus.");
                 }
+              }else{
+                neuerWettschein(t); // neue Wette erstellen + alle Tips in DB schreiben
               }
-              neuerWettschein(); // neue Wette erstellen + alle Tips in DB schreiben
-              window.location.href = "index.php"; // auf index umleiten
             }else{
               alert("Bitte füllen Sie alle Tips der Gruppe: F aus.");
             }
@@ -656,30 +658,26 @@ $('#btnCreateWetteErstellen').click(function(){
   }else{
     alert("Bitte füllen Sie alle Tips der Gruppe: A aus.");
   }
-});
+}
 
 // User-Content: Wettschein erstellen
-function neuerWettschein(){
+function neuerWettschein(t){
     $.ajax({
     url:"./insert/insertWette.php",
     data:"",
-    dataType:"JSON",
+    dataType:"json",
     success: function(data){
-      var wID = "";
-      $.each(data, function(id, obj){
-        wID = obj;
-      });
+      var wID = data.currentWette_ID;
       // Tips eintragen
-      insertTip("A", wID);
-      insertTip("B", wID);
-      insertTip("C", wID);
-      insertTip("D", wID);
-      insertTip("E", wID);
-      insertTip("F", wID);
-      if(TURNIERTYP == "WM"){
-        insertTip("G", wID);
-        insertTip("H", wID);
-      }
+      $.when(insertTip('A', wID), insertTip('B', wID), insertTip('C', wID), insertTip('D', wID), insertTip('E', wID), insertTip('F', wID)).done(function(){
+        if(t == 'WM'){
+          $.when(insertTip('G', wID), insertTip('H', wID)).done(function(){
+            //redirectTo("index.php");
+          });
+        }else{
+          //redirectTo("index.php");
+        }
+      });
     }
   });
 }
@@ -699,16 +697,14 @@ function checkWettscheinVorrunden(g){
 
 // User-Content: EM oder WM?
 function getTurniertyp(){
-    var turniertyp = "";
+    var TURNIERTYP = "";
     $.ajax({
       url:"./read/readAktuelleTurniere.php",
       data:"",
       dataType: "JSON",
       success: function(data){
-        var tabelle = "";
-        $.each(data, function(id, obj){
-          TURNIERTYP = obj.Typ;
-        });
+        TURNIERTYP = data[0].Typ;
+        checkWettscheinProcedure(TURNIERTYP);
       }
     });
 };
@@ -716,6 +712,7 @@ function getTurniertyp(){
 // User-Content: Tips einer gruppe eintragen
 function insertTip(g, wID){
   $.each(getSpiele(g), function(id, obj){
+    console.log("löuft");
     $.ajax({
       type:"GET",
       data:"sid="+obj.Spiel_ID+"&Toto="+obj.Toto+"&wid="+wID,
@@ -762,4 +759,8 @@ function readGamesForCreateWette(){
       $("[id^=createWetteSpielGruppe]").html(dropdown);
     }
   });
+}
+
+function redirectTo(url){
+  window.location.replace(url);
 }
