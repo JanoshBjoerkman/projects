@@ -380,12 +380,12 @@
 								<tr>
 				          <td>
 				            <div class="col-sm-8">
-				              <select class="form-control" id="createWetteSpielGruppe-HF-1-1" required></select>
+				              <select class="form-control" id="createWetteSpielGruppe-FINALE-1-1" required></select>
 				            </div>
 				          </td>
 				          <td>
 										<div class="col-sm-8">
-				              <select class="form-control" id="createWetteSpielGruppe-HF-1-2" required></select>
+				              <select class="form-control" id="createWetteSpielGruppe-FINALE-1-2" required></select>
 				            </div>
 				          </td>
 					      </tr>
@@ -406,7 +406,7 @@
 									<th scope="row">Team</th>
 									<td>
 										<div class="col-sm-8">
-											<select class="form-control" id="createWetteSpielGruppe-HF-1-2" required></select>
+											<select class="form-control" id="createWetteSpielGruppe-WELTMEISTER-1-1" required></select>
 										</div>
 									</td>
 								</tr>

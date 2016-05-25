@@ -718,7 +718,7 @@ function insertTip(g, wID){
       data:"sid="+obj.Spiel_ID+"&Toto="+obj.Toto+"&wid="+wID,
       url:"./insert/insertTip.php",
       success: function(){
-        console.log("insert für Gruppe: "+g+" und WetteID: "+wID+" ok.");
+        //console.log("insert für Gruppe: "+g+" und WetteID: "+wID+" ok.");
       }
     });
   });
@@ -733,21 +733,18 @@ function insertTipFS(g, wID){
 // Teams aus Dropdowns auslesen (Finalspiele, die nach den Vorrunden)
 function getFSSpiele(g){
   var json = [];
-  var th = 1; // "Zähler" für Spiele
   var i = 1; // Zahl gerade: Team1, Zahl ungerade: Team2
-  var r = 0;
+  var sn = 0; // Spielnummer in Gruppe
   $('#tblCreateWette-'+g+' option:selected').each(function(){
-    th += 1; // "Zähler, itteriert durch alle Dropdowns"
-    var tID = $(this).val(); // Team_ID von aktuellem Dropdown
+    var item = {};
+    item['team_ID'] = $(this).val(); // Team_ID von aktuellem Dropdown
     var splitted = $(this).parent().attr('id').split('-');
-    r = splitted[2];
-    if(th % 2 === 0){
-      i = 1;
-    }else{
-      i = 2
-    }
-    console.log(" Gruppe: "+g+" SpielNr: "+r+"Team_ID: "+tID+" Team"+i);
+    item['spielNr'] = splitted[2];
+    item['team'] = splitted[3];
+    json.push(item);
+    //console.log(" Gruppe: "+g+" SpielNr: "+item['spielNr']+" Team"+item['team']+"Team_ID: "+item['team_ID']);
   });
+  return json;
 }
 
 // User-Content: gibt Tips von User für mitgegebene Tabelle als Objekt zurück

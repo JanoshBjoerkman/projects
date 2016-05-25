@@ -114,10 +114,24 @@
 	Home_Team varchar(50),
 	Guest_Team varchar(50),
 	Toto varchar(1),
-	Spiel_ID int NOT NULL,
+	Spiel_ID int,
 	Wette_ID int NOT NULL,
 	PRIMARY KEY (Tip_ID),
 	FOREIGN KEY (Spiel_ID) REFERENCES spiel(Spiel_ID) ON DELETE CASCADE,
+	FOREIGN KEY (Wette_ID) REFERENCES wette(Wette_ID) ON DELETE CASCADE
+	) ENGINE=InnoDB';
+	mysqli_query($db_link, $sql);
+
+	//tipFS
+	$sql = 'CREATE TABLE IF NOT EXISTS tipFS(
+	TipFS_ID int NOT NULL AUTO_INCREMENT,
+	Team1_ID varchar(50),
+	Team2_ID varchar(50),
+	Gruppe_ID int NOT NULL,
+	Spiel_Nr int NOT NULL,
+	Wette_ID int NOT NULL,
+	PRIMARY KEY (Tip_ID),
+	FOREIGN KEY (Gruppe_ID) REFERENCES gruppe(Gruppe_ID) ON DELETE CASCADE,
 	FOREIGN KEY (Wette_ID) REFERENCES wette(Wette_ID) ON DELETE CASCADE
 	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
