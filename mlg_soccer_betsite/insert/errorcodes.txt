@@ -1,0 +1,12 @@
+====================================Liste der Fehlercodes====================================
+
+Vorziffer:                          Ebene:
+=============================       =================================
+1                                   Administrator
+2                                   User (eingeloggt)
+3                                   Gast (nicht eingeloggt)
+
+
+Code:                               Fehler:
+=============================       =================================
+2_CW_ITFS_CNFEG                     Funktion insertTipFS in js/script.js fand keinen gleichen Gruppenname zum mitgebenen Gruppennamen

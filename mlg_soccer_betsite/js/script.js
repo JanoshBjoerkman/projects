@@ -1,6 +1,6 @@
 /*
   Autor:              Janosh Björkman
-  Letzte Änderung:    18.05.2016
+  Letzte Änderung:    26.05.2016
   Projekt:            Fussballwetten-Online
 
   Kleine Info:        jQuery ist der Grund, wieso diese Webseite nicht neu geladen wird, obwohl man Änderungen in der Datenbank
@@ -12,7 +12,6 @@
 */
 
 var EDITRESULTSID = 0; // Globale Variable: Spiel_ID des zu editierenden Resultats
-
 
 //Initialisierung der Website, wird nur einmal ausgeführt (sobald die das komplette Dokument (Webseite) geladen ist)
 $(document).ready(function(){
@@ -670,13 +669,13 @@ function neuerWettschein(t){
       var wID = data.currentWette_ID;
       // Tips eintragen
       $.when(insertTip('A', wID), insertTip('B', wID), insertTip('C', wID), insertTip('D', wID), insertTip('E', wID), insertTip('F', wID),
-      insertTipFS('AF',wID), insertTipFS('VF',wID), insertTipFS('HF',wID), insertTipFS('FINALE',wID), insertTipFS('WELTMEISTER',wID)).done(function(){
+      insertTipFS('AF', wID), insertTipFS('VF', wID), insertTipFS('HF', wID), insertTipFS('FINALE', wID), insertTipFS('WELTMEISTER', wID)).done(function(iA, iB, iC, iD, iE, iF, iAF, iVF, iHF, iFINALE, iWELTMEISTER){
         if(t == 'WM'){
-          $.when(insertTip('G', wID), insertTip('H', wID)).done(function(){
-            //redirectTo("index.php");
+          $.when(insertTip('G', wID), insertTip('H', wID)).done(function(iG, iH){
+            redirectTo("index.php");
           });
         }else{
-          //redirectTo("index.php");
+          redirectTo("index.php");
         }
       });
     }
@@ -712,7 +711,7 @@ function getTurniertyp(){
 
 // User-Content: Tips einer gruppe eintragen
 function insertTip(g, wID){
-  $.each(getSpiele(g), function(id, obj){
+  return $.each(getSpiele(g), function(id, obj){
     $.ajax({
       type:"GET",
       data:"sid="+obj.Spiel_ID+"&Toto="+obj.Toto+"&wid="+wID,
@@ -725,8 +724,50 @@ function insertTip(g, wID){
 }
 
 function insertTipFS(g, wID){
-  $.each(getFSSpiele(g), function(id, obj){
-
+  return $.ajax({
+    url:"./read/readGruppen.php",
+    data:"",
+    dataType:"json",
+    success: function(data){
+      var gID = 0;
+      $.each(data, function(id, obj){
+        if(g == obj.Gruppenname){
+          gID = obj.Gruppe_ID
+        }
+      });
+      if(gID != 0){
+        var s = getFSSpiele(g);
+        for(i = 0; i < s.length; i += 2){
+          switch (g) {
+            case 'AF':
+            case 'VF':
+            case 'HF':
+            case 'FINALE':
+              $.ajax({
+                type:"GET",
+                data:"t1="+s[i].team_ID+"&t2="+s[i+1].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,
+                url:"./insert/insertTipFS.php",
+                success: function(data){
+                  // console.log("insertTipFS läuft");
+                }
+              });
+                break;
+            case 'WELTMEISTER':
+              $.ajax({
+                type:"GET",
+                data:"t1="+s[i].team_ID+"&t2="+s[i].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,
+                url:"./insert/insertTipFS.php",
+                success: function(data){
+                  // console.log("insertTipFS WELTMEISTER läuft");
+                }
+              });
+                break;
+          }
+        }
+      }else{
+        alert("Es tut uns leid, irgendetwas ist schief gelaufen.\nBitte wenden Sie sich an den Administrator.\nFehlercode: 2_CW_ITFS_CNFEG");
+      }
+    }
   });
 }
 
