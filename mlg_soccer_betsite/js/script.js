@@ -558,109 +558,94 @@ function checkWettscheinProcedure(t){
 function neuerWettschein(t){
   $.ajax({url:"./insert/insertWette.php",data:"",dataType:"json"}).done(function(data){
     var wID = data.currentWette_ID;
-    // Tips eintragen
-    $.when.apply(null, insertTip('A', wID)).done(function(){
-      console.log("A fertig");
-      $.when.apply(null, insertTip('B', wID)).done(function(){
-        console.log("B fertig");
-        $.when.apply(null, insertTip('C', wID)).done(function(){
-          console.log("C fertig");
-          $.when.apply(null, insertTip('D', wID)).done(function(){
-            console.log("D fertig");
-            $.when.apply(null, insertTip('E', wID)).done(function(){
-              console.log("E fertig");
-              $.when.apply(null, insertTip('F', wID)).done(function(){
-                console.log("F fertig");
-                $.when.apply(null, insertTipFS('AF', wID)).done(function(){
-                  console.log("AF fertig");
-                  $.when.apply(null, insertTipFS('VF', wID)).done(function(){
-                    console.log("VF fertig");
-                    $.when.apply(null, insertTipFS('HF', wID)).done(function(){
-                      console.log("HF fertig");
-                      $.when.apply(null, insertTipFS('FINALE', wID)).done(function(){
-                        console.log("Finale fertig");
-                        $.when.apply(null, insertTipFS('WELTMEISTER', wID)).done(function(){
-                          console.log("WELTMEISTER fertig");
-                          if(t == 'WM'){
-                            console.log('wm -> insert g und h');
-                            $.when.apply(null, insertTip('G', wID)).done(function(){
-                              $.when.apply(null, insertTip('H', wID)).done(function(){
-                                redirectTo('index.php');
-                              });
-                            });
-                          }else{
-                            console.log('em -> redirect');
-                            redirectTo('index.php');
-                          }
-                        });
-                      });
-                    });
-                  });
-                });
-              });
-            });
-          });
+    $.when(insertTip('A', wID), insertTip('B', wID), insertTip('C', wID), insertTip('D', wID), insertTip('E', wID), insertTip('F', wID),
+    FSa('AF', wID), FSa('VF', wID), FSa('HF', wID), FSa('FINALE', wID), FSa('WELTMEISTER', wID)).done(function(){
+      console.log('insert complete, check if wm');
+      console.log('Turniertyp: '+t);
+      if(t == 'WM'){
+        $.when(insertTip('G', wID), insertTip('H', wID)).done(function(){
+          redirectTo('index.php');
         });
-      });
+      }
+      redirectTo('index.php');
     });
-
-    // $.when(insertTip('A', wID), insertTip('B', wID), insertTip('C', wID), insertTip('D', wID), insertTip('E', wID), insertTip('F', wID),
-    // insertTipFS('AF', wID), insertTipFS('VF', wID), insertTipFS('HF', wID), insertTipFS('FINALE', wID), insertTipFS('WELTMEISTER', wID)).done(function(){
-    //   if(t == 'WM'){
-    //     $.when(insertTip('G', wID), insertTip('H', wID)).done(function(iG, iH){
-    //       //redirectTo("index.php");
-    //     });
-    //   }else{
-    //     //redirectTo("index.php");
-    //   }
-    // });
   });
 }
 
 // User-Content: Tips einer gruppe eintragen
 function insertTip(g, wID){
-  var deferreds = [];
+  var def = $.Deferred(), requests = [];
   $.each(getSpiele(g), function(id, obj){
-    deferreds.push($.ajax({type:"GET", data:"sid="+obj.Spiel_ID+"&Toto="+obj.Toto+"&wid="+wID, url:"./insert/insertTip.php"}));
+    requests.push($.ajax({type:"GET", data:"sid="+obj.Spiel_ID+"&Toto="+obj.Toto+"&wid="+wID, url:"./insert/insertTip.php"}).done(function(){
+      console.log("insertTip mit SID: "+obj.Spiel_ID+" erfolgreich");
+    }));
   });
-  return deferreds;
+  $.when.apply($, requests).then(function(){ def.resolve(); });
+  return def.promise();
 }
 
-function insertTipFS(g, wID){
-  var deferreds = [];
-  deferreds.push($.ajax({url:"./read/readGruppen.php",data:"",dataType:"json"}).done(function(data){
-    var gID = 0;
+function FSa(g, wID){
+  var def = $.Deferred();
+  $.ajax({url:"./read/readGruppen.php",data:"",dataType:"json"}).done(function(data){
+    var requests = [];
     $.each(data, function(id, obj){
       if(g == obj.Gruppenname){
         gID = obj.Gruppe_ID;
       }
     });
-    if(gID != 0){
-      var s = getFSSpiele(g);
-      for(i = 0; i < s.length; i += 2){
-        if(g == 'WELTMEISTER'){
-          $.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"});
-        }else{
-          $.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i+1].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"});
-        }
-        // switch (g) {
-        //   case 'AF':
-        //   case 'VF':
-        //   case 'HF':
-        //   case 'FINALE':
-        //     $.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i+1].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"});
-        //       break;
-        //   case 'WELTMEISTER':
-        //     $.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"});
-        //       break;
-        // }
+    var s = getFSSpiele(g);
+    for(i = 0; i < s.length; i += 2){
+      if(g == 'WELTMEISTER'){
+        requests.push(FSc(s, i, gID, wID));
+      }else{
+        requests.push(FSb(s, i, gID, wID));
       }
-    }else{
-      alert("Es tut uns leid, irgendetwas ist schief gelaufen.\nBitte wenden Sie sich an den Administrator.\nFehlercode: 2_CW_ITFS_CNFEG");
     }
-  }));
-  return deferreds;
+    $.when.apply($, requests).then(function() { def.resolve(); });
+  });
+  return def.promise();
 }
+
+function FSc(s, i, gID, wID){
+  var def = $.Deferred(), requests = [];
+  requests.push($.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"}).done(function(){
+    console.log('insert Weltmeister fertig');
+  }));
+  $.when.apply($, requests).then(function() { def.resolve(); });
+  return def.promise();
+}
+
+function FSb(s, i, gID, wID){
+  var def = $.Deferred(), requests = [];
+  requests.push($.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i+1].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"}).done(function(){
+    console.log('insert Vorrunde fertig');
+  }));
+  $.when.apply($, requests).then(function() { def.resolve(); });
+  return def.promise();
+}
+
+// function insertTipFS(g, wID){
+//   var requests = [];
+//   requests.push($.ajax({url:"./read/readGruppen.php",data:"",dataType:"json"}).done(function(data){
+//     var gID = null;
+//     $.each(data, function(id, obj){
+//       if(g == obj.Gruppenname){
+//         gID = obj.Gruppe_ID;
+//         console.log("Gruppe mitgegeben: "+g+".\nGruppenID aus php: "+gID);
+//       }
+//     });
+//     var s = getFSSpiele(g);
+//     for(i = 0; i < s.length; i += 2){
+//       if(g == 'WELTMEISTER'){
+//         console.log(g);
+//         $.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"});
+//       }else{
+//         $.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i+1].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"});
+//       }
+//     }
+//   }));
+//   return requests;
+// }
 
 // Teams aus Dropdowns auslesen (Finalspiele, die nach den Vorrunden)
 function getFSSpiele(g){

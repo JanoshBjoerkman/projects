@@ -1,7 +1,6 @@
 <?php
   session_start();
   require '../connect.php';
-  header("Content-Type: text/html;charset=UTF-8");
   // check if teams are set
   if(isset($_GET['t1'])){
     $t1 = $_GET['t1'];
