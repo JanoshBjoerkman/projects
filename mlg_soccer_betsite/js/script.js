@@ -584,6 +584,7 @@ function insertTip(g, wID){
   return def.promise();
 }
 
+// Wettschein: Spiele-nach-Vorrunde-Procedre beginnen
 function FSa(g, wID){
   var def = $.Deferred();
   $.ajax({url:"./read/readGruppen.php",data:"",dataType:"json"}).done(function(data){
@@ -606,6 +607,7 @@ function FSa(g, wID){
   return def.promise();
 }
 
+// Wettschein: Weltmeister eintragen
 function FSc(s, i, gID, wID){
   var def = $.Deferred(), requests = [];
   requests.push($.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"}).done(function(){
@@ -615,6 +617,7 @@ function FSc(s, i, gID, wID){
   return def.promise();
 }
 
+// Wettschein: Spiele nach Vorrunden eintragen(ausser Weltmeister)
 function FSb(s, i, gID, wID){
   var def = $.Deferred(), requests = [];
   requests.push($.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i+1].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"}).done(function(){
@@ -623,29 +626,6 @@ function FSb(s, i, gID, wID){
   $.when.apply($, requests).then(function() { def.resolve(); });
   return def.promise();
 }
-
-// function insertTipFS(g, wID){
-//   var requests = [];
-//   requests.push($.ajax({url:"./read/readGruppen.php",data:"",dataType:"json"}).done(function(data){
-//     var gID = null;
-//     $.each(data, function(id, obj){
-//       if(g == obj.Gruppenname){
-//         gID = obj.Gruppe_ID;
-//         console.log("Gruppe mitgegeben: "+g+".\nGruppenID aus php: "+gID);
-//       }
-//     });
-//     var s = getFSSpiele(g);
-//     for(i = 0; i < s.length; i += 2){
-//       if(g == 'WELTMEISTER'){
-//         console.log(g);
-//         $.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"});
-//       }else{
-//         $.ajax({type:"GET",data:"t1="+s[i].team_ID+"&t2="+s[i+1].team_ID+"&gID="+gID+"&sNr="+s[i].spielNr+"&w="+wID,url:"./insert/insertTipFS.php"});
-//       }
-//     }
-//   }));
-//   return requests;
-// }
 
 // Teams aus Dropdowns auslesen (Finalspiele, die nach den Vorrunden)
 function getFSSpiele(g){
