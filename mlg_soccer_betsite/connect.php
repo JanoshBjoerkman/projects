@@ -111,8 +111,6 @@
 	//tip
 	$sql = 'CREATE TABLE IF NOT EXISTS tip(
 	Tip_ID int NOT NULL AUTO_INCREMENT,
-	Home_Team varchar(50),
-	Guest_Team varchar(50),
 	Toto varchar(1),
 	Spiel_ID int,
 	Wette_ID int NOT NULL,
@@ -130,7 +128,7 @@
 	Spiel_Nr int NOT NULL,
 	Gruppe_ID int NOT NULL,
 	Wette_ID int NOT NULL,
-	PRIMARY KEY (Tip_ID),
+	PRIMARY KEY (TipFS_ID),
 	FOREIGN KEY (Gruppe_ID) REFERENCES gruppe(Gruppe_ID) ON DELETE CASCADE,
 	FOREIGN KEY (Wette_ID) REFERENCES wette(Wette_ID) ON DELETE CASCADE
 	) ENGINE=InnoDB';
@@ -144,5 +142,4 @@
 	FOREIGN KEY (Team_ID) REFERENCES team(Team_ID) ON DELETE CASCADE
 	) ENGINE=InnoDB';
 	mysqli_query($db_link, $sql);
-
 ?>

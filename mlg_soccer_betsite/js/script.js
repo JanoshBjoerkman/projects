@@ -101,7 +101,15 @@ $('#turnierErstellenCreateForm').submit(function(e){
 // Admin-Content: dynamisches Team-Erstellen
 $('#teamErstellenForm').submit(function(e){
   e.preventDefault(); // Seite neuladen verhindern
-  $.ajax({type: "GET",url:"./insert/insertTeam.php", data:"land="+$('#teamErstellenLand').val()}).done(function(){
+  var l = $('#teamErstellenLand').val();
+  try{
+    // If the string is UTF-8, this will work and not throw an error.
+    fixedl=decodeURIComponent(escape(l));
+  }catch(e){
+      // If it isn't, an error will be thrown, and we can asume that we have an ISO string.
+      fixedl=l;
+  }
+  $.ajax({type: "GET",url:"./insert/insertTeam.php", data:"land="+fixedl}).done(function(){
     $('#teamErstellenLand').val(""); // Formular leeren
     readTeams(); // Team-Übersich aktuallisieren
     refreshSpielErstellenDropdown(); // Dropdown für Spiel-Erstellen aktuallisieren
@@ -425,10 +433,11 @@ function readWetten(){
 
 // User-Content: Wettschein löschen
 function deleteWette(id){
+  $("#Wette_ID:"+id).prop('disabled', true);
   $.ajax({type:"GET",url:"./delete/deleteWette.php",data:"id="+id}).done(function(data){
-    setTimeout(function(){
+    // setTimeout(function(){
       readWetten();
-    }, 600);
+    // }, 600);
   });
 }
 

@@ -7,6 +7,9 @@
     $testUser = mysqli_fetch_row($testUserList);
     $uid = $testUser[0];
 
+    $sql = "UPDATE user SET offenerBetrag = offenerBetrag +10 WHERE User_ID = '$uid'";
+    mysqli_query($db_link, $sql);
+
     $sql = "INSERT INTO wette VALUES (NULL, '$uid');";
     mysqli_query($db_link, $sql);
     $wid = mysqli_insert_id($db_link);

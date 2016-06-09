@@ -21,6 +21,6 @@
 
   $sid = $_GET['sid'];
   $wid = $_GET['wid'];
-  $sql = "INSERT INTO tip VALUES (NULL, '$t1', '$t2', '$t', '$sid', '$wid');";
+  $sql = "INSERT INTO tip VALUES (NULL, '$t', '$sid', '$wid');";
   mysqli_query($db_link, $sql);
 ?>

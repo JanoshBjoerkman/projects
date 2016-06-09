@@ -421,7 +421,7 @@
 					</div>
 					<div class="col-md-4">
 							<button id="btnCreateWetteErstellen" class="btn btn-success btn-block">Wettschein abschicken</button>
-							<button id="btnCreateWetteAbbrechen" class="btn btn-warning btn-block">Abbrechen</button>
+							<button id="btnCreateWetteAbbrechen" class="btn btn-warning btn-block" data-href="index.php" onclick="location='index.php'" href="index.php">Abbrechen</button>
 					</div>
 				 </div>
        </div>
